@@ -1,6 +1,6 @@
 stages:
     - build_backend
-    - test
+    - test_backend
 
 build: 
     stage: build_backend
@@ -10,7 +10,8 @@ build:
         - ./gradlew.bat --stop
 
 test:
-    stage: test
+    stage: test_backend
     script: 
+        - cd Carspace-backend
         - ./gradlew test
         - ./gradlew.bat --stop
