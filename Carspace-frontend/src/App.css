@@ -1,0 +1,41 @@
+.navbar{
+  background-color: var(--bs-purple);
+}
+.btn-primary{
+  background-color: var(--bs-purple);
+  border-color: var(--bs-purple);
+}
+.bg-primary{
+  background-color: var(--bs-purple) !important;
+  border-color: var(--bs-purple);
+  color: white;
+}
+.bg-light-gray{
+  background-color: rgb(225, 225, 225);
+}
+.btn-primary:hover{
+  opacity: 0.7;
+  border-color: var(--bs-purple);
+  background-color: var(--bs-purple);
+}
+.btn-outline-dark{
+  border-width: 2px;
+  font-weight: 500;
+}
+
+
+/* CREATE AUCTION FORM */
+
+span.bold{
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+
+.media img{
+  width: 100%;
+  height: auto;
+}
+.media{
+  overflow: hidden;
+}
