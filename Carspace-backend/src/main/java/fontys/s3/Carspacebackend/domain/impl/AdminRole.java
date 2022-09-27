@@ -8,12 +8,16 @@ import lombok.Data;
 @Builder
 public class AdminRole implements IRole {
     private String role;
-
-    public AdminRole(String role){
+    private Long id;
+    public AdminRole(String role, Long id){
         this.role = role;
+        this.id = id;
     }
     public String getRole(){
         return role;
+    }
+    public Long getRoleId(){
+        return id;
     }
     public boolean canAccessAuctionCRUD(){
         return true;

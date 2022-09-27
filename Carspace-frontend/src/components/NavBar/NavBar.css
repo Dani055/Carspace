@@ -1,0 +1,9 @@
+.navbar .header-media-logo{
+    max-width: 15%;
+}
+.navbar .media:hover{
+    opacity: 0.8;
+}
+.text-small{
+    font-size: 85%;
+}

@@ -26,7 +26,7 @@ public class BidEntity {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="bidder_id", referencedColumnName = "id", nullable = false)
     private UserEntity bidder;

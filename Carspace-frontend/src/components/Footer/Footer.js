@@ -1,15 +1,19 @@
 import React from "react";
+import "./Footer.css"
 
 import {Link} from "react-router-dom";
 
 function Footer(props) {
   return (
-    <div className="bg-light">
+    <div className="footer">
+      <div className="bg-light">
       <div className="container">
         <footer className="py-5">
           <div className="row">
             <div className="col-4">
-              <h5>CarSpace</h5>
+              <div className="media bg-dark p-2 rounded">
+                <img src="/logo.png"></img>
+              </div>
               <p>© 2022 CarSpace, Inc. All rights reserved.</p>
             </div>
 
@@ -104,6 +108,7 @@ function Footer(props) {
           </div>
         </footer>
       </div>
+    </div>
     </div>
   );
 }

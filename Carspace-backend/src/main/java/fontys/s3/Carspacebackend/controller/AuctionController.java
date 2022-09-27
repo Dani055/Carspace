@@ -2,17 +2,12 @@ package fontys.s3.Carspacebackend.controller;
 
 import fontys.s3.Carspacebackend.business.service.IAuctionService;
 import fontys.s3.Carspacebackend.business.service.IUserService;
-import fontys.s3.Carspacebackend.business.service.impl.UserConverter;
-import fontys.s3.Carspacebackend.domain.User;
 import fontys.s3.Carspacebackend.domain.requests.CreateAuctionReq;
-import fontys.s3.Carspacebackend.domain.requests.LoginReq;
 import fontys.s3.Carspacebackend.domain.responses.GenericObjectResponse;
 import fontys.s3.Carspacebackend.exception.BadTokenException;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
