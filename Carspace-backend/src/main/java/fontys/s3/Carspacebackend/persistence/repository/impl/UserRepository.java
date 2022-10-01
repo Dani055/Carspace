@@ -19,9 +19,9 @@ public class UserRepository implements IUserRepository {
     }
 
     @Override
-    public User saveUser(User user){
+    public Long saveUser(User user){
         UserEntity entity = UserConverter.convertToEntity(user);
-        return UserConverter.convertToPOJO(userRepository.save(entity));
+        return userRepository.save(entity).getId();
     }
     @Override
     public User findById(Long id){

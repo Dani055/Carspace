@@ -33,8 +33,6 @@ public class UserEntity {
     @Column(name="password", nullable = false)
     private String password;
 
-    @NotBlank
-    @Length(min = 2, max = 50)
     @Column(name="first_name", nullable = false)
     private String firstName;
 
@@ -46,6 +44,9 @@ public class UserEntity {
 
     @Column(name="address", nullable = false)
     private String address;
+
+    @Column(name="phone", nullable = false)
+    private String phone;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "creator")

@@ -33,19 +33,22 @@ public class AuctionEntity {
     @Column(name="description")
     private String carDesc;
 
-    @Column(name="starting_price")
+    @Column(name="car_year", nullable = false, columnDefinition = "DATE")
+    private Date carYear;
+
+    @Column(name="starting_price", nullable = false)
     private double startingPrice;
 
-    @Column(name="buyout_price")
+    @Column(name="buyout_price", nullable = false)
     private double buyoutPrice;
 
-    @Column(name="mileage")
+    @Column(name="mileage", nullable = false)
     private int mileage;
 
     @Column(name="has_sold", columnDefinition = "bool default FALSE")
     private boolean hasSold;
 
-    @Column(name="location")
+    @Column(name="location", nullable = false)
     private String location;
 
     @Column(name="starts_on", nullable = false)

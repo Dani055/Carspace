@@ -35,5 +35,11 @@ public class CreateUserReq {
     @Length(min = 2, max = 50)
     private String email;
 
+    @NotBlank
+    @Length(min = 2, max = 50)
     private String address;
+
+    @NotBlank
+    @Length(min = 2, max = 50)
+    private String phone;
 }

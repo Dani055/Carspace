@@ -1,12 +1,16 @@
 package fontys.s3.Carspacebackend.domain.requests;
 
-import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+
 import java.util.List;
+
 
 @Data
 @Builder
@@ -16,5 +20,24 @@ public class CreateAuctionReq {
     private List<String> urls;
     private Long userId;
 
-    private AuctionEntity auction;
+    private String carBrand;
+
+    private String carModel;
+
+    private String carDesc;
+
+    private Date carYear;
+
+    private double startingPrice;
+
+    private double buyoutPrice;
+
+    private int mileage;
+
+    private String location;
+
+    private Timestamp startsOn;
+
+    private Timestamp endsOn;
+
 }

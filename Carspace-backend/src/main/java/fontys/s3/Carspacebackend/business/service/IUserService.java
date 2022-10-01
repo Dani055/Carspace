@@ -5,6 +5,6 @@ import fontys.s3.Carspacebackend.domain.requests.LoginReq;
 import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 
 public interface IUserService {
-    User saveUser(User u);
-    User findUserByUsername(LoginReq req);
+    Long registerUser(User u);
+    User loginUser(String username, String password);
 }

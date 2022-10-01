@@ -3,10 +3,12 @@ package fontys.s3.Carspacebackend.controller;
 import fontys.s3.Carspacebackend.business.service.IUserService;
 import fontys.s3.Carspacebackend.converters.UserConverter;
 import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.domain.dto.UserDTO;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import fontys.s3.Carspacebackend.domain.requests.CreateUserReq;
 import fontys.s3.Carspacebackend.domain.requests.LoginReq;
 import fontys.s3.Carspacebackend.domain.responses.GenericObjectResponse;
+import fontys.s3.Carspacebackend.domain.responses.ResourceCreatedResponse;
 import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,17 +24,18 @@ public class AuthController {
     private IUserService userService;
 
     @PostMapping("signup")
-    public ResponseEntity<GenericObjectResponse> signUp(@RequestBody @Valid CreateUserReq req){
-        User toCreate = User.builder().firstName(req.getFirstName()).lastName(req.getLastName()).email(req.getEmail()).username(req.getUsername()).password(req.getPassword()).address(req.getAddress()).build();
-        User createdUser = userService.saveUser(toCreate);
-        GenericObjectResponse res = GenericObjectResponse.builder().message("Register successful").obj(createdUser).build();
+    public ResponseEntity<ResourceCreatedResponse> signUp(@RequestBody @Valid CreateUserReq req){
+        User toCreate = User.builder().firstName(req.getFirstName()).lastName(req.getLastName()).email(req.getEmail()).username(req.getUsername()).password(req.getPassword()).address(req.getAddress()).phone(req.getPhone()).build();
+        Long userId = userService.registerUser(toCreate);
+        ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Register successful").id(userId).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
     @PostMapping("signin")
     public ResponseEntity<GenericObjectResponse> signIn(@RequestBody @Valid LoginReq req){
-        User loggedUser = userService.findUserByUsername(req);
-        GenericObjectResponse res = GenericObjectResponse.builder().message("Login successful").obj(loggedUser).build();
+        User loggedUser = userService.loginUser(req.getUsername(), req.getPassword());
+        UserDTO userDTO = UserDTO.builder().id(loggedUser.getId()).role(loggedUser.getRole()).username(loggedUser.getUsername()).firstName(loggedUser.getFirstName()).lastName(loggedUser.getLastName()).email(loggedUser.getEmail()).address(loggedUser.getAddress()).phone(loggedUser.getPhone()).build();
+        GenericObjectResponse res = GenericObjectResponse.builder().message("Login successful").obj(userDTO).build();
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 }

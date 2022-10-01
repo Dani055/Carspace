@@ -1,17 +1,19 @@
 package fontys.s3.Carspacebackend.business.service.impl;
 
+import fontys.s3.Carspacebackend.business.interfaces.IAuctionImageRepository;
+import fontys.s3.Carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IAuctionService;
-import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.domain.Auction;
+import fontys.s3.Carspacebackend.domain.Image;
 import fontys.s3.Carspacebackend.domain.requests.CreateAuctionReq;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
-import fontys.s3.Carspacebackend.persistence.repository.IAuctionImageRepository;
-import fontys.s3.Carspacebackend.persistence.repository.IAuctionRepository;
+import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionImageRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
 public class AuctionService implements IAuctionService {
@@ -27,16 +29,13 @@ public class AuctionService implements IAuctionService {
         this.auctionImageRepository = auctionImageRepository;
     }
 
-    public AuctionEntity createAuction(CreateAuctionReq req){
-        AuctionEntity auction = req.getAuction();
-//        User user = userRepository.findById(req.getUserId());
-//        auction.setCreator(user);
-//        auctionRepository.save(auction);
-//        for (String url: req.getUrls()) {
-//            ImageEntity pic = ImageEntity.builder().imgUrl(url).auction(auction).build();
-//            auctionImageRepository.save(pic);
-//        }
-        return auction;
+    public Long createAuction(Auction auc, Long userId, List<String> urls){
+        Long auctionId = auctionRepository.saveAuction(auc, userId);
+        for (String url: urls) {
+            Image pic = Image.builder().imgUrl(url).build();
+            auctionImageRepository.saveImage(pic, auctionId);
+        }
+        return auctionId;
     }
 
 }

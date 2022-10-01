@@ -26,7 +26,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User saveUser(User u){
+    public Long registerUser(User u){
         IRole role = roleRepository.findById(1L);
         u.setRole(role);
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
@@ -36,12 +36,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findUserByUsername(LoginReq req){
-        User found = userRepository.getUserByUsername(req.getUsername());
+    public User loginUser(String username, String password){
+        User found = userRepository.getUserByUsername(username);
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(10, new SecureRandom());
 
-        if(!bCryptPasswordEncoder.matches(req.getPassword(), found.getPassword())){
+        if(!bCryptPasswordEncoder.matches(password, found.getPassword())){
             throw new IncorrectCredentialsException();
         }
         return found;

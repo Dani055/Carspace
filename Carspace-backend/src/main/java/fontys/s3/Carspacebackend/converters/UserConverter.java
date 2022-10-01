@@ -28,9 +28,13 @@ public final class UserConverter {
                 .password(u.getPassword())
                 .username(u.getUsername())
                 .address(u.getAddress())
+                .phone(u.getPhone())
                 .build();
     }
     public static UserEntity convertToEntity(User u){
+        if(u == null){
+            return null;
+        }
         RoleEntity role = RoleEntity.builder().roleName(u.getRole().getRole()).id(u.getRole().getRoleId()).build();
         return UserEntity.builder().id(u.getId())
                 .role(role)
@@ -40,6 +44,7 @@ public final class UserConverter {
                 .password(u.getPassword())
                 .username(u.getUsername())
                 .address(u.getAddress())
+                .phone(u.getPhone())
                 .build();
     }
 }
