@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface IAuctionService {
     Long createAuction(Auction auc, Long userId, List<String> urls);
+    List<Auction> getAuctions();
+
+    Auction getAuctionDetails(Long id);
 }

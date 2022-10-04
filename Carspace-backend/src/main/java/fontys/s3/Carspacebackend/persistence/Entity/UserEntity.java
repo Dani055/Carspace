@@ -1,30 +1,26 @@
 package fontys.s3.Carspacebackend.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.Length;
+
+import lombok.*;
 
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
-@Data
+
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_user")
-public class UserEntity {
+public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="role_id", referencedColumnName = "id", nullable = false)
     private RoleEntity role;
 

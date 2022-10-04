@@ -24,4 +24,6 @@ public class Bid {
     private Double amount;
 
     private Date createdOn;
+
+    private User bidder;
 }

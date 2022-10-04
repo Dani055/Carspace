@@ -2,6 +2,7 @@ package fontys.s3.Carspacebackend.converters;
 
 import fontys.s3.Carspacebackend.domain.IRole;
 import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.domain.dto.UserDTO;
 import fontys.s3.Carspacebackend.domain.impl.AdminRole;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;
@@ -46,5 +47,9 @@ public final class UserConverter {
                 .address(u.getAddress())
                 .phone(u.getPhone())
                 .build();
+    }
+
+    public static UserDTO convertToDTO(User u){
+        return UserDTO.builder().id(u.getId()).role(u.getRole().getRole()).username(u.getUsername()).firstName(u.getFirstName()).lastName(u.getLastName()).email(u.getEmail()).address(u.getAddress()).phone(u.getPhone()).build();
     }
 }

@@ -1,40 +1,41 @@
 package fontys.s3.Carspacebackend.persistence.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.*;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+
+import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_auction_bid")
-public class BidEntity {
+public class BidEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="bidder_id", referencedColumnName = "id", nullable = false)
     private UserEntity bidder;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="auction_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private AuctionEntity auction;
 
     @Column(name="amount", nullable = false)

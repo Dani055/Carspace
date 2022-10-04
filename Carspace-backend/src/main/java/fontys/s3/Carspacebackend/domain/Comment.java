@@ -18,4 +18,6 @@ public class Comment{
     private String text;
 
     private Date createdOn;
+
+    private User creator;
 }

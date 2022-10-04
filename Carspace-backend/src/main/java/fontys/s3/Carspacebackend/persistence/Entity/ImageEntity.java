@@ -1,23 +1,22 @@
 package fontys.s3.Carspacebackend.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.annotations.SQLDelete;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_auction_image")
-public class ImageEntity {
+public class ImageEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,9 +24,10 @@ public class ImageEntity {
     @Column(name="img_url", nullable = false)
     private String imgUrl;
 
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="auction_id", referencedColumnName = "id", nullable = false)
+    @JsonIgnore
     private AuctionEntity auction;
 }

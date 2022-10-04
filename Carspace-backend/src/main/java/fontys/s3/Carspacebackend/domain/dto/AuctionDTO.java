@@ -1,20 +1,21 @@
-package fontys.s3.Carspacebackend.domain;
+package fontys.s3.Carspacebackend.domain.dto;
 
-import lombok.*;
+import fontys.s3.Carspacebackend.domain.Bid;
+import fontys.s3.Carspacebackend.domain.Comment;
+import fontys.s3.Carspacebackend.domain.Image;
+import fontys.s3.Carspacebackend.domain.User;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Singular;
 
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+@Data
 @Builder
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class Auction {
-
+public class AuctionDTO {
     private Long id;
 
     private String carBrand;
@@ -39,16 +40,16 @@ public class Auction {
 
     private Timestamp endsOn;
 
-    private User creator;
+    private UserDTO creator;
 
     @Singular
-    private Set<Image> images = new HashSet<>();
+    private Set<Image> images;
 
     @Singular
-    private Set<Comment> comments = new HashSet<>();
+    private Set<CommentDTO> comments;
 
     @Singular
-    private Set<Bid> bids = new HashSet<>();
+    private Set<BidDTO> bids;
 
-    private Bid winningBid;
+    private BidDTO winningBid;
 }

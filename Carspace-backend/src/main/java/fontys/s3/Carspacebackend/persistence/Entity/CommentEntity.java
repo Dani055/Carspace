@@ -1,34 +1,38 @@
 package fontys.s3.Carspacebackend.persistence.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+
+import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_auction_comment")
-public class CommentEntity {
+public class CommentEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="creator_id", referencedColumnName = "id", nullable = false)
     private UserEntity creator;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @JsonIgnore
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="auction_id", referencedColumnName = "id", nullable = false)
     private AuctionEntity auction;

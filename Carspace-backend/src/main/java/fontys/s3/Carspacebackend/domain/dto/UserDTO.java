@@ -9,7 +9,7 @@ import lombok.Data;
 public class UserDTO {
     private Long id;
 
-    private IRole role;
+    private String role;
 
     private String username;
 

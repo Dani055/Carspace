@@ -34,7 +34,7 @@ public class AuthController {
     @PostMapping("signin")
     public ResponseEntity<GenericObjectResponse> signIn(@RequestBody @Valid LoginReq req){
         User loggedUser = userService.loginUser(req.getUsername(), req.getPassword());
-        UserDTO userDTO = UserDTO.builder().id(loggedUser.getId()).role(loggedUser.getRole()).username(loggedUser.getUsername()).firstName(loggedUser.getFirstName()).lastName(loggedUser.getLastName()).email(loggedUser.getEmail()).address(loggedUser.getAddress()).phone(loggedUser.getPhone()).build();
+        UserDTO userDTO = UserConverter.convertToDTO(loggedUser);
         GenericObjectResponse res = GenericObjectResponse.builder().message("Login successful").obj(userDTO).build();
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }

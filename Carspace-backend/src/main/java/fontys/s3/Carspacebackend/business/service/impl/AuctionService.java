@@ -11,6 +11,8 @@ import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionImageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
@@ -38,4 +40,11 @@ public class AuctionService implements IAuctionService {
         return auctionId;
     }
 
+    public List<Auction> getAuctions(){
+        return auctionRepository.getAuctions();
+    }
+
+    public Auction getAuctionDetails(Long id){
+        return auctionRepository.getAuctionById(id);
+    }
 }

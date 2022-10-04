@@ -1,25 +1,30 @@
 package fontys.s3.Carspacebackend.persistence.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+
+import lombok.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Set;
 
-@Data
+
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_auction")
-public class AuctionEntity {
+public class AuctionEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -63,14 +68,14 @@ public class AuctionEntity {
     private UserEntity creator;
 
 
-    @OneToMany(mappedBy = "auction")
-    private Set<ImageEntity> images = new HashSet<>();
+    @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    private Set<ImageEntity> images;
 
-    @OneToMany(mappedBy = "auction")
-    private Set<CommentEntity> comments = new HashSet<>();
+    @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    private Set<CommentEntity> comments;
 
-    @OneToMany(mappedBy = "auction")
-    private Set<BidEntity> bids = new HashSet<>();
+    @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    private Set<BidEntity> bids;
 
     @OneToOne
     @JoinColumn(name="winning_bid_id", referencedColumnName = "id")
