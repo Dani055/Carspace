@@ -1,15 +1,40 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { registerUserCall } from "../../../service/userService";
+import { toast } from 'react-toastify';
 
 function RegisterForm(props) {
+  const navigate = useNavigate();
+  const [formState, setFormState] = useState({firstName: "", lastName: "", address: "", phone: "", email: "", username: "", password: ""});
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formState);
+    registerUserCall(formState).then((res) => {
+      toast.success(res.message);
+      navigate("/login")
+    })
+    .catch((err) => {
+      toast.error(err);
+    });
+  }
+
+  const handleFormChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setFormState({ ...formState, [name]: value });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="row">
         <div className="col-md-6 mb-4">
           <div className="form-floating mb-3">
             <input
               type="text"
               className="form-control"
+              onChange={handleFormChange}
               id="firstName"
               name="firstName"
               placeholder="name@example.com"
@@ -22,6 +47,7 @@ function RegisterForm(props) {
             <input
               type="text"
               className="form-control"
+              onChange={handleFormChange}
               id="lastName"
               name="lastName"
               placeholder="name@example.com"
@@ -37,6 +63,7 @@ function RegisterForm(props) {
             <input
               type="text"
               className="form-control"
+              onChange={handleFormChange}
               id="address"
               name="address"
               placeholder="name@example.com"
@@ -49,6 +76,7 @@ function RegisterForm(props) {
             <input
               type="tel"
               className="form-control"
+              onChange={handleFormChange}
               id="phone"
               name="phone"
               placeholder="name@example.com"
@@ -64,6 +92,7 @@ function RegisterForm(props) {
             <input
               type="email"
               className="form-control"
+              onChange={handleFormChange}
               id="email"
               name="email"
               placeholder="name@example.com"
@@ -76,6 +105,7 @@ function RegisterForm(props) {
             <input
               type="text"
               className="form-control"
+              onChange={handleFormChange}
               id="username"
               name="username"
               placeholder="name@example.com"
@@ -91,6 +121,7 @@ function RegisterForm(props) {
             <input
               type="password"
               className="form-control"
+              onChange={handleFormChange}
               id="password"
               name="password"
               placeholder="name@example.com"

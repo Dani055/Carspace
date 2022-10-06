@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./NavBar.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../UserProvider";
 
 function NavBar() {
   const navigate = useNavigate();
+  const { loggedUser } = useContext(UserContext);
+
   const links = [
     {
       id: 1,
@@ -21,7 +24,7 @@ function NavBar() {
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container">
         <NavLink className="navbar-brand header-media-logo" to="/">
-          <div className="media">    
+          <div className="media">
             <img src="/logo.png"></img>
           </div>
         </NavLink>
@@ -55,6 +58,8 @@ function NavBar() {
                     Live auctions
                   </Link>
                 </li>
+
+
                 <li>
                   <hr className="dropdown-divider" />
                 </li>
@@ -65,61 +70,71 @@ function NavBar() {
                 </li>
               </ul>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/auction/create">
-                Sell a car
-              </NavLink>
-            </li>
+
+            {
+              loggedUser && <li className="nav-item">
+                <NavLink className="nav-link" to="/auction/create">
+                  Sell a car
+                </NavLink>
+              </li>
+            }
           </ul>
-          <ul className="navbar-nav">
-            <div className="dropdown text-end">
-              <Link
-                className="d-block link-dark text-decocation-none dropdown-toggle"
-                data-bs-toggle="dropdown"
-                area-aria-expanded="false"
+          {
+            loggedUser && <ul className="navbar-nav me-5">
+              <div className="dropdown text-end">
+                <Link
+                  className="d-block link-dark text-decocation-none dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  area-aria-expanded="false"
+                >
+                  <img
+                    src="/default-user-image.png"
+                    alt="profile pic"
+                    width="32"
+                    height="32"
+                    className="rounded-circle"
+                  ></img>
+                </Link>
+                <ul className="dropdown-menu text-small shadow">
+                  <li>
+                    <span className="mx-3 my-1 fw-bold">Welcome, --user--</span>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/profile">
+                      My profile
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="#">
+                      Log out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </ul>
+          }
+          {
+            loggedUser === null && 
+            <>
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className="btn btn-dark mx-2">
+              Log in
+            </button>
+              <button
+                type="button"
+                onClick={() => navigate("/register")}
+                className="btn btn-outline-dark"
               >
-                <img
-                  src="/default-user-image.png"
-                  alt="profile pic"
-                  width="32"
-                  height="32"
-                  className="rounded-circle"
-                ></img>
-              </Link>
-              <ul className="dropdown-menu text-small shadow">
-                <li>
-                  <span className="mx-3 my-1 fw-bold">Welcome, --user--</span>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="/profile">
-                    My profile
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider"/>
-                </li>
-                <li>
-                  <Link className="dropdown-item" to="#">
-                    Log out
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </ul>
-          <button
-            type="button"
-            onClick={() => navigate("/login")}
-            className="btn btn-dark mx-2"
-          >
-            Log in
-          </button>
-          <button
-            type="button"
-            onClick={() => navigate("/register")}
-            className="btn btn-outline-dark"
-          >
-            Register
-          </button>
+                Register
+              </button>
+            </>
+          }
+
         </div>
       </div>
     </nav>

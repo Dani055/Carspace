@@ -1,14 +1,43 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginUserCall } from "../../../service/userService";
+import { toast } from 'react-toastify';
+import { UserContext } from "../../../UserProvider";
+import { useCookies } from 'react-cookie';
 
 function LoginForm(props) {
+  const navigate = useNavigate();
+  const [formState, setFormState] = useState({username: "", password: ""});
+  const {setLoggedUser} = useContext(UserContext)
+  const [cookies, setCookie] = useCookies();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    loginUserCall(formState).then((res) => {
+      toast.success(res.message);
+      setCookie('token', res.obj.id, {maxAge: 60});
+      navigate("/")
+    })
+    .catch((err) => {
+      toast.error(err);
+    });
+  }
+
+  const handleFormChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setFormState({ ...formState, [name]: value });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="form-floating mb-3 text-start">
         <input
           type="username"
           className="form-control"
           id="username"
           name="username"
+          onChange={handleFormChange}
           placeholder="name@example.com"
         />
         <label htmlFor="floatingInput">Username</label>
@@ -20,6 +49,7 @@ function LoginForm(props) {
           className="form-control"
           id="password"
           name="password"
+          onChange={handleFormChange}
           placeholder="Password"
         />
         <label htmlFor="floatingPassword">Password</label>

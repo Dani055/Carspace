@@ -1,7 +1,7 @@
 package fontys.s3.Carspacebackend.controller;
 
 import fontys.s3.Carspacebackend.business.service.IAuctionService;
-import fontys.s3.Carspacebackend.business.service.IUserService;
+
 import fontys.s3.Carspacebackend.converters.AuctionConverter;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.dto.AuctionDTO;
@@ -9,17 +9,18 @@ import fontys.s3.Carspacebackend.domain.requests.CreateAuctionReq;
 import fontys.s3.Carspacebackend.domain.responses.GenericObjectResponse;
 import fontys.s3.Carspacebackend.domain.responses.ResourceCreatedResponse;
 import fontys.s3.Carspacebackend.exception.BadTokenException;
-import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/auction")
 @AllArgsConstructor

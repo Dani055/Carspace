@@ -46,4 +46,11 @@ public class UserService implements IUserService {
         }
         return found;
     }
+
+    @Override
+    public User getUserById(Long id){
+        User found = userRepository.findById(id);
+
+        return found;
+    }
 }

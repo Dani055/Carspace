@@ -3,6 +3,7 @@ package fontys.s3.Carspacebackend.persistence.repository.impl;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.converters.UserConverter;
 import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.exception.IncorrectCredentialsException;
 import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAUserRepository;
@@ -36,7 +37,7 @@ public class UserRepository implements IUserRepository {
     public User getUserByUsername(String username){
         Optional<UserEntity> ue = userRepository.findByUsername(username);
         if(ue.isEmpty()){
-            throw new ResourceNotFoundException("User", "username", username);
+            throw new IncorrectCredentialsException();
         }
 
         return UserConverter.convertToPOJO(ue.get());
