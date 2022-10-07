@@ -23,7 +23,7 @@ public class Auction {
 
     private String carDesc;
 
-    private Date carYear;
+    private int carYear;
 
     private double startingPrice;
 

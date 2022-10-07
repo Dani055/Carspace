@@ -2,30 +2,26 @@ import React, { useContext } from "react";
 import "./NavBar.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserProvider";
+import { useCookies } from "react-cookie";
 
 function NavBar() {
   const navigate = useNavigate();
+  const {setLoggedUser} = useContext(UserContext)
+  const [cookies, setCookie, removeCookie] = useCookies();
   const { loggedUser } = useContext(UserContext);
 
-  const links = [
-    {
-      id: 1,
-      path: "/",
-      text: "Todo List",
-    },
-    {
-      id: 2,
-      path: "/user",
-      text: "User",
-    },
-  ];
+  const logout = (e) => {
+    e.preventDefault();
+    removeCookie('token', {path:'/'});
+    setLoggedUser(null);
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark">
       <div className="container">
         <NavLink className="navbar-brand header-media-logo" to="/">
           <div className="media">
-            <img src="/logo.png"></img>
+            <img src="/logo.png" alt=""></img>
           </div>
         </NavLink>
         <button
@@ -108,7 +104,7 @@ function NavBar() {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="#">
+                    <Link className="dropdown-item" onClick={logout}>
                       Log out
                     </Link>
                   </li>

@@ -31,6 +31,7 @@ public class AuctionService implements IAuctionService {
         this.auctionImageRepository = auctionImageRepository;
     }
 
+    @Transactional
     public Long createAuction(Auction auc, Long userId, List<String> urls){
         Long auctionId = auctionRepository.saveAuction(auc, userId);
         for (String url: urls) {

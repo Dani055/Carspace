@@ -1,18 +1,35 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./EditAuctionForm.css"
+import { toast } from 'react-toastify';
 import DateTimePicker from "react-datetime-picker";
+import { createAuctionCall } from "../../../service/auctionService";
 
 function EditAuctionForm(props) {
-    const [startDate, onChangeStartDate] = useState(new Date());
-    const [endDate, onChangeEndDate] = useState(new Date());
+  const navigate = useNavigate();
+  const [formState, setFormState] = useState({ urls:["photo1", "photo2"], carBrand: "", carModel: "", carDesc: "", carYear: 0, startingPrice: 0, buyoutPrice: 0, mileage: 0, location: ""});
+  const [startsOn, setStartsOn] = useState(new Date());
+  const [endsOn, setEndsOn] = useState(new Date());
 
-    const testForm = (e) => {
-        e.preventDefault()
-        console.log(startDate);
-      }
+  const handleFormChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setFormState({ ...formState, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let body = {...formState, startsOn, endsOn};
+    try {
+      const res = await createAuctionCall(body);
+      toast.success(res.message);
+      navigate('/')
+    } catch (err) {
+      toast.error(err);
+    }
+  }
   return (
-    <form onSubmit={testForm}>
+    <form onSubmit={handleSubmit}>
       <div className="row g-0">
         <div className="col-lg-6">
           <div className="p-5">
@@ -43,8 +60,9 @@ function EditAuctionForm(props) {
                   <input
                     type="text"
                     className="form-control"
-                    id="brand"
-                    name="brand"
+                    id="carBrand"
+                    name="carBrand"
+                    onChange={handleFormChange}
                     placeholder="Elon mobile"
                   />
                   <label htmlFor="floatingInput">Brand</label>
@@ -55,8 +73,9 @@ function EditAuctionForm(props) {
                   <input
                     type="text"
                     className="form-control"
-                    id="model"
-                    name="model"
+                    id="carModel"
+                    name="carModel"
+                    onChange={handleFormChange}
                     placeholder="Cybertrock"
                   />
                   <label htmlFor="floatingInput">Model</label>
@@ -69,8 +88,9 @@ function EditAuctionForm(props) {
                 <textarea
                   className="form-control"
                   placeholder="Vehicle description here"
-                  id="description"
-                  name="description"
+                  id="carDesc"
+                  name="carDesc"
+                  onChange={handleFormChange}
                 ></textarea>
                 <label htmlFor="floatingTextarea">Description</label>
               </div>
@@ -84,6 +104,7 @@ function EditAuctionForm(props) {
                     className="form-control"
                     id="location"
                     name="location"
+                    onChange={handleFormChange}
                     placeholder="The moon"
                   />
                   <label htmlFor="floatingInput">Location</label>
@@ -98,6 +119,7 @@ function EditAuctionForm(props) {
                     className="form-control"
                     id="mileage"
                     name="mileage"
+                    onChange={handleFormChange}
                     placeholder="20"
                   />
                   <label htmlFor="floatingInput">Mileage in KM</label>
@@ -110,8 +132,9 @@ function EditAuctionForm(props) {
                     min={1950}
                     max={2024}
                     className="form-control"
-                    id="year"
-                    name="year"
+                    id="carYear"
+                    name="carYear"
+                    onChange={handleFormChange}
                     placeholder="2022"
                   />
                   <label htmlFor="floatingInput">Vehicle year</label>
@@ -131,10 +154,10 @@ function EditAuctionForm(props) {
               <div>
                 <DateTimePicker
                   className="bg-light text-dark p-3 rounded"
-                  id="startDate"
-                  name="startDate"
-                  onChange={onChangeStartDate}
-                  value={startDate}
+                  id="startsOn"
+                  name="startsOn"
+                  onChange={setStartsOn}
+                  value={startsOn}
                 />
               </div>
             </div>
@@ -146,10 +169,10 @@ function EditAuctionForm(props) {
               <div>
                 <DateTimePicker
                   className="bg-light text-dark p-3 rounded"
-                  id="endDate"
-                  name="endDate"
-                  onChange={onChangeEndDate}
-                  value={endDate}
+                  id="endsOn"
+                  name="ensOn"
+                  onChange={setEndsOn}
+                  value={endsOn}
                 />
               </div>
             </div>
@@ -163,6 +186,7 @@ function EditAuctionForm(props) {
                     max={1000000}
                     className="form-control"
                     id="startingPrice"
+                    onChange={handleFormChange}
                     name="startingPrice"
                     placeholder="20"
                   />
@@ -177,6 +201,7 @@ function EditAuctionForm(props) {
                     max={1000000}
                     className="form-control"
                     id="buyoutPrice"
+                    onChange={handleFormChange}
                     name="buyoutPrice"
                     placeholder="20"
                   />

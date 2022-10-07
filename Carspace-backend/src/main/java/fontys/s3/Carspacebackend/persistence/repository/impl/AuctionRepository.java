@@ -29,9 +29,12 @@ public class AuctionRepository implements IAuctionRepository {
     }
     @Override
     public Long saveAuction(Auction auction, Long userId){
-        UserEntity userEntity = userRepository.findById(userId).get();
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        if(userEntity.isEmpty()){
+            throw new ResourceNotFoundException("User", "id", userId);
+        }
         AuctionEntity auctionEntity = AuctionConverter.convertToEntity(auction);
-        auctionEntity.setCreator(userEntity);
+        auctionEntity.setCreator(userEntity.get());
         return auctionRepository.save(auctionEntity).getId();
     }
 

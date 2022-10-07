@@ -11,16 +11,19 @@ function LoginForm(props) {
   const {setLoggedUser} = useContext(UserContext)
   const [cookies, setCookie] = useCookies();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    loginUserCall(formState).then((res) => {
+    try {
+      const res = await loginUserCall(formState);
       toast.success(res.message);
-      setCookie('token', res.obj.id, {maxAge: 60});
-      navigate("/")
-    })
-    .catch((err) => {
+      setCookie('token', res.obj.id, {maxAge: 180});
+      setLoggedUser(res.obj);
+      navigate("/");
+
+    } 
+    catch (err) {
       toast.error(err);
-    });
+    }
   }
 
   const handleFormChange = (event) => {

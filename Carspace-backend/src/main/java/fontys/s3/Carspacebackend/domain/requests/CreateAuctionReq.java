@@ -26,7 +26,7 @@ public class CreateAuctionReq {
 
     private String carDesc;
 
-    private Date carYear;
+    private int carYear;
 
     private double startingPrice;
 

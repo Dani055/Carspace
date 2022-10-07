@@ -38,8 +38,8 @@ public class AuctionEntity implements Serializable {
     @Column(name="description")
     private String carDesc;
 
-    @Column(name="car_year", nullable = false, columnDefinition = "DATE")
-    private Date carYear;
+    @Column(name="car_year", nullable = false)
+    private int carYear;
 
     @Column(name="starting_price", nullable = false)
     private double startingPrice;

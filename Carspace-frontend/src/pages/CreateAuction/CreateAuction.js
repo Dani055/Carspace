@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import EditAuctionForm from "../../components/forms/EditAuctionForm/EditAuctionForm";
 
 function CreateAuction(props) {
-
   
   return (
     <div className="container py-5">

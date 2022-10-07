@@ -8,16 +8,15 @@ function RegisterForm(props) {
   const [formState, setFormState] = useState({firstName: "", lastName: "", address: "", phone: "", email: "", username: "", password: ""});
 
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(formState);
-    registerUserCall(formState).then((res) => {
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const res = await registerUserCall(formState);
       toast.success(res.message);
       navigate("/login")
-    })
-    .catch((err) => {
+    } catch (err) {
       toast.error(err);
-    });
+    }
   }
 
   const handleFormChange = (event) => {

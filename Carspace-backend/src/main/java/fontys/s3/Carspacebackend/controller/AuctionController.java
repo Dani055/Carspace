@@ -30,6 +30,9 @@ public class AuctionController {
 
     @PostMapping()
     public ResponseEntity<ResourceCreatedResponse> createAuction(@RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
+        if(headers.getFirst(HttpHeaders.AUTHORIZATION) == null){
+            throw new BadTokenException();
+        }
         String token = headers.getFirst(HttpHeaders.AUTHORIZATION).split("Bearer ")[1];
         Long userId;
         try {

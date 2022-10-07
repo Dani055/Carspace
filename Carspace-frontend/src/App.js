@@ -29,10 +29,10 @@ function App() {
       .catch((err) => {
         toast.error(err);
         removeCookie('token', {path:'/'});
+        setLoggedUser(null);
       })
-  
     }
-  }, [cookies["token"]])
+  }, [])
   return (
     <div className="App">
       <Router>
