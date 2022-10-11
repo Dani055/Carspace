@@ -3,7 +3,8 @@ package fontys.s3.Carspacebackend.domain.dto;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 @Data
 @Builder
@@ -12,7 +13,7 @@ public class CommentDTO {
 
     private String text;
 
-    private Date createdOn;
+    private Timestamp createdOn;
 
     private UserDTO creator;
 }

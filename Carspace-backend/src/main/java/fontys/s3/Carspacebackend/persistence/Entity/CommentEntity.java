@@ -10,7 +10,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
@@ -41,5 +42,5 @@ public class CommentEntity implements Serializable {
     private String text;
 
     @Column(name="created_on", nullable = false, columnDefinition = "Datetime default CURRENT_TIMESTAMP")
-    private Date createdOn;
+    private Timestamp createdOn;
 }

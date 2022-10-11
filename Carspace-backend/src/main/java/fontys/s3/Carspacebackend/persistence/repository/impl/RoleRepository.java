@@ -8,16 +8,15 @@ import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;
 import fontys.s3.Carspacebackend.persistence.repository.IJPARoleRepository;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAUserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class RoleRepository implements IRoleRepository {
     private final IJPARoleRepository roleRepository;
-    public RoleRepository(IJPARoleRepository repo){
-        roleRepository = repo;
-    }
 
     public IRole findById(Long id){
         Optional<RoleEntity> role = roleRepository.findById(id);

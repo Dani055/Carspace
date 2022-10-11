@@ -1,10 +1,10 @@
 package fontys.s3.Carspacebackend.domain.dto;
 
-import fontys.s3.Carspacebackend.domain.User;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
+import java.sql.Timestamp;
+
 
 @Data
 @Builder
@@ -13,7 +13,7 @@ public class BidDTO {
 
     private Double amount;
 
-    private Date createdOn;
+    private Timestamp createdOn;
 
     private UserDTO bidder;
 }

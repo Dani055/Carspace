@@ -4,12 +4,14 @@ import "./EditAuctionForm.css"
 import { toast } from 'react-toastify';
 import DateTimePicker from "react-datetime-picker";
 import { createAuctionCall } from "../../../service/auctionService";
+import axios from "axios";
 
 function EditAuctionForm(props) {
   const navigate = useNavigate();
-  const [formState, setFormState] = useState({ urls:["photo1", "photo2"], carBrand: "", carModel: "", carDesc: "", carYear: 0, startingPrice: 0, buyoutPrice: 0, mileage: 0, location: ""});
+  const [formState, setFormState] = useState({ carBrand: "", carModel: "", carDesc: "", carYear: 0, startingPrice: 0, buyoutPrice: 0, mileage: 0, location: ""});
   const [startsOn, setStartsOn] = useState(new Date());
   const [endsOn, setEndsOn] = useState(new Date());
+  const [imageFiles, setImageFiles] = useState(null);
 
   const handleFormChange = (event) => {
     const name = event.target.name;
@@ -17,16 +19,30 @@ function EditAuctionForm(props) {
     setFormState({ ...formState, [name]: value });
   };
 
+  const handleImageChange= (e) => {
+    setImageFiles(e.target.files)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let body = {...formState, startsOn, endsOn};
+    let formData = new FormData();
+    for(let i=0; i<imageFiles?.length;i++){
+      formData.append("photo", imageFiles[i]);
+    }
     try {
+      const imageRes = await axios.post("https://ydimage-server.herokuapp.com/feed/uploadimg", formData, {
+      headers:{
+        "Content-type": "multipart/form-data",
+      },})
+      const links = imageRes.data.links;
+      let body = {...formState, startsOn, endsOn, "urls": links};
       const res = await createAuctionCall(body);
       toast.success(res.message);
       navigate('/')
     } catch (err) {
       toast.error(err);
     }
+    
   }
   return (
     <form onSubmit={handleSubmit}>
@@ -50,6 +66,7 @@ function EditAuctionForm(props) {
                 accept="image/*"
                 id="photosUpload"
                 name="photosUpload"
+                onChange={handleImageChange}
                 multiple
               />
             </div>

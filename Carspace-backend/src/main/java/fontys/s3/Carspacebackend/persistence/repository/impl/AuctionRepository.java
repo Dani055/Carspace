@@ -11,6 +11,7 @@ import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionImageRepository;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionRepository;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAUserRepository;
+import lombok.AllArgsConstructor;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
 
@@ -19,14 +20,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
+@AllArgsConstructor
 public class AuctionRepository implements IAuctionRepository {
     private final IJPAUserRepository userRepository;
     private final IJPAAuctionRepository auctionRepository;
 
-    public AuctionRepository(IJPAUserRepository uRepo, IJPAAuctionRepository aRepo){
-        userRepository = uRepo;
-        auctionRepository = aRepo;
-    }
     @Override
     public Long saveAuction(Auction auction, Long userId){
         Optional<UserEntity> userEntity = userRepository.findById(userId);

@@ -1,12 +1,11 @@
 package fontys.s3.Carspacebackend.domain;
 
-import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
-import lombok.*;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.Date;
+import lombok.*;
+
+import java.sql.Date;
+import java.sql.Timestamp;
+
 
 @Builder
 @Getter
@@ -17,7 +16,7 @@ public class Comment{
 
     private String text;
 
-    private Date createdOn;
+    private Timestamp createdOn;
 
     private User creator;
 }
