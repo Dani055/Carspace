@@ -11,4 +11,7 @@ public interface IAuctionService {
     List<Auction> getAuctions();
 
     Auction getAuctionDetails(Long id);
+    Long editAuction(Auction auc, Long userId, List<String> urls);
+
+    boolean deleteAuction(Long auctionId, Long userId);
 }

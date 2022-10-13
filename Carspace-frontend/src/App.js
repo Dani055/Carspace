@@ -21,7 +21,6 @@ function App() {
   const {setLoggedUser} = useContext(UserContext)
 
   useEffect(()=>{
-    console.log("here")
     if(cookies["token"] !== undefined){
       checkLoginKey().then((res) => {
         setLoggedUser(res.obj);
@@ -44,7 +43,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/auction/create" element={<CreateAuction />} />
           <Route path="/auction/edit" element={<EditAuction />} />
-          <Route path="/auction/details" element={<AuctionDetails />} />
+          <Route path="/auction/details/:auctionId" element={<AuctionDetails />} />
           </Routes>
         <Footer/>
       </Router>

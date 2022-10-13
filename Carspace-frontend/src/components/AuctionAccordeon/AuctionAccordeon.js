@@ -1,4 +1,5 @@
 import React from "react"
+import dayjs from "dayjs";
 
 function AuctionAccordeon(props) {
 
@@ -24,11 +25,11 @@ function AuctionAccordeon(props) {
             data-bs-parent="#accordionDesc"
           >
             <div class="accordion-body">
-              <p>Vehicle brand : <strong>BMW</strong></p>
-              <p>Vehicle model : <strong>330i</strong></p>
-              <p>Vehicle location : <strong>Eindhoven</strong></p>
-              <p>Year of production : <strong>2001  </strong></p>
-              <p>Mielage : <strong>210 000km</strong></p>
+              <p>Vehicle brand : <strong>{props.auction.carBrand}</strong></p>
+              <p>Vehicle model : <strong>{props.auction.carModel}</strong></p>
+              <p>Vehicle location : <strong>{props.auction.location}</strong></p>
+              <p>Year of production : <strong>{props.auction.carYear}</strong></p>
+              <p>Mielage : <strong>{props.auction.mileage} km</strong></p>
             </div>
           </div>
         </div>
@@ -52,10 +53,10 @@ function AuctionAccordeon(props) {
             data-bs-parent="#accordionDesc"
           >
             <div class="accordion-body">
-              <p>Starting price : <strong>3000$</strong></p>
-              <p>Buyout price : <strong>10000$</strong></p>
-              <p>Auction start date : <strong>22.09.2022 11:00:00</strong></p>
-              <p>Auction end date : <strong>27.09.2022 11:00:00  </strong></p>
+              <p>Starting price : <strong>{props.auction.startingPrice}€</strong></p>
+              <p>Buyout price : <strong>{props.auction.buyoutPrice}€</strong></p>
+              <p>Auction start date : <strong>{dayjs(props.auction.startsOn).format("DD/MM/YYYY HH:mm:ss")}</strong></p>
+              <p>Auction end date : <strong>{dayjs(props.auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</strong></p>
             </div>
           </div>
         </div>

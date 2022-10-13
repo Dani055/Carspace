@@ -18,7 +18,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateAuctionReq {
     private List<String> urls;
-    private Long userId;
 
     private String carBrand;
 

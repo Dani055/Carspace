@@ -7,7 +7,9 @@ import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.dto.AuctionDTO;
 import fontys.s3.Carspacebackend.domain.requests.CreateAuctionReq;
 import fontys.s3.Carspacebackend.domain.responses.GenericObjectResponse;
+import fontys.s3.Carspacebackend.domain.responses.ResourceChangedResponse;
 import fontys.s3.Carspacebackend.domain.responses.ResourceCreatedResponse;
+import fontys.s3.Carspacebackend.domain.responses.ResourceDeletedResponse;
 import fontys.s3.Carspacebackend.exception.BadTokenException;
 
 import lombok.AllArgsConstructor;
@@ -28,8 +30,7 @@ public class AuctionController {
 //    private IUserService userService;
     private IAuctionService auctionService;
 
-    @PostMapping()
-    public ResponseEntity<ResourceCreatedResponse> createAuction(@RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
+    private Long extractToken(HttpHeaders headers){
         if(headers.getFirst(HttpHeaders.AUTHORIZATION) == null){
             throw new BadTokenException();
         }
@@ -40,7 +41,12 @@ public class AuctionController {
         } catch (NumberFormatException e) {
             throw new BadTokenException();
         }
-        req.setUserId(userId);
+        return userId;
+    }
+    @PostMapping()
+    public ResponseEntity<ResourceCreatedResponse> createAuction(@RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
+        Long userId = extractToken(headers);
+
         Auction toCreate = Auction.builder().carBrand(req.getCarBrand()).carModel(req.getCarModel()).carDesc(req.getCarDesc()).carYear(req.getCarYear()).startingPrice(req.getStartingPrice()).buyoutPrice(req.getBuyoutPrice()).mileage(req.getMileage()).location(req.getLocation()).startsOn(req.getStartsOn()).endsOn(req.getEndsOn()).build();
         Long createdAuctionId = auctionService.createAuction(toCreate, userId, req.getUrls());
         ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Auction created!").id(createdAuctionId).build();
@@ -59,5 +65,26 @@ public class AuctionController {
     public ResponseEntity<AuctionDTO> getAuctionDetails(@PathVariable Long auctionId){
         Auction auction = auctionService.getAuctionDetails(auctionId);
         return ResponseEntity.ok(AuctionConverter.convertToDTO(auction));
+    }
+
+    @PutMapping("/{auctionId}")
+    public ResponseEntity<ResourceChangedResponse> editAuction(@PathVariable Long auctionId, @RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
+        Long userId = extractToken(headers);
+        Auction toEdit = Auction.builder().id(auctionId).carBrand(req.getCarBrand()).carModel(req.getCarModel()).carDesc(req.getCarDesc()).carYear(req.getCarYear()).startingPrice(req.getStartingPrice()).buyoutPrice(req.getBuyoutPrice()).mileage(req.getMileage()).location(req.getLocation()).startsOn(req.getStartsOn()).endsOn(req.getEndsOn()).build();
+
+        Long editedAuctionId = auctionService.editAuction(toEdit, userId, req.getUrls());
+
+        ResourceChangedResponse res = ResourceChangedResponse.builder().message("Auction edited!").id(editedAuctionId).build();
+        return ResponseEntity.ok(res);
+    }
+
+    @DeleteMapping("/{auctionId}")
+    public ResponseEntity<ResourceDeletedResponse> deleteAuction(@PathVariable Long auctionId, @RequestHeader HttpHeaders headers){
+        Long userId = extractToken(headers);
+
+        auctionService.deleteAuction(auctionId, userId);
+
+        ResourceDeletedResponse res = ResourceDeletedResponse.builder().message("Auction deleted").build();
+        return ResponseEntity.ok(res);
     }
 }
