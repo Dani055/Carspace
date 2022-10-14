@@ -4,16 +4,11 @@ import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IUserService;
 import fontys.s3.Carspacebackend.domain.IRole;
 import fontys.s3.Carspacebackend.domain.User;
-import fontys.s3.Carspacebackend.domain.requests.LoginReq;
 import fontys.s3.Carspacebackend.exception.IncorrectCredentialsException;
-import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
-import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {

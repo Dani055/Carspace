@@ -1,4 +1,4 @@
-package fontys.s3.Carspacebackend.domain.dto;
+package fontys.s3.Carspacebackend.controller.dto;
 
 import lombok.Builder;
 import lombok.Data;
@@ -8,12 +8,12 @@ import java.sql.Timestamp;
 
 @Data
 @Builder
-public class CommentDTO {
+public class BidDTO {
     private Long id;
 
-    private String text;
+    private Double amount;
 
     private Timestamp createdOn;
 
-    private UserDTO creator;
+    private UserDTO bidder;
 }

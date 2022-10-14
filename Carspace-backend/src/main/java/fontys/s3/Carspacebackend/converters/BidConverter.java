@@ -2,8 +2,7 @@ package fontys.s3.Carspacebackend.converters;
 
 import fontys.s3.Carspacebackend.domain.Bid;
 
-import fontys.s3.Carspacebackend.domain.User;
-import fontys.s3.Carspacebackend.domain.dto.BidDTO;
+import fontys.s3.Carspacebackend.controller.dto.BidDTO;
 import fontys.s3.Carspacebackend.persistence.Entity.BidEntity;
 
 

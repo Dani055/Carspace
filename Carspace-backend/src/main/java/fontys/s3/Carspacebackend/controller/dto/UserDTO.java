@@ -1,4 +1,4 @@
-package fontys.s3.Carspacebackend.domain.dto;
+package fontys.s3.Carspacebackend.controller.dto;
 
 import fontys.s3.Carspacebackend.domain.IRole;
 import lombok.Builder;

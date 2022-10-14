@@ -2,7 +2,7 @@ package fontys.s3.Carspacebackend.converters;
 
 import fontys.s3.Carspacebackend.domain.IRole;
 import fontys.s3.Carspacebackend.domain.User;
-import fontys.s3.Carspacebackend.domain.dto.UserDTO;
+import fontys.s3.Carspacebackend.controller.dto.UserDTO;
 import fontys.s3.Carspacebackend.domain.impl.AdminRole;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;

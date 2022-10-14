@@ -1,4 +1,4 @@
-package fontys.s3.Carspacebackend.domain.requests;
+package fontys.s3.Carspacebackend.controller.requests;
 
 
 import lombok.AllArgsConstructor;

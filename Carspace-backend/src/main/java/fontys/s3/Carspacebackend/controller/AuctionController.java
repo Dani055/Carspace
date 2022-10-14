@@ -4,12 +4,12 @@ import fontys.s3.Carspacebackend.business.service.IAuctionService;
 
 import fontys.s3.Carspacebackend.converters.AuctionConverter;
 import fontys.s3.Carspacebackend.domain.Auction;
-import fontys.s3.Carspacebackend.domain.dto.AuctionDTO;
-import fontys.s3.Carspacebackend.domain.requests.CreateAuctionReq;
-import fontys.s3.Carspacebackend.domain.responses.GenericObjectResponse;
-import fontys.s3.Carspacebackend.domain.responses.ResourceChangedResponse;
-import fontys.s3.Carspacebackend.domain.responses.ResourceCreatedResponse;
-import fontys.s3.Carspacebackend.domain.responses.ResourceDeletedResponse;
+import fontys.s3.Carspacebackend.controller.dto.AuctionDTO;
+import fontys.s3.Carspacebackend.controller.requests.CreateAuctionReq;
+import fontys.s3.Carspacebackend.controller.responses.GenericObjectResponse;
+import fontys.s3.Carspacebackend.controller.responses.ResourceChangedResponse;
+import fontys.s3.Carspacebackend.controller.responses.ResourceCreatedResponse;
+import fontys.s3.Carspacebackend.controller.responses.ResourceDeletedResponse;
 import fontys.s3.Carspacebackend.exception.BadTokenException;
 
 import lombok.AllArgsConstructor;

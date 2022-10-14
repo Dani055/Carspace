@@ -4,11 +4,10 @@ import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.domain.Comment;
 import fontys.s3.Carspacebackend.domain.Image;
-import fontys.s3.Carspacebackend.domain.dto.AuctionDTO;
-import fontys.s3.Carspacebackend.domain.dto.BidDTO;
-import fontys.s3.Carspacebackend.domain.dto.CommentDTO;
+import fontys.s3.Carspacebackend.controller.dto.AuctionDTO;
+import fontys.s3.Carspacebackend.controller.dto.BidDTO;
+import fontys.s3.Carspacebackend.controller.dto.CommentDTO;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
 
 import java.util.Set;
 import java.util.stream.Collectors;

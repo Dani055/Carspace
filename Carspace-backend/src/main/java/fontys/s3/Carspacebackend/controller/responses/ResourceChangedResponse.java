@@ -1,11 +1,11 @@
-package fontys.s3.Carspacebackend.domain.responses;
+package fontys.s3.Carspacebackend.controller.responses;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class ResourceCreatedResponse {
+public class ResourceChangedResponse {
     private String message;
     private Long id;
 }

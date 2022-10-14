@@ -1,16 +1,11 @@
-package fontys.s3.Carspacebackend.domain.dto;
+package fontys.s3.Carspacebackend.controller.dto;
 
-import fontys.s3.Carspacebackend.domain.Bid;
-import fontys.s3.Carspacebackend.domain.Comment;
 import fontys.s3.Carspacebackend.domain.Image;
-import fontys.s3.Carspacebackend.domain.User;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Singular;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashSet;
 import java.util.Set;
 
 @Data

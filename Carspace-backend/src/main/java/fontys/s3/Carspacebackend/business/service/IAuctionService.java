@@ -1,8 +1,6 @@
 package fontys.s3.Carspacebackend.business.service;
 
 import fontys.s3.Carspacebackend.domain.Auction;
-import fontys.s3.Carspacebackend.domain.requests.CreateAuctionReq;
-import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 
 import java.util.List;
 
