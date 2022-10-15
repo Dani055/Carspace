@@ -8,6 +8,7 @@ import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

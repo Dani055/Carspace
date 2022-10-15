@@ -64,7 +64,8 @@ public class AuctionController {
     @GetMapping("/{auctionId}")
     public ResponseEntity<AuctionDTO> getAuctionDetails(@PathVariable Long auctionId){
         Auction auction = auctionService.getAuctionDetails(auctionId);
-        return ResponseEntity.ok(AuctionConverter.convertToDTO(auction));
+        AuctionDTO a = AuctionConverter.convertToDTO(auction);
+        return ResponseEntity.ok(a);
     }
 
     @PutMapping("/{auctionId}")

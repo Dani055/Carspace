@@ -7,6 +7,7 @@ import org.hibernate.annotations.*;
 import javax.persistence.*;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -22,6 +23,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Entity
 @Table(name="s3carspace_auction")
 public class AuctionEntity implements Serializable {
@@ -72,9 +74,11 @@ public class AuctionEntity implements Serializable {
     private Set<ImageEntity> images;
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    @OrderBy("createdOn DESC")
     private Set<CommentEntity> comments;
 
     @OneToMany(mappedBy = "auction", fetch = FetchType.LAZY)
+    @OrderBy("amount DESC")
     private Set<BidEntity> bids;
 
     @OneToOne

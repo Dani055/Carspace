@@ -9,7 +9,9 @@ import fontys.s3.Carspacebackend.controller.dto.BidDTO;
 import fontys.s3.Carspacebackend.controller.dto.CommentDTO;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class AuctionConverter {
@@ -24,21 +26,21 @@ public class AuctionConverter {
             images = null;
         }
         else{
-            images = a.getImages().stream().map(imageEntity -> ImageConverter.convertToPOJO(imageEntity)).collect(Collectors.toSet());
+            images = a.getImages().stream().map(imageEntity -> ImageConverter.convertToPOJO(imageEntity)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         if(a.getComments() == null){
             comments = null;
         }
         else{
-            comments = a.getComments().stream().map(commentEntity -> CommentConverter.convertToPOJO(commentEntity)).collect(Collectors.toSet());
+            comments = a.getComments().stream().map(commentEntity -> CommentConverter.convertToPOJO(commentEntity)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         if(a.getBids() == null){
             bids = null;
         }
         else{
-            bids = a.getBids().stream().map(bidEntity -> BidConverter.convertToPOJO(bidEntity)).collect(Collectors.toSet());
+            bids = a.getBids().stream().map(bidEntity -> BidConverter.convertToPOJO(bidEntity)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         return Auction.builder().id(a.getId())
@@ -89,14 +91,14 @@ public class AuctionConverter {
             comments = null;
         }
         else{
-            comments = a.getComments().stream().map(comment -> CommentConverter.convertToDTO(comment)).collect(Collectors.toSet());
+            comments = a.getComments().stream().map(comment -> CommentConverter.convertToDTO(comment)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         if(a.getBids() == null){
             bids = null;
         }
         else{
-            bids = a.getBids().stream().map(bid -> BidConverter.convertToDTO(bid)).collect(Collectors.toSet());
+            bids = a.getBids().stream().map(bid -> BidConverter.convertToDTO(bid)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         return AuctionDTO.builder().id(a.getId())

@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 @Setter
 @Builder
 @NoArgsConstructor
+@EqualsAndHashCode
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_auction_comment")
@@ -29,6 +30,7 @@ public class CommentEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="creator_id", referencedColumnName = "id", nullable = false)
+    @EqualsAndHashCode.Exclude
     private UserEntity creator;
 
 
@@ -36,6 +38,7 @@ public class CommentEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="auction_id", referencedColumnName = "id", nullable = false)
+    @EqualsAndHashCode.Exclude
     private AuctionEntity auction;
 
     @Column(name="text", nullable = false)

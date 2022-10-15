@@ -63,7 +63,8 @@ public class AuctionRepository implements IAuctionRepository {
         if(auction.isEmpty()){
             throw new ResourceNotFoundException("Auction", "id", aucId);
         }
-        return AuctionConverter.convertToPOJO(auction.get());
+        Auction a = AuctionConverter.convertToPOJO(auction.get());
+        return a;
     }
 
     @Override

@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 @Setter
 @Builder
 @NoArgsConstructor
+@EqualsAndHashCode
 @AllArgsConstructor
 @Entity
 @Table(name="s3carspace_auction_bid")
@@ -28,6 +29,7 @@ public class BidEntity implements Serializable {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="bidder_id", referencedColumnName = "id", nullable = false)
+    @EqualsAndHashCode.Exclude
     private UserEntity bidder;
 
 
@@ -35,6 +37,7 @@ public class BidEntity implements Serializable {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="auction_id", referencedColumnName = "id", nullable = false)
     @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private AuctionEntity auction;
 
     @Column(name="amount", nullable = false)
