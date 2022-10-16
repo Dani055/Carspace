@@ -2,12 +2,8 @@ package fontys.s3.Carspacebackend.domain;
 
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Builder
 @Getter
@@ -51,4 +47,21 @@ public class Auction {
     private Set<Bid> bids = new HashSet<>();
 
     private Bid winningBid;
+
+    public boolean isOwner(User u){
+        if(u.getId() == this.creator.getId())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hasStarted(){
+        java.util.Date date = new Date();
+        Timestamp now = new Timestamp(date.getTime());
+        if(now.after(startsOn)){
+            return true;
+        }
+        return false;
+    }
 }

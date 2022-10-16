@@ -2,6 +2,7 @@ package fontys.s3.Carspacebackend.business.service.impl;
 import fontys.s3.Carspacebackend.business.interfaces.IRoleRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IUserService;
+import fontys.s3.Carspacebackend.business.validator.IAuctionValidator;
 import fontys.s3.Carspacebackend.domain.IRole;
 import fontys.s3.Carspacebackend.domain.User;
 import fontys.s3.Carspacebackend.exception.IncorrectCredentialsException;
@@ -14,6 +15,7 @@ import java.security.SecureRandom;
 public class UserService implements IUserService {
     private IRoleRepository roleRepository;
     private IUserRepository userRepository;
+
 
     public UserService(IRoleRepository roleRepository, IUserRepository userRepository) {
         this.roleRepository = roleRepository;
