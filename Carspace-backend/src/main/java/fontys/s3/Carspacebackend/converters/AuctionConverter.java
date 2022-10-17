@@ -11,7 +11,6 @@ import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class AuctionConverter {

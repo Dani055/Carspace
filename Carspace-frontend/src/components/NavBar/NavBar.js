@@ -10,7 +10,7 @@ function NavBar() {
   const {setLoggedUser} = useContext(UserContext)
   const [cookies, setCookie, removeCookie] = useCookies();
   const { loggedUser } = useContext(UserContext);
-
+  
   const logout = (e) => {
     e.preventDefault();
     removeCookie('token', {path:'/'});

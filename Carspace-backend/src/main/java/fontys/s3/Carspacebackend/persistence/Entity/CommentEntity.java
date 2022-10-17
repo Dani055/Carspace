@@ -1,16 +1,15 @@
 package fontys.s3.Carspacebackend.persistence.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -45,5 +44,6 @@ public class CommentEntity implements Serializable {
     private String text;
 
     @Column(name="created_on", nullable = false, columnDefinition = "Datetime default CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private Timestamp createdOn;
 }

@@ -2,7 +2,6 @@ package fontys.s3.Carspacebackend.business.validator;
 
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.exception.IncorrectAuctionDates;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;

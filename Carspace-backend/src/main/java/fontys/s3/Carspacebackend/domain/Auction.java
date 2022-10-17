@@ -64,4 +64,12 @@ public class Auction {
         }
         return false;
     }
+    public boolean hasEnded(){
+        java.util.Date date = new Date();
+        Timestamp now = new Timestamp(date.getTime());
+        if(now.after(endsOn)){
+            return true;
+        }
+        return false;
+    }
 }

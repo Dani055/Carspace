@@ -5,7 +5,6 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import java.util.List;

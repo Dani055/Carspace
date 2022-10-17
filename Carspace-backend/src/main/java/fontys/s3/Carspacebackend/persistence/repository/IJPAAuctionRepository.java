@@ -17,6 +17,8 @@ public interface IJPAAuctionRepository extends JpaRepository<AuctionEntity, Long
                     "images",
                     "comments",
                     "bids",
+                    "bids.bidder",
+                    "comments.creator"
             }
     )
 
@@ -30,6 +32,8 @@ public interface IJPAAuctionRepository extends JpaRepository<AuctionEntity, Long
                     "images",
                     "comments",
                     "bids",
+                    "bids.bidder",
+                    "comments.creator"
             }
     )
     List<AuctionEntity> findAll();

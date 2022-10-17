@@ -2,7 +2,6 @@ package fontys.s3.Carspacebackend.domain;
 
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 

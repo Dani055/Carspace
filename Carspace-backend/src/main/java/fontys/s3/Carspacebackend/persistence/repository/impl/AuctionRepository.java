@@ -2,10 +2,7 @@ package fontys.s3.Carspacebackend.persistence.repository.impl;
 
 import fontys.s3.Carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.Carspacebackend.converters.AuctionConverter;
-import fontys.s3.Carspacebackend.converters.UserConverter;
 import fontys.s3.Carspacebackend.domain.Auction;
-import fontys.s3.Carspacebackend.domain.Image;
-import fontys.s3.Carspacebackend.domain.User;
 import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
@@ -14,9 +11,7 @@ import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionImageReposito
 import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionRepository;
 import fontys.s3.Carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

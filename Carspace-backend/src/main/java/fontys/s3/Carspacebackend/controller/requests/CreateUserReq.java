@@ -1,6 +1,5 @@
 package fontys.s3.Carspacebackend.controller.requests;
 
-import fontys.s3.Carspacebackend.domain.IRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

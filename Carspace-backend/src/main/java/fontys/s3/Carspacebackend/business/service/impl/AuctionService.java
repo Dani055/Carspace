@@ -1,6 +1,4 @@
 package fontys.s3.Carspacebackend.business.service.impl;
-
-import fontys.s3.Carspacebackend.business.interfaces.IAuctionImageRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IAuctionService;

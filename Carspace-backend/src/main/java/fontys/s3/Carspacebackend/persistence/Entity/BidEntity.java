@@ -3,13 +3,13 @@ package fontys.s3.Carspacebackend.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Getter
@@ -44,5 +44,6 @@ public class BidEntity implements Serializable {
     private Double amount;
 
     @Column(name="created_on", nullable = false, columnDefinition = "Datetime default CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private Timestamp createdOn;
 }

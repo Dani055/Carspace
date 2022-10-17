@@ -2,7 +2,6 @@ package fontys.s3.Carspacebackend.business.service.impl;
 import fontys.s3.Carspacebackend.business.interfaces.IRoleRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IUserService;
-import fontys.s3.Carspacebackend.business.validator.IAuctionValidator;
 import fontys.s3.Carspacebackend.domain.IRole;
 import fontys.s3.Carspacebackend.domain.User;
 import fontys.s3.Carspacebackend.exception.IncorrectCredentialsException;

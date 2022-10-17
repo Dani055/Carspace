@@ -14,7 +14,6 @@ import { UserProvider } from './UserProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
     <CookiesProvider>
       <UserProvider>
       <App />
