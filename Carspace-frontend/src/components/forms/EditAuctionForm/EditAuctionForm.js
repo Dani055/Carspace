@@ -1,17 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./EditAuctionForm.css"
 import { toast } from 'react-toastify';
 import DateTimePicker from "react-datetime-picker";
-import { createAuctionCall } from "../../../service/auctionService";
+import { createAuctionCall, editAuctionCall } from "../../../service/auctionService";
 import axios from "axios";
 
 function EditAuctionForm(props) {
   const navigate = useNavigate();
-  const [formState, setFormState] = useState({ carBrand: "", carModel: "", carDesc: "", carYear: 0, startingPrice: 0, buyoutPrice: 0, mileage: 0, location: ""});
+  const [formState, setFormState] = useState({ carBrand: "", carModel: "", carDesc: "", carYear: "", startingPrice: "", buyoutPrice: "", mileage: "", location: ""});
   const [startsOn, setStartsOn] = useState(new Date());
   const [endsOn, setEndsOn] = useState(new Date());
   const [imageFiles, setImageFiles] = useState(null);
+
+  useEffect(() =>  {
+      if(props.editmode){
+        let newFormState = {
+          carBrand: props.auction.carBrand,
+          carModel: props.auction.carModel,
+          carDesc:props.auction.carDesc,
+          carYear: props.auction.carYear,
+          startingPrice: props.auction.startingPrice,
+          buyoutPrice: props.auction.buyoutPrice,
+          mileage: props.auction.mileage,
+          location: props.auction.location
+        }
+        setFormState(newFormState);
+        setStartsOn(props.auction.startsOn);
+        setEndsOn(props.auction.endsOn);
+      }
+  }, [])
 
   const handleFormChange = (event) => {
     const name = event.target.name;
@@ -25,6 +43,7 @@ function EditAuctionForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formState);
     let formData = new FormData();
     for(let i=0; i<imageFiles?.length;i++){
       formData.append("photo", imageFiles[i]);
@@ -36,7 +55,14 @@ function EditAuctionForm(props) {
       },})
       const links = imageRes.data.links;
       let body = {...formState, startsOn, endsOn, "urls": links};
-      const res = await createAuctionCall(body);
+      let res;
+      if(props.editmode){
+        res = await editAuctionCall(body, props.auction.id);
+      }
+      else{
+        res = await createAuctionCall(body);
+      }
+      
       toast.success(res.message);
       navigate('/')
     } catch (err) {
@@ -80,6 +106,7 @@ function EditAuctionForm(props) {
                     id="carBrand"
                     name="carBrand"
                     onChange={handleFormChange}
+                    value={formState.carBrand}
                     placeholder="Elon mobile"
                   />
                   <label htmlFor="floatingInput">Brand</label>
@@ -93,6 +120,7 @@ function EditAuctionForm(props) {
                     id="carModel"
                     name="carModel"
                     onChange={handleFormChange}
+                    value={formState.carModel}
                     placeholder="Cybertrock"
                   />
                   <label htmlFor="floatingInput">Model</label>
@@ -108,6 +136,7 @@ function EditAuctionForm(props) {
                   id="carDesc"
                   name="carDesc"
                   onChange={handleFormChange}
+                  value={formState.carDesc}
                 ></textarea>
                 <label htmlFor="floatingTextarea">Description</label>
               </div>
@@ -122,6 +151,7 @@ function EditAuctionForm(props) {
                     id="location"
                     name="location"
                     onChange={handleFormChange}
+                    value={formState.location}
                     placeholder="The moon"
                   />
                   <label htmlFor="floatingInput">Location</label>
@@ -137,6 +167,7 @@ function EditAuctionForm(props) {
                     id="mileage"
                     name="mileage"
                     onChange={handleFormChange}
+                    value={formState.mileage}
                     placeholder="20"
                   />
                   <label htmlFor="floatingInput">Mileage in KM</label>
@@ -152,6 +183,7 @@ function EditAuctionForm(props) {
                     id="carYear"
                     name="carYear"
                     onChange={handleFormChange}
+                    value={formState.carYear}
                     placeholder="2022"
                   />
                   <label htmlFor="floatingInput">Vehicle year</label>
@@ -204,6 +236,7 @@ function EditAuctionForm(props) {
                     className="form-control"
                     id="startingPrice"
                     onChange={handleFormChange}
+                    value={formState.startingPrice}
                     name="startingPrice"
                     placeholder="20"
                   />
@@ -219,6 +252,7 @@ function EditAuctionForm(props) {
                     className="form-control"
                     id="buyoutPrice"
                     onChange={handleFormChange}
+                    value={formState.buyoutPrice}
                     name="buyoutPrice"
                     placeholder="20"
                   />

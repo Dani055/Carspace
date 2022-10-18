@@ -1,11 +1,6 @@
 package fontys.s3.Carspacebackend.domain;
 
-import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 
 @Builder
 @Getter

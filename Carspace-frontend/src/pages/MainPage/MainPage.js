@@ -10,10 +10,8 @@ function MainPage() {
 
   useEffect(()=>{
     async function getData(){
-      console.log("getting auctions")
       try {
         const res = await getAuctionsCall();
-        console.log(res);
         setAuctions(res.obj)
       } catch (error) {
         console.log(error)

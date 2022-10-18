@@ -69,7 +69,9 @@ public class AuctionRepository implements IAuctionRepository {
             throw new ResourceNotFoundException("Auction", "id", a.getId());
         }
         AuctionEntity entity = ae.get();
-        imageRepository.deleteAll(entity.getImages());
+        if(urls.size() > 0){
+            imageRepository.deleteAll(entity.getImages());
+        }
 
         List<ImageEntity> toAdd = new ArrayList<>();
         for (String url: urls) {

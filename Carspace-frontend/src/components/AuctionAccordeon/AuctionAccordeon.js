@@ -4,11 +4,11 @@ import dayjs from "dayjs";
 function AuctionAccordeon(props) {
 
     return (
-        <div class="accordion mt-4" id="accordionDesc">
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingOne">
+        <div className="accordion mt-4" id="accordionDesc">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingOne">
             <button
-              class="accordion-button"
+              className="accordion-button"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseOne"
@@ -20,23 +20,24 @@ function AuctionAccordeon(props) {
           </h2>
           <div
             id="collapseOne"
-            class="accordion-collapse collapse show"
+            className="accordion-collapse collapse show"
             aria-labelledby="headingOne"
             data-bs-parent="#accordionDesc"
           >
-            <div class="accordion-body">
+            <div className="accordion-body">
               <p>Vehicle brand : <strong>{props.auction.carBrand}</strong></p>
               <p>Vehicle model : <strong>{props.auction.carModel}</strong></p>
               <p>Vehicle location : <strong>{props.auction.location}</strong></p>
               <p>Year of production : <strong>{props.auction.carYear}</strong></p>
               <p>Mielage : <strong>{props.auction.mileage} km</strong></p>
+              <p>Description : <strong>{props.auction.carDesc}</strong></p>
             </div>
           </div>
         </div>
-        <div class="accordion-item">
-          <h2 class="accordion-header" id="headingTwo">
+        <div className="accordion-item">
+          <h2 className="accordion-header" id="headingTwo">
             <button
-              class="accordion-button collapsed"
+              className="accordion-button collapsed"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#collapseTwo"
@@ -48,11 +49,11 @@ function AuctionAccordeon(props) {
           </h2>
           <div
             id="collapseTwo"
-            class="accordion-collapse collapse"
+            className="accordion-collapse collapse"
             aria-labelledby="headingTwo"
             data-bs-parent="#accordionDesc"
           >
-            <div class="accordion-body">
+            <div className="accordion-body">
               <p>Starting price : <strong>{props.auction.startingPrice}€</strong></p>
               <p>Buyout price : <strong>{props.auction.buyoutPrice}€</strong></p>
               <p>Auction start date : <strong>{dayjs(props.auction.startsOn).format("DD/MM/YYYY HH:mm:ss")}</strong></p>

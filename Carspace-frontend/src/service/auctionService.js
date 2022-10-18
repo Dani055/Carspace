@@ -22,6 +22,20 @@ const getAuctionById = (id) => {
             throwError(err)
         })
 }
+const editAuctionCall = (body, id) => {
+    return axiosConfig.put(`auction/` + id, body)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
+const deleteAuctionCall = (id) => {
+    return axiosConfig.delete(`auction/` + id)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
 
 function throwError (err){
     if (err.response) {
@@ -36,5 +50,7 @@ function throwError (err){
 export {
     createAuctionCall,
     getAuctionsCall,
-    getAuctionById
+    getAuctionById,
+    editAuctionCall,
+    deleteAuctionCall
 }

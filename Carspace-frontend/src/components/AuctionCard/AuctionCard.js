@@ -4,8 +4,7 @@ import {Link, useNavigate } from "react-router-dom";
 
 function AuctionCard(props) {
   const navigate = useNavigate();
-  // BIDS ARE NOT SORTED BY HIGHEST, FIX LATER
-  // COMMENTS NEED TO BE SORTED - desc
+
   return (
     <div className="col-md-3 d-flex align-items-stretch">
             <div className="card">

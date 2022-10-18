@@ -5,7 +5,7 @@ import AuctionAccordeon from "../../components/AuctionAccordeon/AuctionAccordeon
 import AuctionComments from "../../components/AuctionComments/AuctionComments";
 import BidForm from "../../components/forms/BidForm/BidForm";
 import BidHistory from "../../components/BidHistory/BidHistory";
-import { getAuctionById } from "../../service/auctionService";
+import { deleteAuctionCall, getAuctionById } from "../../service/auctionService";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { UserContext } from "../../UserProvider";
@@ -31,6 +31,17 @@ function AuctionDetails(props) {
     }
     getData();
   }, [])
+
+  const deleteAuction = async () => {
+    try {
+      const res = await deleteAuctionCall(params.auctionId);
+      toast.success(res.message)
+      navigate('/')
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
+  };
 
   const deleteButtonHTML = () => {
     return <>
@@ -104,9 +115,7 @@ function AuctionDetails(props) {
       return <BidForm />;
     }
   }
-  const deleteAuction = () => {
-    console.log("Delete auction confirmed");
-  };
+
 
   return (
     <div className="container">
@@ -154,7 +163,7 @@ function AuctionDetails(props) {
                 <div className="col-auto buttons">
                   {
                     (loggedUser?.id === auction.creator.id || loggedUser?.role === 'admin') && dayjs().isBefore(auction.startsOn) &&
-                    <button type="button" className="btn btn-warning">
+                    <button type="button" className="btn btn-warning" onClick={() => navigate("/auction/edit/" + auction.id)}>
                       Edit auction
                     </button>
                   }
@@ -172,7 +181,7 @@ function AuctionDetails(props) {
               dayjs().isBefore(auction.startsOn) &&
               <div className="bg-dark text-light p-3 rounded">
               <p>
-                Auction starts on <span className="bold">{dayjs(auction.startsOn).format("DD/MM/YYYY HH:MM:ss")}</span>
+                Auction starts on <span className="bold">{dayjs(auction.startsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
               </p>
               <p className="m-0">
                 Time remaining until start:{" "}
@@ -184,7 +193,7 @@ function AuctionDetails(props) {
               dayjs().isAfter(auction.startsOn) && dayjs().isBefore(auction.endsOn) &&
               <div className="bg-warning p-3 rounded">
               <p>
-                Auction ending on <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:MM:ss")}</span>
+                Auction ending on <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
               </p>
               <p className="m-0">
                 Time remaining:{" "}
@@ -196,7 +205,7 @@ function AuctionDetails(props) {
               dayjs().isAfter(auction.endsOn) &&
               <div className="bg-danger text-white p-3 rounded">
               <p>
-                Auction ended on: <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:MM:ss")}</span>
+                Auction ended on: <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
               </p>
               </div>
             }
@@ -222,7 +231,7 @@ function AuctionDetails(props) {
                 </p>
                 <h3>{auction.bids[0].amount}€</h3>
                 <p>
-                  Placed on <span className="bold">{dayjs(auction.bids[0].creatordOn).format("DD/MM/YYYY HH:MM:ss")}</span>
+                  Placed on <span className="bold">{dayjs(auction.bids[0].creatordOn).format("DD/MM/YYYY HH:mm:ss")}</span>
                 </p>
                 </> : <h4>This auction has no bids yet</h4>
                 }
