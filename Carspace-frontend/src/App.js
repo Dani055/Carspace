@@ -23,22 +23,22 @@ function App() {
   const [isBusy, setIsBusy] = useState(true);
 
   useEffect(()=>{
-    console.log("getting user");
     async function getUser() {
-      try {
-        const res = await checkLoginKey();
-        setLoggedUser(res.obj);
-        setIsBusy(false)
-      } catch (err) {
-        toast.error(err);
-        removeCookie('token', {path:'/'});
-        setLoggedUser(null);
+      if(cookies["token"] !== undefined){
+        try {
+          const res = await checkLoginKey();
+          setLoggedUser(res.obj);
+        } catch (err) {
+          toast.error(err);
+          removeCookie('token', {path:'/'});
+          setLoggedUser(null);
+          setIsBusy(false);
+        }
       }
+      setIsBusy(false)
     }
+    getUser();
 
-    if(cookies["token"] !== undefined){
-      getUser();
-    }
   }, [])
   return (
     <div className="App">
