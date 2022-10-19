@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 
 
 @Data
@@ -13,7 +14,7 @@ public class CommentDTO {
 
     private String text;
 
-    private Timestamp createdOn;
+    private Instant createdOn;
 
     private UserDTO creator;
 }

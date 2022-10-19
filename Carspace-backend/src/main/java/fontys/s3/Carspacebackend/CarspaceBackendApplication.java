@@ -13,7 +13,7 @@ public class CarspaceBackendApplication {
 	@PostConstruct
 	void started() {
 		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-		System.out.println("Spring boot application running in UTC timezone :"+ new Date());
+		System.out.println("Spring boot application running in timezone :"+ new Date());
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(CarspaceBackendApplication.class, args);

@@ -3,6 +3,7 @@ package fontys.s3.Carspacebackend.domain;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.*;
 
 @Builder
@@ -31,9 +32,9 @@ public class Auction {
 
     private String location;
 
-    private Timestamp startsOn;
+    private Instant startsOn;
 
-    private Timestamp endsOn;
+    private Instant endsOn;
 
     private User creator;
 
@@ -57,17 +58,15 @@ public class Auction {
     }
 
     public boolean hasStarted(){
-        java.util.Date date = new Date();
-        Timestamp now = new Timestamp(date.getTime());
-        if(now.after(startsOn)){
+        Instant now = Instant.now();
+        if(now.isAfter(startsOn)){
             return true;
         }
         return false;
     }
     public boolean hasEnded(){
-        java.util.Date date = new Date();
-        Timestamp now = new Timestamp(date.getTime());
-        if(now.after(endsOn)){
+        Instant now = Instant.now();
+        if(now.isAfter(endsOn)){
             return true;
         }
         return false;

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 
-
+import java.time.Instant;
 import java.util.Set;
 
 
@@ -59,10 +59,10 @@ public class AuctionEntity implements Serializable {
     private String location;
 
     @Column(name="starts_on", nullable = false)
-    private Timestamp startsOn;
+    private Instant startsOn;
 
     @Column(name="ends_on", nullable = false)
-    private Timestamp endsOn;
+    private Instant endsOn;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @OnDelete(action = OnDeleteAction.CASCADE)

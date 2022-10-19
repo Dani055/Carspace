@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.*;
 import java.sql.Timestamp;
 
+import java.time.Instant;
 import java.util.List;
 
 
@@ -55,9 +56,9 @@ public class CreateAuctionReq {
     private String location;
 
     @NotNull
-    private Timestamp startsOn;
+    private Instant startsOn;
 
     @NotNull
-    private Timestamp endsOn;
+    private Instant endsOn;
 
 }

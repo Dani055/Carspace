@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 
 function Footer(props) {
   return (
-    <div className="footer">
+    <div className="footer mt-auto">
       <div className="bg-light">
       <div className="container">
         <footer className="py-5">

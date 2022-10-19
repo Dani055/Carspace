@@ -11,9 +11,7 @@ import fontys.s3.Carspacebackend.exception.UnauthorizedException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.sql.Timestamp;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -68,8 +66,6 @@ public class AuctionService implements IAuctionService {
             throw new UnauthorizedException("Auction");
         }
 
-        Date date = new Date();
-        Timestamp now = new Timestamp(date.getTime());
         if(foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD()){
             if(foundAuction.hasStarted()){
                 throw new AuctionHasStartedException();

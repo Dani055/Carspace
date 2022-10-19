@@ -2,7 +2,7 @@ package fontys.s3.Carspacebackend.domain;
 
 import lombok.*;
 
-import java.sql.Timestamp;
+import java.time.Instant;
 
 
 @Builder
@@ -16,7 +16,7 @@ public class Bid {
 
     private Double amount;
 
-    private Timestamp createdOn;
+    private Instant createdOn;
 
     private User bidder;
 }

@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -45,5 +46,5 @@ public class BidEntity implements Serializable {
 
     @Column(name="created_on", nullable = false, columnDefinition = "Datetime default CURRENT_TIMESTAMP")
     @CreationTimestamp
-    private Timestamp createdOn;
+    private Instant createdOn;
 }

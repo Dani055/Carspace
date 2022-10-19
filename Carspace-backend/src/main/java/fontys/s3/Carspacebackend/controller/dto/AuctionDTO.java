@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.Singular;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Set;
 
 @Data
@@ -31,9 +32,9 @@ public class AuctionDTO {
 
     private String location;
 
-    private Timestamp startsOn;
+    private Instant startsOn;
 
-    private Timestamp endsOn;
+    private Instant endsOn;
 
     private UserDTO creator;
 
