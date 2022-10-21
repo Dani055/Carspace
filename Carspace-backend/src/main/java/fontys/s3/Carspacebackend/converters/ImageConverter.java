@@ -12,6 +12,9 @@ public class ImageConverter {
     }
 
     public static Image convertToPOJO(ImageEntity i){
+        if(i == null){
+            return null;
+        }
         return Image.builder().id(i.getId())
                 .imgUrl(i.getImgUrl())
                 .build();

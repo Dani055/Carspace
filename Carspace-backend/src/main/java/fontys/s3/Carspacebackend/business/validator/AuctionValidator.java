@@ -12,6 +12,7 @@ import java.util.Date;
 
 @Service
 public class AuctionValidator implements IAuctionValidator{
+
     public boolean ValidateDatesForModification(Auction auc){
         Instant now = Instant.now();
 
