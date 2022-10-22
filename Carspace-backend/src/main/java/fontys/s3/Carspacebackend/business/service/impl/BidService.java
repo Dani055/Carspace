@@ -42,7 +42,7 @@ public class BidService implements IBidService {
         }
         Bid highestBid = auction.getBids().stream().max(Comparator.comparingDouble(Bid::getAmount)).orElse(Bid.builder().amount(0.0).build());
         if(b.getAmount() <= highestBid.getAmount()){
-            throw new CannotPlaceBidException("Amount is less than highest bid");
+            throw new CannotPlaceBidException("Bid is less than the highest bid");
         }
 
         return bidRepository.saveBid(b, auctionId, userId);

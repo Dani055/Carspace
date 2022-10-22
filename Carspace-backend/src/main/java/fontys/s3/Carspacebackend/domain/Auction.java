@@ -58,14 +58,14 @@ public class Auction {
     }
 
     public boolean hasStarted(){
-        Instant now = Instant.now();
+        Instant now = TimeHelper.Now();
         if(now.isAfter(startsOn)){
             return true;
         }
         return false;
     }
     public boolean hasEnded(){
-        Instant now = Instant.now();
+        Instant now = TimeHelper.Now();
         if(now.isAfter(endsOn)){
             return true;
         }
