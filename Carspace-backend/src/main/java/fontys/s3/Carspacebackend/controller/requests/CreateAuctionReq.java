@@ -18,17 +18,14 @@ import java.util.List;
 public class CreateAuctionReq {
     private List<String> urls;
 
-    @NotNull
     @NotBlank
     @Length(min = 2, max = 15)
     private String carBrand;
 
-    @NotNull
     @NotBlank
     @Length(min = 2, max = 20)
     private String carModel;
 
-    @NotNull
     @NotBlank
     @Length(min = 10, max = 255)
     private String carDesc;
@@ -49,8 +46,7 @@ public class CreateAuctionReq {
     @NotNull
     @Min(0)
     private int mileage;
-
-    @NotNull
+    
     @NotBlank
     @Length(min = 4, max = 255)
     private String location;

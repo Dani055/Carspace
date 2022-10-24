@@ -11,7 +11,9 @@ public final class TimeHelper {
         }
         return Instant.now();
     }
-
+    public static void Reset(){
+        debugTime = Instant.parse("2022-07-10T15:30:00.00Z");
+    }
     public static void EnterDebugMode(){
         debugMode = true;
     }

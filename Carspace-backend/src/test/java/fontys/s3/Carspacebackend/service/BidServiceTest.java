@@ -1,13 +1,10 @@
 package fontys.s3.Carspacebackend.service;
 
 import fontys.s3.Carspacebackend.business.service.impl.BidService;
-import fontys.s3.Carspacebackend.business.validator.AuctionValidator;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.domain.TimeHelper;
 import fontys.s3.Carspacebackend.domain.User;
-import fontys.s3.Carspacebackend.domain.impl.UserRole;
-import fontys.s3.Carspacebackend.exception.AuctionHasStartedException;
 import fontys.s3.Carspacebackend.exception.CannotPlaceBidException;
 import fontys.s3.Carspacebackend.persistence.repository.impl.AuctionRepository;
 import fontys.s3.Carspacebackend.persistence.repository.impl.BidRepository;
@@ -17,12 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

@@ -7,6 +7,7 @@ import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.exception.BadTokenException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,6 @@ public class BidController {
         Long createdBidId = bidService.createBid(bid, auctionId, userId);
 
         ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Bid placed!").id(createdBidId).build();
-        return ResponseEntity.ok(res);
+        return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 }

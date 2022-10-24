@@ -1,6 +1,5 @@
 package fontys.s3.Carspacebackend.domain;
 
-import org.junit.After;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +28,8 @@ public class TimeHelperTest {
         TimeHelper.SetTime("2022-09-10T15:30:00.00Z");
         Instant time = TimeHelper.Now();
         assertEquals(expectedTime, time);
+        //reset back to default
+        TimeHelper.Reset();
     }
 
     @AfterEach

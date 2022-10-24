@@ -7,6 +7,7 @@ import fontys.s3.Carspacebackend.domain.Comment;
 import fontys.s3.Carspacebackend.exception.BadTokenException;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -39,6 +40,6 @@ public class CommentController {
         Long createdCommentId = commentService.createComment(c, auctionId, userId);
 
         ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Comment created!").id(createdCommentId).build();
-        return ResponseEntity.ok(res);
+        return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 }

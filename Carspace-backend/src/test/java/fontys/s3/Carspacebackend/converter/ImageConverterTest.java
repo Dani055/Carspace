@@ -3,7 +3,6 @@ package fontys.s3.Carspacebackend.converter;
 import fontys.s3.Carspacebackend.converters.ImageConverter;
 import fontys.s3.Carspacebackend.domain.Image;
 import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

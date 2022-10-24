@@ -14,7 +14,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCommentReq {
-    @NotNull
     @NotBlank
     @Length(min = 5, max = 100)
     private String text;
