@@ -61,7 +61,7 @@ public class AuctionValidatorTest {
     void testThrowExceptionWhenStartDateIsTooSoon(){
 
         Instant now = Instant.now();
-        Instant auctionStart = now.plus(1, ChronoUnit.DAYS);
+        Instant auctionStart = now.plus(30, ChronoUnit.MINUTES);
         Instant auctionEnd = now.plus(2, ChronoUnit.DAYS);
 
         Auction a = Auction.builder().id(100L).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(true).location("123 avenue").startsOn(auctionStart).endsOn(auctionEnd).build();
