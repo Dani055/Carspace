@@ -1,7 +1,8 @@
 stages:
+    - sonar
     - build_backend
     - test_backend
-    - sonar
+    
 sonarqube-check:
   stage: sonar
   image: gradle:jre11-slim
