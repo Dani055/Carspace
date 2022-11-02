@@ -5,6 +5,7 @@ import fontys.s3.Carspacebackend.converters.ImageConverter;
 
 import fontys.s3.Carspacebackend.domain.Image;
 
+import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
 import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
 
@@ -13,6 +14,8 @@ import fontys.s3.Carspacebackend.persistence.repository.IJPAAuctionRepository;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -23,9 +26,14 @@ public class AuctionImageRepository implements IAuctionImageRepository {
 
     @Override
     public void saveImage(Image i, Long auctionId){
-        AuctionEntity forAuction = auctionRepository.findById(auctionId).get();
+        Optional<AuctionEntity> forAuction = auctionRepository.findById(auctionId);
+
+        if(forAuction.isEmpty()){
+            throw new ResourceNotFoundException("Auction", "id", auctionId);
+        }
+
         ImageEntity entity = ImageConverter.convertToEntity(i);
-        entity.setAuction(forAuction);
+        entity.setAuction(forAuction.get());
         imgRepository.save(entity);
     }
 }

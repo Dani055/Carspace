@@ -7,9 +7,4 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class CarspaceBackendApplicationTests {
 
-	@Test
-	void mockTest() {
-		assertEquals("asd", "asd");
-	}
-
 }
