@@ -3,17 +3,19 @@ import "./NavBar.css";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserProvider";
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
 
 function NavBar() {
   const navigate = useNavigate();
   const {setLoggedUser} = useContext(UserContext)
   const [cookies, setCookie, removeCookie] = useCookies();
   const { loggedUser } = useContext(UserContext);
-
+  
   const logout = (e) => {
     e.preventDefault();
     removeCookie('token', {path:'/'});
     setLoggedUser(null);
+    toast.success("Logged out")
   }
 
   return (

@@ -1,7 +1,11 @@
 package fontys.s3.Carspacebackend.domain.impl;
 
 import fontys.s3.Carspacebackend.domain.IRole;
+import lombok.Builder;
+import lombok.Data;
 
+@Data
+@Builder
 public class UserRole implements IRole {
     private String role;
     private Long id;

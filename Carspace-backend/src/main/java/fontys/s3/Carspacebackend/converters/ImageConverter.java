@@ -1,13 +1,10 @@
 package fontys.s3.Carspacebackend.converters;
 
-import fontys.s3.Carspacebackend.domain.IRole;
+
 import fontys.s3.Carspacebackend.domain.Image;
-import fontys.s3.Carspacebackend.domain.User;
-import fontys.s3.Carspacebackend.domain.impl.AdminRole;
-import fontys.s3.Carspacebackend.domain.impl.UserRole;
+
 import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.UserEntity;
+
 
 public class ImageConverter {
     private ImageConverter(){
@@ -15,6 +12,9 @@ public class ImageConverter {
     }
 
     public static Image convertToPOJO(ImageEntity i){
+        if(i == null){
+            return null;
+        }
         return Image.builder().id(i.getId())
                 .imgUrl(i.getImgUrl())
                 .build();

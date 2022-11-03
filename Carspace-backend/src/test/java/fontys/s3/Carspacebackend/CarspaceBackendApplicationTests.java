@@ -5,11 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CarspaceBackendApplicationTests {
-
-	@Test
-	void mockTest() {
-		assertEquals("asd", "asd");
-	}
+public class CarspaceBackendApplicationTests {
 
 }

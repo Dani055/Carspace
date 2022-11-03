@@ -1,11 +1,14 @@
-package fontys.s3.Carspacebackend.domain.dto;
+package fontys.s3.Carspacebackend.controller.dto;
 
-import fontys.s3.Carspacebackend.domain.IRole;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
     private Long id;
 

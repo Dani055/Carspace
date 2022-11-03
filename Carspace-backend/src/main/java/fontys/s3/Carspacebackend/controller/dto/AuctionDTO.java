@@ -1,20 +1,16 @@
-package fontys.s3.Carspacebackend.domain.dto;
+package fontys.s3.Carspacebackend.controller.dto;
 
-import fontys.s3.Carspacebackend.domain.Bid;
-import fontys.s3.Carspacebackend.domain.Comment;
 import fontys.s3.Carspacebackend.domain.Image;
-import fontys.s3.Carspacebackend.domain.User;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Singular;
+import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.HashSet;
+import java.time.Instant;
 import java.util.Set;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class AuctionDTO {
     private Long id;
 
@@ -36,9 +32,9 @@ public class AuctionDTO {
 
     private String location;
 
-    private Timestamp startsOn;
+    private Instant startsOn;
 
-    private Timestamp endsOn;
+    private Instant endsOn;
 
     private UserDTO creator;
 

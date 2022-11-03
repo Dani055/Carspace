@@ -2,7 +2,7 @@ package fontys.s3.Carspacebackend.converters;
 
 import fontys.s3.Carspacebackend.domain.IRole;
 import fontys.s3.Carspacebackend.domain.User;
-import fontys.s3.Carspacebackend.domain.dto.UserDTO;
+import fontys.s3.Carspacebackend.controller.dto.UserDTO;
 import fontys.s3.Carspacebackend.domain.impl.AdminRole;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import fontys.s3.Carspacebackend.persistence.Entity.RoleEntity;
@@ -14,6 +14,9 @@ public final class UserConverter {
     }
 
     public static User convertToPOJO(UserEntity u){
+        if(u == null){
+            return null;
+        }
         IRole role;
         if(u.getRole().getRoleName().equals("user")){
             role = new UserRole("user", u.getRole().getId());
@@ -50,6 +53,9 @@ public final class UserConverter {
     }
 
     public static UserDTO convertToDTO(User u){
+        if(u == null){
+            return null;
+        }
         return UserDTO.builder().id(u.getId()).role(u.getRole().getRole()).username(u.getUsername()).firstName(u.getFirstName()).lastName(u.getLastName()).email(u.getEmail()).address(u.getAddress()).phone(u.getPhone()).build();
     }
 }

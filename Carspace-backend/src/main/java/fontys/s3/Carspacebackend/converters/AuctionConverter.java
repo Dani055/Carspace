@@ -4,12 +4,13 @@ import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.domain.Comment;
 import fontys.s3.Carspacebackend.domain.Image;
-import fontys.s3.Carspacebackend.domain.dto.AuctionDTO;
-import fontys.s3.Carspacebackend.domain.dto.BidDTO;
-import fontys.s3.Carspacebackend.domain.dto.CommentDTO;
+import fontys.s3.Carspacebackend.controller.dto.AuctionDTO;
+import fontys.s3.Carspacebackend.controller.dto.BidDTO;
+import fontys.s3.Carspacebackend.controller.dto.CommentDTO;
 import fontys.s3.Carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.Carspacebackend.persistence.Entity.ImageEntity;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,24 +23,24 @@ public class AuctionConverter {
         Set<Comment> comments;
         Set<Bid> bids;
         if(a.getImages() == null){
-            images = null;
+            images = new HashSet<>();
         }
         else{
-            images = a.getImages().stream().map(imageEntity -> ImageConverter.convertToPOJO(imageEntity)).collect(Collectors.toSet());
+            images = a.getImages().stream().map(imageEntity -> ImageConverter.convertToPOJO(imageEntity)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         if(a.getComments() == null){
-            comments = null;
+            comments = new HashSet<>();
         }
         else{
-            comments = a.getComments().stream().map(commentEntity -> CommentConverter.convertToPOJO(commentEntity)).collect(Collectors.toSet());
+            comments = a.getComments().stream().map(commentEntity -> CommentConverter.convertToPOJO(commentEntity)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         if(a.getBids() == null){
-            bids = null;
+            bids = new HashSet<>();
         }
         else{
-            bids = a.getBids().stream().map(bidEntity -> BidConverter.convertToPOJO(bidEntity)).collect(Collectors.toSet());
+            bids = a.getBids().stream().map(bidEntity -> BidConverter.convertToPOJO(bidEntity)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         return Auction.builder().id(a.getId())
@@ -87,17 +88,17 @@ public class AuctionConverter {
         Set<CommentDTO> comments;
         Set<BidDTO> bids;
         if(a.getComments() == null){
-            comments = null;
+            comments = new HashSet<>();
         }
         else{
-            comments = a.getComments().stream().map(comment -> CommentConverter.convertToDTO(comment)).collect(Collectors.toSet());
+            comments = a.getComments().stream().map(comment -> CommentConverter.convertToDTO(comment)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         if(a.getBids() == null){
-            bids = null;
+            bids = new HashSet<>();
         }
         else{
-            bids = a.getBids().stream().map(bid -> BidConverter.convertToDTO(bid)).collect(Collectors.toSet());
+            bids = a.getBids().stream().map(bid -> BidConverter.convertToDTO(bid)).collect(Collectors.toCollection(LinkedHashSet::new));
         }
 
         return AuctionDTO.builder().id(a.getId())

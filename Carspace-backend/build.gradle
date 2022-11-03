@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
+	id "org.sonarqube" version "3.4.0.2513"
+	id 'jacoco'
 }
 
 group = 'fontys.s3'
@@ -18,18 +20,41 @@ repositories {
 	mavenCentral()
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "I476740_s3-carspace_AYQ4zFv2WExUpI2ZPdgp"
+    property "sonar.qualitygate.wait", true 
+	property "sonar.java.coveragePlugin", "jacoco"
+    property "sonar.jacoco.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+  }
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation "org.springframework.boot:spring-boot-starter-security"
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.cloud:spring-cloud-starter-bootstrap:3.1.3'
+	testImplementation 'com.playtika.testcontainers:embedded-mysql:2.2.9'
 }
 
 test {
 	useJUnitPlatform()
+}
+
+test.finalizedBy jacocoTestReport
+tasks.named('sonarqube').configure {
+	dependsOn test
 }

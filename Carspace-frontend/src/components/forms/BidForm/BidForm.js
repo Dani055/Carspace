@@ -1,10 +1,25 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { createBidCall } from "../../../service/bidService";
 
 function BidForm(props) {
+  const params = useParams();
+  const [amount, setAmount] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleFormChange = (event) => {
+    setAmount(event.target.value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submission confirmed");
+    try {
+      const res = await createBidCall({amount}, params.auctionId);
+      toast.success(res.message);
+    } catch (error) {
+      console.log(error);
+      toast.error(error);
+    }
   };
 
 
@@ -17,6 +32,7 @@ function BidForm(props) {
             type="number"
             min={0}
             max={100000}
+            onChange={handleFormChange}
             className="form-control"
             id="bidAmount"
             name="bidAmount"

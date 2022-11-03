@@ -1,10 +1,6 @@
-package fontys.s3.Carspacebackend.domain.requests;
+package fontys.s3.Carspacebackend.controller.requests;
 
-import fontys.s3.Carspacebackend.domain.IRole;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -14,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserReq {
-
     @NotBlank
     @Length(min = 2, max = 50)
     private String username;
@@ -32,7 +27,7 @@ public class CreateUserReq {
     private String lastName;
 
     @NotBlank
-    @Length(min = 2, max = 50)
+    @Length(min = 5, max = 50)
     private String email;
 
     @NotBlank
@@ -40,6 +35,6 @@ public class CreateUserReq {
     private String address;
 
     @NotBlank
-    @Length(min = 2, max = 50)
+    @Length(min = 8, max = 50)
     private String phone;
 }
