@@ -20,10 +20,18 @@ repositories {
 	mavenCentral()
 }
 
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
 sonarqube {
   properties {
     property "sonar.projectKey", "I476740_s3-carspace_AYQ4zFv2WExUpI2ZPdgp"
     property "sonar.qualitygate.wait", true 
+	property "sonar.java.coveragePlugin", "jacoco"
+    property "sonar.jacoco.reportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
   }
 }
 
@@ -44,4 +52,9 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+test.finalizedBy jacocoTestReport
+tasks.named('sonarqube').configure {
+	dependsOn test
 }
