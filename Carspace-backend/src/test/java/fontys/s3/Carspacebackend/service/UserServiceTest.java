@@ -1,7 +1,11 @@
 package fontys.s3.Carspacebackend.service;
 
+import fontys.s3.Carspacebackend.business.jwt.AccessTokenHelper;
+import fontys.s3.Carspacebackend.business.jwt.IAccessTokenHelper;
 import fontys.s3.Carspacebackend.business.service.impl.UserService;
+import fontys.s3.Carspacebackend.domain.AccessToken;
 import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.domain.UserWithToken;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import fontys.s3.Carspacebackend.exception.IncorrectCredentialsException;
 import fontys.s3.Carspacebackend.persistence.repository.impl.RoleRepository;
@@ -25,6 +29,12 @@ class UserServiceTest {
 
     @Mock
     private UserRepository userRepoMock;
+
+    @Mock
+    private AccessTokenHelper accessTokenHelperMock;
+
+    @Mock
+    private AccessToken accessToken;
 
     @InjectMocks
     private UserService userService;
@@ -69,11 +79,15 @@ class UserServiceTest {
         String encodedPassword = bCryptPasswordEncoder.encode(password);
         User toLogin = User.builder().id(50L).username("jdoe").password(encodedPassword).firstName("john").lastName("doe").email("jdoe@gmail.com").address("avenue 123").phone("+311").build();
 
+        when(accessTokenHelperMock.generateAccessToken(toLogin)).thenReturn("token");
         when(userRepoMock.getUserByUsername(username)).thenReturn(toLogin);
 
-        User found = userService.loginUser(username, password);
-        assertEquals(toLogin, found);
+        UserWithToken uwt = userService.loginUser(username, password);
+        assertEquals(toLogin, uwt.getUser());
+        assertEquals(uwt.getToken(), "token");
+
         verify(userRepoMock).getUserByUsername(username);
+        verify(accessTokenHelperMock).generateAccessToken(toLogin);
     }
 
     @Test
@@ -85,5 +99,20 @@ class UserServiceTest {
 
         assertEquals(toFind, found);
         verify(userRepoMock).findById(50L);
+    }
+
+    @Test
+    void getUserByAccessToken() {
+        User toFind = User.builder().id(50L).username("jdoe").password("pass").firstName("john").lastName("doe").email("jdoe@gmail.com").address("avenue 123").phone("+311").build();
+
+        when(accessToken.getUserId()).thenReturn(toFind.getId());
+        when(userRepoMock.findById(50L)).thenReturn(toFind);
+
+        User found = userService.getUserByAccessToken();
+
+        assertEquals(toFind, found);
+
+        verify(userRepoMock).findById(50L);
+        verify(accessToken).getUserId();
     }
 }

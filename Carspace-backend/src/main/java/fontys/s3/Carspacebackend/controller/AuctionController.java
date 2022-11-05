@@ -2,6 +2,7 @@ package fontys.s3.Carspacebackend.controller;
 
 import fontys.s3.Carspacebackend.business.service.IAuctionService;
 
+import fontys.s3.Carspacebackend.configuration.security.isauthenticated.IsAuthenticated;
 import fontys.s3.Carspacebackend.converters.AuctionConverter;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.controller.dto.AuctionDTO;
@@ -29,27 +30,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AuctionController {
 //    private IUserService userService;
-    private IAuctionService auctionService;
+    private final IAuctionService auctionService;
 
-    private Long extractToken(HttpHeaders headers){
-        if(headers.getFirst(HttpHeaders.AUTHORIZATION) == null){
-            throw new BadTokenException();
-        }
-        String token = headers.getFirst(HttpHeaders.AUTHORIZATION).split("Bearer ")[1];
-        Long userId;
-        try {
-            userId = Long.parseLong(token);
-        } catch (NumberFormatException e) {
-            throw new BadTokenException();
-        }
-        return userId;
-    }
     @PostMapping()
+    @IsAuthenticated
     public ResponseEntity<ResourceCreatedResponse> createAuction(@RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
-        Long userId = extractToken(headers);
-
         Auction toCreate = Auction.builder().carBrand(req.getCarBrand()).carModel(req.getCarModel()).carDesc(req.getCarDesc()).carYear(req.getCarYear()).startingPrice(req.getStartingPrice()).buyoutPrice(req.getBuyoutPrice()).mileage(req.getMileage()).location(req.getLocation()).startsOn(req.getStartsOn()).endsOn(req.getEndsOn()).build();
-        Long createdAuctionId = auctionService.createAuction(toCreate, userId, req.getUrls());
+        Long createdAuctionId = auctionService.createAuction(toCreate, req.getUrls());
         ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Auction created!").id(createdAuctionId).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
@@ -70,21 +57,20 @@ public class AuctionController {
     }
 
     @PutMapping("/{auctionId}")
-    public ResponseEntity<ResourceChangedResponse> editAuction(@PathVariable Long auctionId, @RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
-        Long userId = extractToken(headers);
+    @IsAuthenticated
+    public ResponseEntity<ResourceChangedResponse> editAuction(@PathVariable Long auctionId, @RequestBody @Valid CreateAuctionReq req){
         Auction toEdit = Auction.builder().id(auctionId).carBrand(req.getCarBrand()).carModel(req.getCarModel()).carDesc(req.getCarDesc()).carYear(req.getCarYear()).startingPrice(req.getStartingPrice()).buyoutPrice(req.getBuyoutPrice()).mileage(req.getMileage()).location(req.getLocation()).startsOn(req.getStartsOn()).endsOn(req.getEndsOn()).build();
 
-        Long editedAuctionId = auctionService.editAuction(toEdit, userId, req.getUrls());
+        Long editedAuctionId = auctionService.editAuction(toEdit, req.getUrls());
 
         ResourceChangedResponse res = ResourceChangedResponse.builder().message("Auction edited!").id(editedAuctionId).build();
         return ResponseEntity.ok(res);
     }
 
     @DeleteMapping("/{auctionId}")
-    public ResponseEntity<ResourceDeletedResponse> deleteAuction(@PathVariable Long auctionId, @RequestHeader HttpHeaders headers){
-        Long userId = extractToken(headers);
-
-        auctionService.deleteAuction(auctionId, userId);
+    @IsAuthenticated
+    public ResponseEntity<ResourceDeletedResponse> deleteAuction(@PathVariable Long auctionId){
+        auctionService.deleteAuction(auctionId);
 
         ResourceDeletedResponse res = ResourceDeletedResponse.builder().message("Auction deleted").build();
         return ResponseEntity.ok(res);

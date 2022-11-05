@@ -1,10 +1,7 @@
 package fontys.s3.Carspacebackend.service;
 
 import fontys.s3.Carspacebackend.business.service.impl.BidService;
-import fontys.s3.Carspacebackend.domain.Auction;
-import fontys.s3.Carspacebackend.domain.Bid;
-import fontys.s3.Carspacebackend.domain.TimeHelper;
-import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.domain.*;
 import fontys.s3.Carspacebackend.exception.CannotPlaceBidException;
 import fontys.s3.Carspacebackend.persistence.repository.impl.AuctionRepository;
 import fontys.s3.Carspacebackend.persistence.repository.impl.BidRepository;
@@ -30,6 +27,9 @@ public class BidServiceTest {
     @Mock
     private BidRepository bidRepoMock;
 
+    @Mock
+    private AccessToken accessToken;
+
     @InjectMocks
     private BidService bidService;
 
@@ -41,11 +41,12 @@ public class BidServiceTest {
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
         Bid toCreate = Bid.builder().id(25L).amount(500.0).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotPlaceBidException.class, () -> {
-            bidService.createBid(toCreate, auction.getId(), aucCreator.getId());
+            bidService.createBid(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot place bid. Reason: Auction has not started yet";
@@ -54,6 +55,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -67,11 +69,12 @@ public class BidServiceTest {
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).endsOn(aucEnd).build();
         Bid toCreate = Bid.builder().id(25L).amount(500.0).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotPlaceBidException.class, () -> {
-            bidService.createBid(toCreate, auction.getId(), aucCreator.getId());
+            bidService.createBid(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot place bid. Reason: Auction has ended";
@@ -80,6 +83,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -93,11 +97,12 @@ public class BidServiceTest {
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).endsOn(aucEnd).build();
         Bid toCreate = Bid.builder().id(25L).amount(500.0).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotPlaceBidException.class, () -> {
-            bidService.createBid(toCreate, auction.getId(), aucCreator.getId());
+            bidService.createBid(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot place bid. Reason: You cannot bid on your own auction";
@@ -106,6 +111,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -120,11 +126,12 @@ public class BidServiceTest {
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).endsOn(aucEnd).build();
         Bid toCreate = Bid.builder().id(25L).amount(500.0).bidder(bidder).build();
 
+        when(accessToken.getUserId()).thenReturn(bidder.getId());
         when(userRepoMock.findById(bidder.getId())).thenReturn(bidder);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotPlaceBidException.class, () -> {
-            bidService.createBid(toCreate, auction.getId(), bidder.getId());
+            bidService.createBid(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot place bid. Reason: Bid is not above the minimum amount";
@@ -133,6 +140,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(55L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -147,11 +155,12 @@ public class BidServiceTest {
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).endsOn(aucEnd).build();
         Bid toCreate = Bid.builder().id(25L).amount(2500.0).bidder(bidder).build();
 
+        when(accessToken.getUserId()).thenReturn(bidder.getId());
         when(userRepoMock.findById(bidder.getId())).thenReturn(bidder);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotPlaceBidException.class, () -> {
-            bidService.createBid(toCreate, auction.getId(), bidder.getId());
+            bidService.createBid(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot place bid. Reason: Bid is above the buyout amount";
@@ -160,6 +169,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(55L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -179,11 +189,12 @@ public class BidServiceTest {
         bids.add(Bid.builder().id(23L).amount(1200.0).build());
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").bids(bids).carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).endsOn(aucEnd).build();
 
+        when(accessToken.getUserId()).thenReturn(bidder.getId());
         when(userRepoMock.findById(bidder.getId())).thenReturn(bidder);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotPlaceBidException.class, () -> {
-            bidService.createBid(toCreate, auction.getId(), bidder.getId());
+            bidService.createBid(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot place bid. Reason: Bid is less than the highest bid";
@@ -192,6 +203,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(55L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -211,14 +223,16 @@ public class BidServiceTest {
         bids.add(Bid.builder().id(23L).amount(1200.0).build());
         Auction auction = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").bids(bids).carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).endsOn(aucEnd).build();
 
+        when(accessToken.getUserId()).thenReturn(bidder.getId());
         when(userRepoMock.findById(bidder.getId())).thenReturn(bidder);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
         when(bidRepoMock.saveBid(toCreate, auction.getId(), bidder.getId())).thenReturn(123L);
 
-        assertEquals(123L, bidService.createBid(toCreate, auction.getId(), bidder.getId()));
+        assertEquals(123L, bidService.createBid(toCreate, auction.getId()));
         verify(userRepoMock).findById(55L);
         verify(auctionRepoMock).getAuctionById(100L);
         verify(bidRepoMock).saveBid(toCreate, 100L, 55L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 }

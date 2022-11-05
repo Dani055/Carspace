@@ -2,6 +2,7 @@ package fontys.s3.Carspacebackend.service;
 
 import fontys.s3.Carspacebackend.business.service.impl.AuctionService;
 import fontys.s3.Carspacebackend.business.validator.AuctionValidator;
+import fontys.s3.Carspacebackend.domain.AccessToken;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.TimeHelper;
 import fontys.s3.Carspacebackend.domain.User;
@@ -36,6 +37,8 @@ class AuctionServiceTest {
     @Mock
     private AuctionValidator validatorMock;
 
+    @Mock
+    private AccessToken accessToken;
     @InjectMocks
     private AuctionService auctionService;
 
@@ -48,10 +51,12 @@ class AuctionServiceTest {
 
         when(validatorMock.ValidateDatesForModification(toCreate)).thenReturn(true);
         when(auctionRepoMock.saveAuction(toCreate, userId, urls)).thenReturn(200L);
+        when(accessToken.getUserId()).thenReturn(userId);
 
-        assertEquals(200L, auctionService.createAuction(toCreate, userId, urls));
+        assertEquals(200L, auctionService.createAuction(toCreate, urls));
         verify(validatorMock).ValidateDatesForModification(toCreate);
         verify(auctionRepoMock).saveAuction(toCreate, userId, urls);
+        verify(accessToken).getUserId();
     }
 
     @Test
@@ -63,11 +68,12 @@ class AuctionServiceTest {
         urls.add("img1");
         Auction toEdit = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).location("123 avenue").build();
 
+        when(accessToken.getUserId()).thenReturn(65L);
         when(userRepoMock.findById(65L)).thenReturn(differentUser);
         when(auctionRepoMock.getAuctionById(100L)).thenReturn(toEdit);
 
         Exception exception = assertThrows(UnauthorizedException.class, () -> {
-            auctionService.editAuction(toEdit, 65L, urls);
+            auctionService.editAuction(toEdit, urls);
         });
 
         String expectedMessage = "You are not authorized to modify resource:Auction";
@@ -76,6 +82,7 @@ class AuctionServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(65L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
     }
 
     @Test
@@ -89,11 +96,12 @@ class AuctionServiceTest {
         urls.add("img1");
         Auction toEdit = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(toEdit.getId())).thenReturn(toEdit);
 
         Exception exception = assertThrows(AuctionHasStartedException.class, () -> {
-            auctionService.editAuction(toEdit, aucCreator.getId(), urls);
+            auctionService.editAuction(toEdit, urls);
         });
 
         String expectedMessage = "Cannot change auction/delete info. It has already started";
@@ -102,6 +110,7 @@ class AuctionServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(aucCreator.getId());
         verify(auctionRepoMock).getAuctionById(toEdit.getId());
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -115,15 +124,17 @@ class AuctionServiceTest {
         List<String> urls = new ArrayList<>();
         Auction toEdit = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(toEdit.getId())).thenReturn(toEdit);
         when(validatorMock.ValidateDatesForModification(toEdit)).thenReturn(true);
         when(auctionRepoMock.changeAuctionInfo(toEdit, urls)).thenReturn(999L);
 
-        assertEquals(999L, auctionService.editAuction(toEdit, aucCreator.getId(), urls));
+        assertEquals(999L, auctionService.editAuction(toEdit, urls));
         verify(userRepoMock).findById(aucCreator.getId());
         verify(auctionRepoMock).getAuctionById(toEdit.getId());
         verify(validatorMock).ValidateDatesForModification(toEdit);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -137,15 +148,17 @@ class AuctionServiceTest {
         List<String> urls = new ArrayList<>();
         Auction toEdit = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(toEdit.getId())).thenReturn(toEdit);
         when(validatorMock.ValidateDatesForModification(toEdit)).thenReturn(true);
         when(auctionRepoMock.changeAuctionInfo(toEdit, urls)).thenReturn(999L);
 
-        assertEquals(999L, auctionService.editAuction(toEdit, aucCreator.getId(), urls));
+        assertEquals(999L, auctionService.editAuction(toEdit, urls));
         verify(userRepoMock).findById(aucCreator.getId());
         verify(auctionRepoMock).getAuctionById(toEdit.getId());
         verify(validatorMock).ValidateDatesForModification(toEdit);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -158,11 +171,12 @@ class AuctionServiceTest {
 
         Auction toDelete = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).location("123 avenue").build();
 
+        when(accessToken.getUserId()).thenReturn(differentUser.getId());
         when(userRepoMock.findById(differentUser.getId())).thenReturn(differentUser);
         when(auctionRepoMock.getAuctionById(toDelete.getId())).thenReturn(toDelete);
 
         Exception exception = assertThrows(UnauthorizedException.class, () -> {
-            auctionService.deleteAuction(toDelete.getId(), differentUser.getId());
+            auctionService.deleteAuction(toDelete.getId());
         });
 
         String expectedMessage = "You are not authorized to modify resource:Auction";
@@ -171,6 +185,7 @@ class AuctionServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(65L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
     }
 
     @Test
@@ -184,11 +199,12 @@ class AuctionServiceTest {
 
         Auction toDelete = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(toDelete.getId())).thenReturn(toDelete);
 
         Exception exception = assertThrows(AuctionHasStartedException.class, () -> {
-            auctionService.deleteAuction(toDelete.getId(), aucCreator.getId());
+            auctionService.deleteAuction(toDelete.getId());
         });
 
         String expectedMessage = "Cannot change auction/delete info. It has already started";
@@ -197,6 +213,8 @@ class AuctionServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(accessToken).getUserId();
+
         TimeHelper.QuitDebugMode();
     }
 
@@ -210,14 +228,16 @@ class AuctionServiceTest {
         List<String> urls = new ArrayList<>();
         Auction toDelete = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(toDelete.getId())).thenReturn(toDelete);
         when(auctionRepoMock.deleteAuction(toDelete.getId())).thenReturn(true);
 
-        assertTrue(auctionService.deleteAuction(toDelete.getId(), aucCreator.getId()));
+        assertTrue(auctionService.deleteAuction(toDelete.getId()));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
         verify(auctionRepoMock).deleteAuction(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 
@@ -231,14 +251,16 @@ class AuctionServiceTest {
         List<String> urls = new ArrayList<>();
         Auction toDelete = Auction.builder().id(100L).creator(aucCreator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).hasSold(false).startsOn(aucStart).build();
 
+        when(accessToken.getUserId()).thenReturn(aucCreator.getId());
         when(userRepoMock.findById(aucCreator.getId())).thenReturn(aucCreator);
         when(auctionRepoMock.getAuctionById(toDelete.getId())).thenReturn(toDelete);
         when(auctionRepoMock.deleteAuction(toDelete.getId())).thenReturn(true);
 
-        assertTrue(auctionService.deleteAuction(toDelete.getId(), aucCreator.getId()));
+        assertTrue(auctionService.deleteAuction(toDelete.getId()));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
         verify(auctionRepoMock).deleteAuction(100L);
+        verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
 }

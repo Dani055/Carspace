@@ -2,21 +2,21 @@ package fontys.s3.Carspacebackend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fontys.s3.Carspacebackend.business.service.impl.AuctionService;
-import fontys.s3.Carspacebackend.controller.dto.AuctionDTO;
-import fontys.s3.Carspacebackend.controller.dto.CommentDTO;
 import fontys.s3.Carspacebackend.controller.requests.CreateAuctionReq;
 import fontys.s3.Carspacebackend.controller.responses.ResourceChangedResponse;
 import fontys.s3.Carspacebackend.controller.responses.ResourceCreatedResponse;
 import fontys.s3.Carspacebackend.controller.responses.ResourceDeletedResponse;
-import fontys.s3.Carspacebackend.converters.AuctionConverter;
 import fontys.s3.Carspacebackend.domain.*;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -34,7 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(AuctionController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class AuctionControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -45,18 +46,18 @@ public class AuctionControllerTest {
     private AuctionService auctionServiceMock;
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void createAuctionShouldReturn201WhenRequestValid() throws Exception{
         ArgumentCaptor<Auction> auctionCaptor = ArgumentCaptor.forClass(Auction.class);
         List<String> urls = new ArrayList<>();
         urls.add("xd1");
         CreateAuctionReq req = CreateAuctionReq.builder().urls(urls).carBrand("BMW").carModel("330i").carDesc("descdescde").carYear(2002).startingPrice(1000).buyoutPrice(2000).mileage(120000).startsOn(Instant.now()).endsOn(Instant.now()).location("123 avenue").build();
-        when(auctionServiceMock.createAuction(auctionCaptor.capture(), eq(25L), eq(urls))).thenReturn(100L);
+        when(auctionServiceMock.createAuction(auctionCaptor.capture(), eq(urls))).thenReturn(100L);
 
         ResourceCreatedResponse expectedRes = ResourceCreatedResponse.builder().id(100L).message("Auction created!").build();
 
         mockMvc.perform(post("/auction")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         .content(objectMapper.writeValueAsString(req)))
                 .andDo(print())
                 .andExpect(status().isCreated())
@@ -64,16 +65,16 @@ public class AuctionControllerTest {
                 .andExpect(responseBody().containsObjectAsJson(expectedRes, ResourceCreatedResponse.class));
 
 
-        verify(auctionServiceMock).createAuction(auctionCaptor.capture(), eq(25L), eq(urls));
+        verify(auctionServiceMock).createAuction(auctionCaptor.capture(), eq(urls));
     }
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void createAuctionShouldReturn400WhenMissingFields() throws Exception{
         CreateAuctionReq req = CreateAuctionReq.builder().carBrand("").carModel("").carDesc("").carYear(0).startingPrice(-1).buyoutPrice(-1).mileage(-1).startsOn(null).endsOn(null).location("").build();
 
         mockMvc.perform(post("/auction")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         .content(objectMapper.writeValueAsString(req)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
@@ -136,18 +137,18 @@ public class AuctionControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void editAuctionShouldReturn200WhenRequestValid() throws Exception{
         ArgumentCaptor<Auction> auctionCaptor = ArgumentCaptor.forClass(Auction.class);
         List<String> urls = new ArrayList<>();
         urls.add("xd1");
         CreateAuctionReq req = CreateAuctionReq.builder().urls(urls).carBrand("BMW").carModel("330i").carDesc("descdescde").carYear(2002).startingPrice(1000).buyoutPrice(2000).mileage(120000).startsOn(Instant.now()).endsOn(Instant.now()).location("123 avenue").build();
-        when(auctionServiceMock.editAuction(auctionCaptor.capture(), eq(25L), eq(urls))).thenReturn(100L);
+        when(auctionServiceMock.editAuction(auctionCaptor.capture(), eq(urls))).thenReturn(100L);
 
         ResourceChangedResponse expectedRes = ResourceChangedResponse.builder().id(100L).message("Auction edited!").build();
 
         mockMvc.perform(put("/auction/100")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         .content(objectMapper.writeValueAsString(req)))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -155,16 +156,16 @@ public class AuctionControllerTest {
                 .andExpect(responseBody().containsObjectAsJson(expectedRes, ResourceChangedResponse.class));
 
 
-        verify(auctionServiceMock).editAuction(auctionCaptor.capture(), eq(25L), eq(urls));
+        verify(auctionServiceMock).editAuction(auctionCaptor.capture(), eq(urls));
     }
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void editAuctionShouldReturn400WhenMissingFields() throws Exception{
         CreateAuctionReq req = CreateAuctionReq.builder().carBrand("").carModel("").carDesc("").carYear(0).startingPrice(-1).buyoutPrice(-1).mileage(-1).startsOn(null).endsOn(null).location("").build();
 
         mockMvc.perform(put("/auction/100")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         .content(objectMapper.writeValueAsString(req)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
@@ -174,14 +175,14 @@ public class AuctionControllerTest {
         verifyNoInteractions(auctionServiceMock);
     }
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void deleteAuctionShouldReturn200WhenRequestValid() throws Exception{
-        when(auctionServiceMock.deleteAuction(100L, 25L)).thenReturn(true);
+        when(auctionServiceMock.deleteAuction(100L)).thenReturn(true);
 
         ResourceDeletedResponse expectedRes = ResourceDeletedResponse.builder().message("Auction deleted").build();
 
         mockMvc.perform(delete("/auction/100")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         )
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -189,6 +190,6 @@ public class AuctionControllerTest {
                 .andExpect(responseBody().containsObjectAsJson(expectedRes, ResourceDeletedResponse.class));
 
 
-        verify(auctionServiceMock).deleteAuction(100L, 25L);
+        verify(auctionServiceMock).deleteAuction(100L);
     }
 }

@@ -1,6 +1,7 @@
 package fontys.s3.Carspacebackend.service;
 
 import fontys.s3.Carspacebackend.business.service.impl.CommentService;
+import fontys.s3.Carspacebackend.domain.AccessToken;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.Comment;
 import fontys.s3.Carspacebackend.domain.TimeHelper;
@@ -32,6 +33,9 @@ public class CommentServiceTest {
     @Mock
     private CommentRepository commentRepoMock;
 
+    @Mock
+    private AccessToken accessToken;
+
     @InjectMocks
     private CommentService commentService;
 
@@ -46,7 +50,7 @@ public class CommentServiceTest {
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
 
         Exception exception = assertThrows(CannotCreateCommentException.class, () -> {
-            commentService.createComment(toCreate, auction.getId(), 50L);
+            commentService.createComment(toCreate, auction.getId());
         });
 
         String expectedMessage = "Cannot create comment. Reason: Auction has ended";
@@ -64,11 +68,13 @@ public class CommentServiceTest {
 
         Comment toCreate = Comment.builder().id(20L).text("a comment").build();
 
+        when(accessToken.getUserId()).thenReturn(50L);
         when(auctionRepoMock.getAuctionById(auction.getId())).thenReturn(auction);
         when(commentRepoMock.saveComment(toCreate, auction.getId(), 50L)).thenReturn(123L);
 
-        assertEquals(123L, commentService.createComment(toCreate, auction.getId(), 50L));
+        assertEquals(123L, commentService.createComment(toCreate, auction.getId()));
         verify(auctionRepoMock).getAuctionById(100L);
         verify(commentRepoMock).saveComment(toCreate, 100L, 50L);
+        verify(accessToken).getUserId();
     }
 }

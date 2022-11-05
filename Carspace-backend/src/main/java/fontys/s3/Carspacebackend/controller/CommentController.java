@@ -18,26 +18,12 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class CommentController {
     private ICommentService commentService;
-    private Long extractToken(HttpHeaders headers){
-        if(headers.getFirst(HttpHeaders.AUTHORIZATION) == null){
-            throw new BadTokenException();
-        }
-        String token = headers.getFirst(HttpHeaders.AUTHORIZATION).split("Bearer ")[1];
-        Long userId;
-        try {
-            userId = Long.parseLong(token);
-        } catch (NumberFormatException e) {
-            throw new BadTokenException();
-        }
-        return userId;
-    }
 
     @PostMapping("/{auctionId}")
-    public ResponseEntity<ResourceCreatedResponse> postComment(@PathVariable Long auctionId, @RequestHeader HttpHeaders headers, @RequestBody @Valid CreateCommentReq req){
-        Long userId = extractToken(headers);
+    public ResponseEntity<ResourceCreatedResponse> postComment(@PathVariable Long auctionId, @RequestBody @Valid CreateCommentReq req){
         Comment c = Comment.builder().text(req.getText()).build();
 
-        Long createdCommentId = commentService.createComment(c, auctionId, userId);
+        Long createdCommentId = commentService.createComment(c, auctionId);
 
         ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Comment created!").id(createdCommentId).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(res);

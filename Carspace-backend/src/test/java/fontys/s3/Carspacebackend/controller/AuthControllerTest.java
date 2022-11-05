@@ -5,13 +5,17 @@ import fontys.s3.Carspacebackend.business.service.impl.UserService;
 import fontys.s3.Carspacebackend.controller.requests.LoginReq;
 import fontys.s3.Carspacebackend.controller.responses.ResourceCreatedResponse;
 import fontys.s3.Carspacebackend.domain.User;
+import fontys.s3.Carspacebackend.domain.UserWithToken;
 import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,7 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(AuthController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -88,7 +93,9 @@ public class AuthControllerTest {
         UserRole role = UserRole.builder().id(1L).role("user").build();
         User user = User.builder().id(25L).username("test").password("123").role(role).firstName("John").lastName("Doe").email("jdoe@gmail.com").address("eindhoven").phone("+123124124").build();
 
-        when(userServiceMock.loginUser(req.getUsername(), req.getPassword())).thenReturn(user);
+        UserWithToken uwt = UserWithToken.builder().user(user).token("asdtoken").build();
+
+        when(userServiceMock.loginUser(req.getUsername(), req.getPassword())).thenReturn(uwt);
 
         mockMvc.perform(post("/auth/signin")
                         .contentType(APPLICATION_JSON_VALUE)
@@ -98,8 +105,9 @@ public class AuthControllerTest {
                 .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
                 .andExpect(content().json("""
                                                        {"message":"Login successful",
-                                                       "obj":
-                                                            {"id":25,
+                                                       "obj": 
+                                                       {
+                                                        "user": {"id":25,
                                                             "role":"user",
                                                             "username":"test",
                                                             "firstName":"John",
@@ -107,7 +115,10 @@ public class AuthControllerTest {
                                                             "email":"jdoe@gmail.com",
                                                             "address":"eindhoven",
                                                             "phone":"+123124124"
-                                                            }
+                                                            },
+                                                        "accessToken": "asdtoken"
+                                                       }
+                                                            
                                                        }
                                                     """));
 
@@ -126,22 +137,21 @@ public class AuthControllerTest {
                 .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
                 .andExpect(responseBody().containsError("username", "must not be blank"))
                 .andExpect(responseBody().containsError("password","must not be blank"))
-
                 .andReturn();
 
         verifyNoInteractions(userServiceMock);
     }
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void checkKeyShouldReturn200WhenRequestValid() throws Exception{
         UserRole role = UserRole.builder().id(1L).role("user").build();
         User user = User.builder().id(25L).username("test").password("123").role(role).firstName("John").lastName("Doe").email("jdoe@gmail.com").address("eindhoven").phone("+123124124").build();
 
-        when(userServiceMock.getUserById(25L)).thenReturn(user);
+        when(userServiceMock.getUserByAccessToken()).thenReturn(user);
 
         mockMvc.perform(get("/auth/checkkey")
-                        .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25))
+                        .contentType(APPLICATION_JSON_VALUE))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
@@ -161,6 +171,6 @@ public class AuthControllerTest {
                                                     """));
 
 
-        verify(userServiceMock).getUserById(25L);
+        verify(userServiceMock).getUserByAccessToken();
     }
 }

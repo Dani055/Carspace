@@ -4,6 +4,7 @@ import fontys.s3.Carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IBidRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IBidService;
+import fontys.s3.Carspacebackend.domain.AccessToken;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.domain.User;
@@ -21,9 +22,11 @@ public class BidService implements IBidService {
     private IAuctionRepository auctionRepository;
     private IBidRepository bidRepository;
 
+    private AccessToken requestAccessToken;
+
     @Transactional
-    public Long createBid(Bid b, Long auctionId, Long userId){
-        User bidder = userRepository.findById(userId);
+    public Long createBid(Bid b, Long auctionId){
+        User bidder = userRepository.findById(requestAccessToken.getUserId());
         Auction auction = auctionRepository.getAuctionById(auctionId);
         if(!auction.hasStarted()){
             throw new CannotPlaceBidException("Auction has not started yet");
@@ -45,6 +48,6 @@ public class BidService implements IBidService {
             throw new CannotPlaceBidException("Bid is less than the highest bid");
         }
 
-        return bidRepository.saveBid(b, auctionId, userId);
+        return bidRepository.saveBid(b, auctionId, bidder.getId());
     }
 }

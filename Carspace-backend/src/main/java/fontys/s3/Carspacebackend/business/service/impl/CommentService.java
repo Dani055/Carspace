@@ -4,6 +4,7 @@ import fontys.s3.Carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.Carspacebackend.business.interfaces.ICommentRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.ICommentService;
+import fontys.s3.Carspacebackend.domain.AccessToken;
 import fontys.s3.Carspacebackend.domain.Auction;
 
 import fontys.s3.Carspacebackend.domain.Comment;
@@ -23,15 +24,16 @@ public class CommentService implements ICommentService {
     private IAuctionRepository auctionRepository;
     private ICommentRepository commentRepository;
 
+    private AccessToken requestAccessToken;
+
     @Transactional
-    public Long createComment(Comment c, Long auctionId, Long userId){
-//        User bidder = userRepository.findById(userId);
+    public Long createComment(Comment c, Long auctionId){
         Auction auction = auctionRepository.getAuctionById(auctionId);
 
         if(auction.hasEnded()){
             throw new CannotCreateCommentException("Auction has ended");
         }
 
-        return commentRepository.saveComment(c, auctionId, userId);
+        return commentRepository.saveComment(c, auctionId, requestAccessToken.getUserId());
     }
 }

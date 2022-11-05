@@ -12,8 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,7 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(CommentController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 public class CommentControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -39,17 +43,17 @@ public class CommentControllerTest {
     private CommentService commentService;
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void createCommentShouldReturn201WhenRequestValid() throws Exception{
         ArgumentCaptor<Comment> commentCaptor = ArgumentCaptor.forClass(Comment.class);
 
         CreateCommentReq req = CreateCommentReq.builder().text("a comment").build();
-        when(commentService.createComment(commentCaptor.capture(), eq(100L), eq(25L))).thenReturn(999L);
+        when(commentService.createComment(commentCaptor.capture(), eq(100L))).thenReturn(999L);
 
         ResourceCreatedResponse expectedRes = ResourceCreatedResponse.builder().id(999L).message("Comment created!").build();
 
         mockMvc.perform(post("/comment/100")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         .content(objectMapper.writeValueAsString(req)))
                 .andDo(print())
                 .andExpect(status().isCreated())
@@ -57,16 +61,16 @@ public class CommentControllerTest {
                 .andExpect(responseBody().containsObjectAsJson(expectedRes, ResourceCreatedResponse.class));
 
 
-        verify(commentService).createComment(commentCaptor.capture(), eq(100L), eq(25L));
+        verify(commentService).createComment(commentCaptor.capture(), eq(100L));
     }
 
     @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
     void createCommentShouldReturn400WhenMissingFields() throws Exception{
         CreateCommentReq req = CreateCommentReq.builder().text("").build();
 
         mockMvc.perform(post("/comment/100")
                         .contentType(APPLICATION_JSON_VALUE)
-                        .header("authorization", "Bearer " + 25)
                         .content(objectMapper.writeValueAsString(req)))
                 .andDo(print())
                 .andExpect(status().isBadRequest())

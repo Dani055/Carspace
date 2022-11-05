@@ -1,6 +1,7 @@
 package fontys.s3.Carspacebackend.controller;
 
 import fontys.s3.Carspacebackend.business.service.IBidService;
+import fontys.s3.Carspacebackend.configuration.security.isauthenticated.IsAuthenticated;
 import fontys.s3.Carspacebackend.controller.requests.CreateBidReq;
 import fontys.s3.Carspacebackend.controller.responses.ResourceCreatedResponse;
 import fontys.s3.Carspacebackend.domain.Bid;
@@ -19,26 +20,13 @@ import javax.validation.Valid;
 @AllArgsConstructor
 public class BidController {
     private IBidService bidService;
-    private Long extractToken(HttpHeaders headers){
-        if(headers.getFirst(HttpHeaders.AUTHORIZATION) == null){
-            throw new BadTokenException();
-        }
-        String token = headers.getFirst(HttpHeaders.AUTHORIZATION).split("Bearer ")[1];
-        Long userId;
-        try {
-            userId = Long.parseLong(token);
-        } catch (NumberFormatException e) {
-            throw new BadTokenException();
-        }
-        return userId;
-    }
 
     @PostMapping("/{auctionId}")
-    public ResponseEntity<ResourceCreatedResponse> placeBid(@PathVariable Long auctionId, @RequestHeader HttpHeaders headers, @RequestBody @Valid CreateBidReq req){
-        Long userId = extractToken(headers);
+    @IsAuthenticated
+    public ResponseEntity<ResourceCreatedResponse> placeBid(@PathVariable Long auctionId, @RequestBody @Valid CreateBidReq req){
         Bid bid = Bid.builder().amount(req.getAmount()).build();
 
-        Long createdBidId = bidService.createBid(bid, auctionId, userId);
+        Long createdBidId = bidService.createBid(bid, auctionId);
 
         ResourceCreatedResponse res = ResourceCreatedResponse.builder().message("Bid placed!").id(createdBidId).build();
         return ResponseEntity.status(HttpStatus.CREATED).body(res);

@@ -3,6 +3,7 @@ import fontys.s3.Carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.Carspacebackend.business.interfaces.IUserRepository;
 import fontys.s3.Carspacebackend.business.service.IAuctionService;
 import fontys.s3.Carspacebackend.business.validator.IAuctionValidator;
+import fontys.s3.Carspacebackend.domain.AccessToken;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.User;
 import fontys.s3.Carspacebackend.exception.AuctionHasStartedException;
@@ -20,12 +21,13 @@ public class AuctionService implements IAuctionService {
     private IUserRepository userRepository;
     private IAuctionRepository auctionRepository;
     private IAuctionValidator auctionValidator;
+    private AccessToken requestAccessToken;
 
     @Transactional
-    public Long createAuction(Auction auc, Long userId, List<String> urls){
+    public Long createAuction(Auction auc, List<String> urls){
         auctionValidator.ValidateDatesForModification(auc);
 
-        Long auctionId = auctionRepository.saveAuction(auc, userId, urls);
+        Long auctionId = auctionRepository.saveAuction(auc, requestAccessToken.getUserId(), urls);
 
         return auctionId;
     }
@@ -38,9 +40,10 @@ public class AuctionService implements IAuctionService {
         return auctionRepository.getAuctionById(id);
     }
     @Transactional
-    public Long editAuction(Auction auc, Long userId, List<String> urls){
+    public Long editAuction(Auction auc, List<String> urls){
         //biznis logic
-        User owner = userRepository.findById(userId);
+        User owner = userRepository.findById(requestAccessToken.getUserId());
+
         Auction foundAuction = auctionRepository.getAuctionById(auc.getId());
         if(!foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD()){
             throw new UnauthorizedException("Auction");
@@ -59,8 +62,8 @@ public class AuctionService implements IAuctionService {
         return auctionId;
     }
     @Transactional
-    public boolean deleteAuction(Long auctionId, Long userId){
-        User owner = userRepository.findById(userId);
+    public boolean deleteAuction(Long auctionId){
+        User owner = userRepository.findById(requestAccessToken.getUserId());
         Auction foundAuction = auctionRepository.getAuctionById(auctionId);
         if(!foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD()){
             throw new UnauthorizedException("Auction");
