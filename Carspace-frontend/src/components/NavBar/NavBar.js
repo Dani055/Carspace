@@ -13,7 +13,7 @@ function NavBar() {
   
   const logout = (e) => {
     e.preventDefault();
-    removeCookie('token', {path:'/'});
+    window.sessionStorage.removeItem("tkn");
     setLoggedUser(null);
     toast.success("Logged out")
   }

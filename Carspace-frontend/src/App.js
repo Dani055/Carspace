@@ -25,13 +25,14 @@ function App() {
 
   useEffect(()=>{
     async function getUser() {
-      if(cookies["token"] !== undefined){
+      const token = window.sessionStorage.getItem("tkn");
+      if(token !== null){
         try {
           const res = await checkLoginKey();
           setLoggedUser(res.obj);
         } catch (err) {
           toast.error(err);
-          removeCookie('token', {path:'/'});
+          window.sessionStorage.removeItem("tkn");
           setLoggedUser(null);
           setIsBusy(false);
         }

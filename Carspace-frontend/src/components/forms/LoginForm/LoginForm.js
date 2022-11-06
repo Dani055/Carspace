@@ -16,8 +16,8 @@ function LoginForm(props) {
     try {
       const res = await loginUserCall(formState);
       toast.success(res.message);
-      setCookie('token', res.obj.id, {maxAge: 180});
-      setLoggedUser(res.obj);
+      window.sessionStorage.setItem("tkn", res.obj.accessToken);
+      setLoggedUser(res.obj.user);
       navigate("/");
 
     } 
