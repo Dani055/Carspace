@@ -9,8 +9,11 @@ import fontys.s3.Carspacebackend.domain.Auction;
 
 import fontys.s3.Carspacebackend.domain.Comment;
 
+import fontys.s3.Carspacebackend.domain.User;
 import fontys.s3.Carspacebackend.exception.CannotCreateCommentException;
 
+import fontys.s3.Carspacebackend.exception.CannotDeleteCommentException;
+import fontys.s3.Carspacebackend.persistence.repository.impl.CommentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,5 +38,18 @@ public class CommentService implements ICommentService {
         }
 
         return commentRepository.saveComment(c, auctionId, requestAccessToken.getUserId());
+    }
+
+    @Transactional
+    public Boolean deleteComment(Long commentId){
+        User u = userRepository.findById(requestAccessToken.getUserId());
+        Comment c = commentRepository.findById(commentId);
+        if(c.getCreator().getId() != u.getId()){
+            if(!u.getRole().canAccessCommentCRUD()){
+                throw new CannotDeleteCommentException("You can only delete your own comments");
+            }
+        }
+
+        return commentRepository.deleteComment(commentId);
     }
 }

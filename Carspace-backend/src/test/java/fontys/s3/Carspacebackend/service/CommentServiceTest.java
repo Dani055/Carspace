@@ -1,11 +1,11 @@
 package fontys.s3.Carspacebackend.service;
 
 import fontys.s3.Carspacebackend.business.service.impl.CommentService;
-import fontys.s3.Carspacebackend.domain.AccessToken;
-import fontys.s3.Carspacebackend.domain.Auction;
-import fontys.s3.Carspacebackend.domain.Comment;
-import fontys.s3.Carspacebackend.domain.TimeHelper;
+import fontys.s3.Carspacebackend.domain.*;
+import fontys.s3.Carspacebackend.domain.impl.AdminRole;
+import fontys.s3.Carspacebackend.domain.impl.UserRole;
 import fontys.s3.Carspacebackend.exception.CannotCreateCommentException;
+import fontys.s3.Carspacebackend.exception.CannotDeleteCommentException;
 import fontys.s3.Carspacebackend.exception.CannotPlaceBidException;
 import fontys.s3.Carspacebackend.persistence.repository.impl.AuctionRepository;
 import fontys.s3.Carspacebackend.persistence.repository.impl.BidRepository;
@@ -20,8 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTest {
@@ -58,6 +57,8 @@ public class CommentServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
         verify(auctionRepoMock).getAuctionById(100L);
+
+        TimeHelper.QuitDebugMode();
     }
 
     @Test
@@ -76,5 +77,65 @@ public class CommentServiceTest {
         verify(auctionRepoMock).getAuctionById(100L);
         verify(commentRepoMock).saveComment(toCreate, 100L, 50L);
         verify(accessToken).getUserId();
+
+        TimeHelper.QuitDebugMode();
+    }
+
+    @Test
+    void tryDeleteCommentWhenNotOwner(){
+        UserRole role = UserRole.builder().id(2L).role("user").build();
+        User commentCreator = User.builder().id(10L).username("jdoe").build();
+        User actor = User.builder().id(11L).username("mama").role(role).build();
+        Comment toDelete = Comment.builder().id(20L).text("a comment").creator(commentCreator).build();
+
+        when(accessToken.getUserId()).thenReturn(actor.getId());
+        when(userRepoMock.findById(actor.getId())).thenReturn(actor);
+        when(commentRepoMock.findById(toDelete.getId())).thenReturn(toDelete);
+
+        Exception exception = assertThrows(CannotDeleteCommentException.class, () -> {
+            commentService.deleteComment(20L);
+        });
+
+        String expectedMessage = "Cannot delete comment. Reason: You can only delete your own comments";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+
+        verify(accessToken).getUserId();
+        verify(userRepoMock).findById(actor.getId());
+        verify(commentRepoMock).findById(toDelete.getId());
+
+    }
+    @Test
+    void deleteCommentWhenAdmin(){
+        AdminRole role = AdminRole.builder().id(1L).role("admin").build();
+        User commentCreator = User.builder().id(10L).username("jdoe").build();
+        User actor = User.builder().id(11L).username("mama").role(role).build();
+        Comment toDelete = Comment.builder().id(20L).text("a comment").creator(commentCreator).build();
+
+        when(accessToken.getUserId()).thenReturn(actor.getId());
+        when(userRepoMock.findById(actor.getId())).thenReturn(actor);
+        when(commentRepoMock.findById(toDelete.getId())).thenReturn(toDelete);
+        when(commentRepoMock.deleteComment(toDelete.getId())).thenReturn(true);
+
+        assertTrue(commentService.deleteComment(20L));
+        verify(accessToken).getUserId();
+        verify(userRepoMock).findById(actor.getId());
+        verify(commentRepoMock).findById(toDelete.getId());
+    }
+    @Test
+    void deleteOwnComment(){
+        UserRole role = UserRole.builder().id(2L).role("user").build();
+        User actor = User.builder().id(11L).username("mama").role(role).build();
+        Comment toDelete = Comment.builder().id(20L).text("a comment").creator(actor).build();
+
+        when(accessToken.getUserId()).thenReturn(actor.getId());
+        when(userRepoMock.findById(actor.getId())).thenReturn(actor);
+        when(commentRepoMock.findById(toDelete.getId())).thenReturn(toDelete);
+        when(commentRepoMock.deleteComment(toDelete.getId())).thenReturn(true);
+
+        assertTrue(commentService.deleteComment(20L));
+        verify(accessToken).getUserId();
+        verify(userRepoMock).findById(actor.getId());
+        verify(commentRepoMock).findById(toDelete.getId());
     }
 }

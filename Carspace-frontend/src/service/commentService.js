@@ -9,6 +9,14 @@ const createCommentCall = (body, auctionId) => {
         })
 }
 
+const deleteCommentCall = (commentId) => {
+    return axiosConfig.delete(`comment/`+ commentId)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
+
 
 function throwError (err){
     if (err.response) {
@@ -21,5 +29,6 @@ function throwError (err){
 }
 
 export {
-    createCommentCall
+    createCommentCall,
+    deleteCommentCall
 }

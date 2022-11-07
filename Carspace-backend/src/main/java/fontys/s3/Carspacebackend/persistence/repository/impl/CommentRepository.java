@@ -27,6 +27,15 @@ public class CommentRepository implements ICommentRepository {
     private final IJPAAuctionRepository auctionRepository;
 
     @Override
+    public Comment findById(Long commentId){
+        Optional<CommentEntity> ce = commentRepository.findById(commentId);
+        if(ce.isEmpty()){
+            throw new ResourceNotFoundException("Comment", "id", commentId);
+        }
+        Comment c = CommentConverter.convertToPOJO(ce.get());
+        return c;
+    }
+    @Override
     public Long saveComment(Comment c, Long auctionId, Long userId){
         Optional<AuctionEntity> auction = auctionRepository.findById(auctionId);
         if(auction.isEmpty()){
@@ -43,4 +52,11 @@ public class CommentRepository implements ICommentRepository {
 
         return comment.getId();
     }
+
+    @Override
+    public Boolean deleteComment(Long commentId){
+        commentRepository.deleteById(commentId);
+        return true;
+    }
+
 }

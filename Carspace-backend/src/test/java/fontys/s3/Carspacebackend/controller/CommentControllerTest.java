@@ -6,6 +6,7 @@ import fontys.s3.Carspacebackend.business.service.impl.CommentService;
 import fontys.s3.Carspacebackend.controller.requests.CreateBidReq;
 import fontys.s3.Carspacebackend.controller.requests.CreateCommentReq;
 import fontys.s3.Carspacebackend.controller.responses.ResourceCreatedResponse;
+import fontys.s3.Carspacebackend.controller.responses.ResourceDeletedResponse;
 import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.domain.Comment;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import static fontys.s3.Carspacebackend.ResponseBodyMatchers.responseBody;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -79,5 +81,23 @@ public class CommentControllerTest {
                 .andExpect(responseBody().containsError("text", "length must be between 5 and 100"));
 
         verifyNoInteractions(commentService);
+    }
+
+    @Test
+    @WithMockUser(username = "usernaem", roles = {"user"})
+    void deleteShouldReturn200WhenRequestValid() throws Exception{
+        when(commentService.deleteComment(111L)).thenReturn(true);
+
+        ResourceDeletedResponse expectedRes = ResourceDeletedResponse.builder().message("Comment deleted!").build();
+
+        mockMvc.perform(delete("/comment/111")
+                        .contentType(APPLICATION_JSON_VALUE))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
+                .andExpect(responseBody().containsObjectAsJson(expectedRes, ResourceDeletedResponse.class));
+
+
+        verify(commentService).deleteComment(111L);
     }
 }

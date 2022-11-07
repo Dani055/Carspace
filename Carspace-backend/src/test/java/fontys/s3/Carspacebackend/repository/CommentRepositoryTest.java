@@ -3,10 +3,12 @@ package fontys.s3.Carspacebackend.repository;
 import fontys.s3.Carspacebackend.domain.Auction;
 import fontys.s3.Carspacebackend.domain.Bid;
 import fontys.s3.Carspacebackend.domain.Comment;
+import fontys.s3.Carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.Carspacebackend.persistence.repository.impl.AuctionRepository;
 import fontys.s3.Carspacebackend.persistence.repository.impl.BidRepository;
 import fontys.s3.Carspacebackend.persistence.repository.impl.CommentRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,21 +38,38 @@ public class CommentRepositoryTest extends RepositoryTest{
 
     @Transactional
     @Test
-    void shouldSaveCommentAndAppearInGetAuction() {
+    void shouldSaveCommentAndGetInfo() {
         InsertTestAuctions();
         Comment savedComment = Comment.builder().text("a comment").build();
 
         Long commentId = commentRepo.saveComment(savedComment, 1L, 3L);
         assertNotNull(commentId);
 
-        Auction auction = auctionRepo.getAuctionById(1L);
+        Comment foundComment = commentRepo.findById(commentId);
 
-        //Java is autistic and hashset has no get method, so this will have to do
-        for (Comment c :auction.getComments()) {
-            assertEquals(commentId, c.getId());
-            assertEquals(savedComment.getText(), c.getText());
-            assertEquals(3L, c.getCreator().getId());
-            assertTrue(c.getCreatedOn().isBefore(Instant.now()));
-        }
+        assertEquals(savedComment.getText(), foundComment.getText());
+        assertEquals(3L, foundComment.getCreator().getId());
+
+    }
+
+    @Transactional
+    @Test
+    void shouldSaveCommentAndDelete() {
+        InsertTestAuctions();
+        Comment savedComment = Comment.builder().text("a comment").build();
+
+        Long commentId = commentRepo.saveComment(savedComment, 1L, 3L);
+        assertNotNull(commentId);
+        commentRepo.deleteComment(commentId);
+
+        Exception exception = assertThrows(ResourceNotFoundException.class, () -> {
+            Comment foundComment = commentRepo.findById(commentId);
+        });
+
+        String expectedMessage = "Comment not found with id : " + "'" + commentId + "'";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
     }
 }
