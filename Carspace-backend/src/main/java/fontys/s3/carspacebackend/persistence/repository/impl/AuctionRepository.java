@@ -3,6 +3,7 @@ package fontys.s3.carspacebackend.persistence.repository.impl;
 import fontys.s3.carspacebackend.business.interfaces.IAuctionRepository;
 import fontys.s3.carspacebackend.converters.AuctionConverter;
 import fontys.s3.carspacebackend.domain.Auction;
+import fontys.s3.carspacebackend.domain.AuctionFilters;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
 import fontys.s3.carspacebackend.persistence.Entity.ImageEntity;
@@ -11,6 +12,8 @@ import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionImageReposito
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,5 +101,20 @@ public class AuctionRepository implements IAuctionRepository {
     public boolean deleteAuction(Long auctionId){
         auctionRepository.deleteById(auctionId);
         return true;
+    }
+
+    @Override
+    public Page<Auction> findLiveAuctionsByFilters(AuctionFilters filters, Pageable pageable){
+        //Commencing pepega shit
+        Page<AuctionEntity> entities;
+        if(filters.isHasEnded()){
+            entities = auctionRepository.findByCarBrandContainingAndCarModelContainingAndLocationContainingAndCarYearBetweenAndStartingPriceGreaterThanEqualAndBuyoutPriceLessThanEqualAndMileageBetweenAndHasSoldOrderByEndsOnDesc(filters.getCarBrand(),filters.getCarModel(), filters.getLocation(), filters.getMinYear(), filters.getMaxYear(),filters.getMinPrice(), filters.getMaxPrice(),filters.getMinMileage(), filters.getMaxMileage(),true, pageable);
+        }
+        else{
+            entities = auctionRepository.findByCarBrandContainingAndCarModelContainingAndLocationContainingAndCarYearBetweenAndStartingPriceGreaterThanEqualAndBuyoutPriceLessThanEqualAndMileageBetweenAndHasSoldOrderByEndsOnAsc(filters.getCarBrand(),filters.getCarModel(), filters.getLocation(), filters.getMinYear(), filters.getMaxYear(),filters.getMinPrice(), filters.getMaxPrice(),filters.getMinMileage(), filters.getMaxMileage(),false, pageable);
+        }
+
+        Page<Auction> auctions = entities.map(AuctionConverter::convertToPOJO);
+        return auctions;
     }
 }

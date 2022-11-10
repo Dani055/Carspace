@@ -5,11 +5,14 @@ import fontys.s3.carspacebackend.business.service.IAuctionService;
 import fontys.s3.carspacebackend.business.validator.IAuctionValidator;
 import fontys.s3.carspacebackend.domain.AccessToken;
 import fontys.s3.carspacebackend.domain.Auction;
+import fontys.s3.carspacebackend.domain.AuctionFilters;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.exception.AuctionHasStartedException;
 
 import fontys.s3.carspacebackend.exception.UnauthorizedException;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,5 +78,9 @@ public class AuctionService implements IAuctionService {
             }
         }
         return auctionRepository.deleteAuction(auctionId);
+    }
+
+    public Page<Auction> getLiveAuctions(AuctionFilters filters, Pageable pageable){
+        return auctionRepository.findLiveAuctionsByFilters(filters, pageable);
     }
 }
