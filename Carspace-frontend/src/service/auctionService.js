@@ -15,6 +15,20 @@ const getAuctionsCall = () => {
             throwError(err)
         })
 }
+const getLiveAuctionsWithFiltersAndPage = (filters, page) => {
+    return axiosConfig.get(`auction/filter?location=${filters?.location}&carModel=${filters?.carModel}&minPrice=${filters?.minPrice}&maxPrice=${filters?.maxPrice}&minMileage=${filters?.minMileage}&hasEnded=false&carBrand=${filters?.carBrand}&minYear=${filters?.minYear}&maxYear=${filters?.maxYear}&maxMileage=${filters?.maxMileage}&page=${page}`)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
+const getEndedAuctionsWithFiltersAndPage = (filters, page) => {
+    return axiosConfig.get(`auction/filter?location=${filters?.location}&carModel=${filters?.carModel}&minPrice=${filters?.minPrice}&maxPrice=${filters?.maxPrice}&minMileage=${filters?.minMileage}&hasEnded=true&carBrand=${filters?.carBrand}&minYear=${filters?.minYear}&maxYear=${filters?.maxYear}&maxMileage=${filters?.maxMileage}&page=${page}`)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
 const getAuctionById = (id) => {
     return axiosConfig.get(`auction/` + id)
         .then((response) => response.data)
@@ -50,6 +64,8 @@ function throwError (err){
 export {
     createAuctionCall,
     getAuctionsCall,
+    getLiveAuctionsWithFiltersAndPage,
+    getEndedAuctionsWithFiltersAndPage,
     getAuctionById,
     editAuctionCall,
     deleteAuctionCall

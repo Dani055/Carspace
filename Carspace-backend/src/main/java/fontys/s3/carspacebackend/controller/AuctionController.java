@@ -75,7 +75,7 @@ public class AuctionController {
         return ResponseEntity.ok(res);
     }
 
-    @GetMapping("/live")
+    @GetMapping("/filter")
     public ResponseEntity<FilteredAuctionsResponse> getLiveAuctions(
             @RequestParam(defaultValue = "", required = false) String carBrand,
             @RequestParam(defaultValue = "", required = false) String carModel,
@@ -85,11 +85,11 @@ public class AuctionController {
             @RequestParam(defaultValue = "0.0", required = false) double minPrice,
             @RequestParam(defaultValue = "214748364.0", required = false) double maxPrice,
             @RequestParam(defaultValue = "0", required = false) int minMileage,
-            @RequestParam(defaultValue = "1000000", required = false) int maxMileage,
+            @RequestParam(defaultValue = "2000000", required = false) int maxMileage,
             @RequestParam(defaultValue = "false", required = false) boolean hasEnded,
             @RequestParam(defaultValue = "0") int page)
     {
-        Pageable paging = PageRequest.of(page, 2);
+        Pageable paging = PageRequest.of(page, 1);
         AuctionFilters filters = AuctionFilters.builder().carBrand(carBrand).carModel(carModel).minYear(minYear).maxYear(maxYear).location(location).minPrice(minPrice).maxPrice(maxPrice).minMileage(minMileage).maxMileage(maxMileage).hasEnded(hasEnded).build();
         Page<Auction> pages = auctionService.getLiveAuctions(filters, paging);
         List<AuctionDTO> dtos = pages.getContent().stream().map(a -> AuctionConverter.convertToDTO(a)).collect(Collectors.toList());

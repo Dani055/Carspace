@@ -18,6 +18,7 @@ import { checkLoginKey } from './service/userService';
 import { UserContext } from './UserProvider';
 import Protected from './components/Protected/Protected';
 import NotFound from './pages/NotFound/NotFound';
+import AuctionResults from './pages/AuctionResults/AuctionResults';
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies();
   const {loggedUser, setLoggedUser} = useContext(UserContext);
@@ -48,6 +49,7 @@ function App() {
           <NavBar />
           <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/results" element={<AuctionResults />} />
           <Route path="/login" element={<Login />} />
 
           <Route path="/profile" element={

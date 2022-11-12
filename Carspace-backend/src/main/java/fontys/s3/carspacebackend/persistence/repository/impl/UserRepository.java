@@ -5,9 +5,11 @@ import fontys.s3.carspacebackend.converters.UserConverter;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.exception.IncorrectCredentialsException;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
+import fontys.s3.carspacebackend.exception.UsernameExistsException;
 import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
 import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -20,7 +22,13 @@ public class UserRepository implements IUserRepository {
     @Override
     public Long saveUser(User user){
         UserEntity entity = UserConverter.convertToEntity(user);
-        return userRepository.save(entity).getId();
+        try{
+            return userRepository.save(entity).getId();
+        }
+        catch (DataIntegrityViolationException ex){
+            throw new UsernameExistsException();
+        }
+
     }
     @Override
     public User findById(Long id){

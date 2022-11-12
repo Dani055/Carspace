@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import AuctionCard from "../../components/AuctionCard/AuctionCard";
 import FilterForm from "../../components/forms/FilterForm/FilterForm";
 import PaginationLinks from "../../components/PaginationLinks/PaginationLinks";
-import { getAuctionsCall, getLiveAuctionsWithFiltersAndPage } from "../../service/auctionService";
+import {getEndedAuctionsWithFiltersAndPage } from "../../service/auctionService";
 
-function MainPage() {
+function AuctionResults() {
   const [auctions, setAuctions] = useState(null);
   const [filters, setFilters] = useState({ carBrand: "", carModel: "", location: "", minYear: 0, maxYear: 3000, minPrice: 0, maxPrice: 214748364, minMileage: 0, maxMileage: 2000000});
   const [currentPage, setCurrentPage] = useState(0);
@@ -20,12 +19,11 @@ function MainPage() {
   const changePage = (page) => {
     setCurrentPage(page);
   }
-  const loadAuctionsWithFiltersAndPage = async () => {
+  const loadEndedAuctionsWithFiltersAndPage = async () => {
       try{
-        const res = await getLiveAuctionsWithFiltersAndPage(filters, currentPage);
+        const res = await getEndedAuctionsWithFiltersAndPage(filters, currentPage);
         setResults(res.totalItems);
         setAuctions(res.auctions);
-        // setCurrentPage(res.currentPage);
         setTotalPages(res.totalPages);
       }
       catch(error){
@@ -34,22 +32,11 @@ function MainPage() {
       }
   }
   useEffect(() => {
-    loadAuctionsWithFiltersAndPage();
+    loadEndedAuctionsWithFiltersAndPage();
   }, [filters, currentPage])
-  // useEffect(() => {
-  //   loadAuctionsWithFiltersAndPage();
-  // }, [currentPage])
 
   useEffect(()=>{
-    // async function getData(){
-    //   try {
-    //     const res = await getAuctionsCall();
-    //     setAuctions(res.obj)
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
-    loadAuctionsWithFiltersAndPage();
+    loadEndedAuctionsWithFiltersAndPage();
   }, [])
   return (
     <div>
@@ -57,8 +44,8 @@ function MainPage() {
         <FilterForm applyFilters={applyFilters}/>
       </div>
       <div className="container mt-5">
-        <h3 className="pb-2 border-bottom">Live/Pending auctions</h3>
-        <div className="row mb-5 g-4">
+        <h3 className="border-bottom bg-warning p-2 mb-4 rounded">You are not browsing auction results</h3>
+        <div className="row bg-light mb-5 g-4 pb-3">
           <p className="text-info">Found {results} auctions...</p>
           
           {auctions?.map((auction) => {
@@ -74,4 +61,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default AuctionResults;

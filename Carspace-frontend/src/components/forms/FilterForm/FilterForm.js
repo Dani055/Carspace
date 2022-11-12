@@ -1,34 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import years from "../../../years";
 
 function FilterForm(props) {
+  const [formState, setFormState] = useState({ carBrand: "", carModel: "", location: "", minYear: 0, maxYear: 3000, minPrice: 0, maxPrice: 214748364, minMileage: 0, maxMileage: 2000000 });
 
-    return (
-        <form>
-        <h4 className="border-bottom p-2">Filters:</h4>
-        <div className="row gx-5 pt-3 align-items-center">
+  const handleFormChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.value;
+    setFormState({ ...formState, [name]: value });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    props.applyFilters(formState);
+  }
+
+  return (
+    <div class="accordion" id="filtersAccordion">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+          <h4>Filters:</h4>
+        </button>
+      </h2>
+      <div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#filtersAccordion">
+        <div class="accordion-body">
+        <form onSubmit={handleSubmit}>
+        <div className="row gx-5 align-items-center">
           <div className="col-md-5">
             <div className="row gx-3 mb-3">
               <label htmlFor="inputYearMin" className="col-auto col-form-label">
                 Year: from
               </label>
               <div className="col-md-4 me-auto">
-                <select defaultValue={"Min"} className="form-select" aria-label="Default select example">
+                <select name="minYear" id="inputYearMin" onChange={handleFormChange} defaultValue={0} className="form-select" aria-label="Default select example">
                   {
                     years.map((number) => ( 
-                      <option value={number}>{number}</option>
+                      <option value={number} key={number}>{number}</option>
                     ))
                   };  
                 </select>
               </div>
-              <label htmlFor="" className="col-auto col-form-label">
+              <label htmlFor="inputYearMax" className="col-auto col-form-label">
                 To
               </label>
               <div className="col-md-4  ">
-                <select defaultValue={"Max"} className="form-select" aria-label="Default select example">
+                <select id="inputYearMax" onChange={handleFormChange} name="maxYear" defaultValue={0} className="form-select" aria-label="Default select example">
                   {
                     years.map((number) => ( 
-                      <option value={number}>{number}</option>
+                      <option value={number} key={number}>{number}</option>
                     ))
                   }; 
                 </select>
@@ -36,7 +54,7 @@ function FilterForm(props) {
             </div>
 
             <div className="row gx-3 mb-3">
-              <label htmlFor="inputYearMin" className="col-auto col-form-label">
+              <label htmlFor="inputPriceMin" className="col-auto col-form-label">
                 Price: from
               </label>
               <div className="col-md-4 me-auto">
@@ -44,12 +62,14 @@ function FilterForm(props) {
                   type="number"
                   min={0}
                   max={2000000}
+                  onChange={handleFormChange}
                   className="form-control"
-                  id="exampleFormControlInput1"
+                  name="minPrice"
+                  id="inputPriceMin"
                   placeholder="€2000"
                 />
               </div>
-              <label htmlFor="" className="col-auto col-form-label">
+              <label htmlFor="inputPriceMax" className="col-auto col-form-label">
                 To
               </label>
               <div className="col-md-4">
@@ -57,15 +77,17 @@ function FilterForm(props) {
                   type="number"
                   min={0}
                   max={2000000}
+                  onChange={handleFormChange}
+                  name="maxPrice"
                   className="form-control"
                   placeholder="€4000"
-                  id="exampleFormControlInput1"
+                  id="inputPriceMax"
                 />
               </div>
             </div>
 
             <div className="row gx-3 mb-3">
-              <label htmlFor="inputYearMin" className="col-auto col-form-label">
+              <label htmlFor="inputMileageMin" className="col-auto col-form-label">
                 Mileage: from
               </label>
               <div className="col-md-4 me-auto">
@@ -73,12 +95,14 @@ function FilterForm(props) {
                   type="number"
                   min={0}
                   max={2000000}
+                  onChange={handleFormChange}
+                  name="minMileage"
                   className="form-control"
-                  id="exampleFormControlInput1"
-                  placeholder="20km"
+                  id="inputMileageMin"
+                  placeholder="20 km"
                 />
               </div>
-              <label htmlFor="" className="col-auto col-form-label">
+              <label htmlFor="inputMileageMax" className="col-auto col-form-label">
                 To
               </label>
               <div className="col-md-4">
@@ -86,9 +110,11 @@ function FilterForm(props) {
                   type="number"
                   min={0}
                   max={2000000}
+                  onChange={handleFormChange}
+                  name="maxMileage"
                   className="form-control"
-                  placeholder="220 000km"
-                  id="exampleFormControlInput1"
+                  placeholder="220 000 km"
+                  id="inputMileageMax"
                 />
               </div>
             </div>
@@ -96,33 +122,52 @@ function FilterForm(props) {
 
           <div className="col-md-5">
             <div className="mb-3">
-              <label htmlFor="formGroupExampleInput" className="form-label">
-                Search
+              <label htmlFor="brand" className="form-label">
+                Brand
               </label>
               <input
                 type="text"
                 className="form-control mb-2"
-                id="formGroupExampleInput"
+                name="carBrand"
+                onChange={handleFormChange}
+                id="brand"
                 placeholder="BMW, Ford, Toyota..."
               />
-              <label htmlFor="formGroupExampleInput" className="form-label">
+              <label htmlFor="model" className="form-label">
+                Vehicle model
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="model"
+                onChange={handleFormChange}
+                name="carModel"
+                placeholder="Land cruiser"
+              />
+              <label htmlFor="location" className="form-label">
                 Location
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="formGroupExampleInput"
+                onChange={handleFormChange}
+                id="location"
+                name="location"
                 placeholder="Eindhoven, Netherlands"
               />
             </div>
           </div>
 
           <div className="col-md-2">
-            <button className="btn btn-primary btn-lg">Search</button>
+            <button type="submit" className="btn btn-primary btn-lg">Search</button>
           </div>
         </div>
       </form>
-    )
+        </div>
+      </div>
+    </div>
+
+  )
 }
 
 export default FilterForm;
