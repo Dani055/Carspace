@@ -22,7 +22,7 @@ function LoginForm(props) {
 
     } 
     catch (err) {
-      toast.error(err);
+      toast.error("Incorrect username or password");
     }
   }
 

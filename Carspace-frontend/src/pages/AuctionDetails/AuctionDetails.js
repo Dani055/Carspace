@@ -9,6 +9,7 @@ import { deleteAuctionCall, getAuctionById } from "../../service/auctionService"
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { UserContext } from "../../UserProvider";
+import TimerComponent from "../../components/TimerComponent/TimerComponent";
 
 function AuctionDetails(props) {
   const params = useParams();
@@ -183,10 +184,7 @@ function AuctionDetails(props) {
               <p>
                 Auction starts on <span className="bold">{dayjs(auction.startsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
               </p>
-              <p className="m-0">
-                Time remaining until start:{" "}
-                <span className="bold">(calculate)</span>
-              </p>
+              <TimerComponent diffDate={auction.startsOn}/>
               </div>
             }
             {
@@ -195,10 +193,7 @@ function AuctionDetails(props) {
               <p>
                 Auction ending on <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
               </p>
-              <p className="m-0">
-                Time remaining:{" "}
-                <span className="bold">(calculate)</span>
-              </p>
+              <TimerComponent diffDate={auction.endsOn}/>
             </div>
             }
             {
@@ -214,7 +209,7 @@ function AuctionDetails(props) {
                 {
                   auction.bids.length !== 0 ? <>
                   <p>
-                  Winning bid
+                  {auction.winningBid == null ? "Leading bid" : "Winner"}
                   <Link className="link-light" to="profile">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
