@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import AuctionCard from "../../components/AuctionCard/AuctionCard";
 import FilterForm from "../../components/forms/FilterForm/FilterForm";
 import PaginationLinks from "../../components/PaginationLinks/PaginationLinks";
-import { getAuctionsCall, getLiveAuctionsWithFiltersAndPage } from "../../service/auctionService";
+import { getLiveAuctionsWithFiltersAndPage } from "../../service/auctionService";
 
 function MainPage() {
   const [auctions, setAuctions] = useState(null);
@@ -25,7 +25,6 @@ function MainPage() {
         const res = await getLiveAuctionsWithFiltersAndPage(filters, currentPage);
         setResults(res.totalItems);
         setAuctions(res.auctions);
-        // setCurrentPage(res.currentPage);
         setTotalPages(res.totalPages);
       }
       catch(error){
@@ -36,19 +35,8 @@ function MainPage() {
   useEffect(() => {
     loadAuctionsWithFiltersAndPage();
   }, [filters, currentPage])
-  // useEffect(() => {
-  //   loadAuctionsWithFiltersAndPage();
-  // }, [currentPage])
 
   useEffect(()=>{
-    // async function getData(){
-    //   try {
-    //     const res = await getAuctionsCall();
-    //     setAuctions(res.obj)
-    //   } catch (error) {
-    //     console.log(error)
-    //   }
-    // }
     loadAuctionsWithFiltersAndPage();
   }, [])
   return (

@@ -24,6 +24,13 @@ const checkLoginKey = () => {
             throwError(err)
         })
 }
+const getUserProfile = (username) => {
+    return axiosConfig.get(`user/${username}`)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
 function throwError (err){
     if (err.response) {
         if(err.response.data.fieldErrors){
@@ -40,5 +47,6 @@ function throwError (err){
 export {
     registerUserCall,
     loginUserCall,
-    checkLoginKey
+    checkLoginKey,
+    getUserProfile
 }

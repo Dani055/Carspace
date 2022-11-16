@@ -49,6 +49,19 @@ public interface IJPAAuctionRepository extends JpaRepository<AuctionEntity, Long
                     "bids.bidder",
             }
     )
+    List<AuctionEntity> findByCreatorId(Long creatorId);
+
+    @EntityGraph(
+            type = EntityGraph.EntityGraphType.LOAD,
+            attributePaths = {
+                    "creator",
+                    "images",
+                    "comments",
+                    "bids",
+                    "comments.creator",
+                    "bids.bidder",
+            }
+    )
     Page<AuctionEntity> findByCarBrandContainingAndCarModelContainingAndLocationContainingAndCarYearBetweenAndStartingPriceGreaterThanEqualAndBuyoutPriceLessThanEqualAndMileageBetweenAndHasSoldOrderByEndsOnAsc(String carBrand, String carModel, String location,int startYear, int endYear, double startingPrice, double buyoutPrice,int startMileage, int endMileage, boolean hasSold,Pageable pageable);
 
     @EntityGraph(

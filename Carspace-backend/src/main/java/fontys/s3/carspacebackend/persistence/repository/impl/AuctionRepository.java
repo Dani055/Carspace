@@ -47,11 +47,12 @@ public class AuctionRepository implements IAuctionRepository {
         return auctionRepository.save(auctionEntity).getId();
     }
 
-    @Override
-    public List<Auction> getAuctions(){
-        List<AuctionEntity> auctionsEntities = auctionRepository.findAll();
 
-        List<Auction> auctions = auctionsEntities.stream().map(auctionEntity -> AuctionConverter.convertToPOJO(auctionEntity)).collect(Collectors.toList());
+    @Override
+    public List<Auction> getAuctionsByCreator(long creatorId){
+        List<AuctionEntity> auctionsEntities = auctionRepository.findByCreatorId(creatorId);
+
+        List<Auction> auctions = auctionsEntities.stream().map(AuctionConverter::convertToPOJO).collect(Collectors.toList());
         return auctions;
     }
 

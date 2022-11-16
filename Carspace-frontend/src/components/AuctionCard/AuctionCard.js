@@ -13,12 +13,12 @@ function AuctionCard(props) {
               {props.auction.images.length === 0 ? <img
                   src="Image_not_available.png"
                   className="card-img-top"
-                  alt=""
+                  alt="img"
                 /> : 
                 <img
                 src={props.auction.images[0].imgUrl}
                 className="card-img-top"
-                alt=""
+                alt="img"
               />
               }
               </Link>
@@ -50,7 +50,7 @@ function AuctionCard(props) {
                 }
               </div>
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">Mileage: {props.auction.mileage}</li>
+                <li className="list-group-item">Mileage: {props.auction.mileage} km</li>
                 <li className="list-group-item">
                   <span className="text-primary">
                     {props.auction.bids.length === 0 ? 

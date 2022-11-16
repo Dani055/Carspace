@@ -35,8 +35,8 @@ public class AuctionService implements IAuctionService {
         return auctionId;
     }
 
-    public List<Auction> getAuctions(){
-        return auctionRepository.getAuctions();
+    public List<Auction> getAuctionsByCreator(Long creatorId){
+        return auctionRepository.getAuctionsByCreator(creatorId);
     }
 
     public Auction getAuctionDetails(Long id){

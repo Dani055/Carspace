@@ -52,6 +52,11 @@ function App() {
           <Route path="/results" element={<AuctionResults />} />
           <Route path="/login" element={<Login />} />
 
+          <Route path="/profile/:username" element={
+            <Protected loggedUser={loggedUser}>
+              <ProfilePage />
+            </Protected>
+          } />
           <Route path="/profile" element={
             <Protected loggedUser={loggedUser}>
               <ProfilePage />

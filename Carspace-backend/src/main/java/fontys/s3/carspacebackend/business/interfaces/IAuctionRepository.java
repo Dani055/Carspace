@@ -9,8 +9,7 @@ import java.util.List;
 
 public interface IAuctionRepository {
     Long saveAuction(Auction auction, Long userId, List<String> urls);
-    List<Auction> getAuctions();
-
+    List<Auction> getAuctionsByCreator(long creatorId);
     Auction getAuctionById(Long aucId);
     Long changeAuctionInfo(Auction auction, List<String> urls);
     boolean deleteAuction(Long auctionId);

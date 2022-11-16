@@ -19,7 +19,7 @@ import javax.validation.Valid;
 public class CommentController {
     private ICommentService commentService;
 
-    @PostMapping("/{auctionId}")
+    @PostMapping("/{auctionId}") //Maybe not the most RESTful way, auctionId should be a query param
     @IsAuthenticated
     public ResponseEntity<ResourceCreatedResponse> postComment(@PathVariable Long auctionId, @RequestBody @Valid CreateCommentReq req){
         Comment c = Comment.builder().text(req.getText()).build();

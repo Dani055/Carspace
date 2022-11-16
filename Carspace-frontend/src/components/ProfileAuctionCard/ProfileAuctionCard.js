@@ -1,32 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ProfileAuctionCard(props) {
+  const navigate = useNavigate();
 
   return (
     <div className="col-md-3 d-flex align-items-stretch">
             <div className="card">
               <Link to="#">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/1998-2001_BMW_328i_%28E46%29_sedan_%282011-07-17%29_01.jpg/1200px-1998-2001_BMW_328i_%28E46%29_sedan_%282011-07-17%29_01.jpg"
+              {props.auction.images.length === 0 ? <img
+                  src="Image_not_available.png"
                   className="card-img-top"
-                  alt=""
-                />
+                  alt="img"
+                /> : 
+                <img
+                src={props.auction.images[0].imgUrl}
+                className="card-img-top"
+                alt="img"
+              />
+              }
               </Link>
               <div className="card-body mb-auto">
-                <Link to="#">
-                  <h5 className="card-title">BMW 325i</h5>
+                <Link to={"/auction/details/" + props.auction.id}>
+                  <h5 className="card-title">{props.auction.carBrand} {props.auction.carModel}</h5>
                 </Link>
               </div>
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">Mileage: 222 000 km</li>
+                <li className="list-group-item">Mileage: {props.auction.mileage}km</li>
                 <li className="list-group-item">
-                  <span className="text-primary">Highest bid 6500$</span>
+                  <span className="text-primary">{props.auction.bids.length === 0 ? 
+                      "No bids yet" :
+                      "Highest bid: $" + props.auction.bids[0].amount
+                    }</span>
                 </li>
-                <li className="list-group-item">Location: Eindhoven</li>
+                <li className="list-group-item">Location: {props.auction.location}</li>
               </ul>
               <div className="card-footer text-center p-3">
-                <Link to="#" className="card-link">
+                <Link to={"/auction/details/" + props.auction.id} className="card-link">
                   <button type="button" className="btn btn-primary btn-sm">
                     Go to auction
                   </button>

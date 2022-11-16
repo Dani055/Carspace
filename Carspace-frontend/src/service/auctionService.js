@@ -8,8 +8,8 @@ const createAuctionCall = (body) => {
             throwError(err)
         })
 }
-const getAuctionsCall = () => {
-    return axiosConfig.get(`auction`)
+const getAuctionsByCreatorCall = (creatorId) => {
+    return axiosConfig.get(`auction?creatorId=${creatorId}`)
         .then((response) => response.data)
         .catch((err) => {
             throwError(err)
@@ -63,7 +63,7 @@ function throwError (err){
 
 export {
     createAuctionCall,
-    getAuctionsCall,
+    getAuctionsByCreatorCall,
     getLiveAuctionsWithFiltersAndPage,
     getEndedAuctionsWithFiltersAndPage,
     getAuctionById,

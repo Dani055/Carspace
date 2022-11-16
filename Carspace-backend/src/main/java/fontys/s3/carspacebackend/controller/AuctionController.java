@@ -40,14 +40,13 @@ public class AuctionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
-    @GetMapping
-    public ResponseEntity<GenericObjectResponse> getAllAuctions(){
-        List<Auction> auctions = auctionService.getAuctions();
-        List<AuctionDTO> dtos = auctions.stream().map(a -> AuctionConverter.convertToDTO(a)).collect(Collectors.toList());
+    @GetMapping()
+    public ResponseEntity<GenericObjectResponse> getAuctionsByCreator(@RequestParam(required = true) Long creatorId){
+        List<Auction> auctions = auctionService.getAuctionsByCreator(creatorId);
+        List<AuctionDTO> dtos = auctions.stream().map(AuctionConverter::convertToDTO).collect(Collectors.toList());
         GenericObjectResponse res = GenericObjectResponse.builder().message("Successfully fetched auctions").obj(dtos).build();
         return ResponseEntity.ok(res);
     }
-
     @GetMapping("/{auctionId}")
     public ResponseEntity<AuctionDTO> getAuctionDetails(@PathVariable Long auctionId){
         Auction auction = auctionService.getAuctionDetails(auctionId);

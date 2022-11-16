@@ -54,7 +54,11 @@ public class UserService implements IUserService {
 
         return found;
     }
-
+    @Override
+    public User getUserByUsername(String username){
+        User found = userRepository.getUserByUsername(username);
+        return found;
+    }
     @Override
     public User getUserByAccessToken(){
         User found = userRepository.findById(requestAccessToken.getUserId());

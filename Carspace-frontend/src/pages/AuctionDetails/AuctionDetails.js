@@ -17,7 +17,6 @@ function AuctionDetails(props) {
   const [auction, setAuction] = useState(null);
   const { loggedUser } = useContext(UserContext);
 
-  console.log(loggedUser);
   useEffect(() => {
     async function getData() {
       try {

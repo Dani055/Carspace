@@ -15,14 +15,14 @@ function FilterForm(props) {
   }
 
   return (
-    <div class="accordion" id="filtersAccordion">
-      <h2 class="accordion-header" id="headingOne">
-        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+    <div className="accordion" id="filtersAccordion">
+      <h2 className="accordion-header" id="headingOne">
+        <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
           <h4>Filters:</h4>
         </button>
       </h2>
-      <div id="collapseFilters" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#filtersAccordion">
-        <div class="accordion-body">
+      <div id="collapseFilters" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#filtersAccordion">
+        <div className="accordion-body">
         <form onSubmit={handleSubmit}>
         <div className="row gx-5 align-items-center">
           <div className="col-md-5">

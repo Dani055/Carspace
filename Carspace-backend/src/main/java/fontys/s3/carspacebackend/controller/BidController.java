@@ -19,7 +19,8 @@ import javax.validation.Valid;
 public class BidController {
     private IBidService bidService;
 
-    @PostMapping("/{auctionId}")
+
+    @PostMapping("/{auctionId}") //Maybe not the most RESTful way, auctionId should be a query param
     @IsAuthenticated
     public ResponseEntity<ResourceCreatedResponse> placeBid(@PathVariable Long auctionId, @RequestBody @Valid CreateBidReq req){
         Bid bid = Bid.builder().amount(req.getAmount()).build();
