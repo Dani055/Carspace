@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -47,6 +48,7 @@ public class AuthController {
 
     @GetMapping("checkkey")
     @IsAuthenticated
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<GenericObjectResponse> checkKey(){
         User loggedUser = userService.getUserByAccessToken();
         UserDTO userDTO = UserConverter.convertToDTO(loggedUser);

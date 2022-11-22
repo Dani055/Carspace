@@ -19,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,6 +34,7 @@ public class AuctionController {
 
     @PostMapping()
     @IsAuthenticated
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<ResourceCreatedResponse> createAuction(@RequestHeader HttpHeaders headers, @RequestBody @Valid CreateAuctionReq req){
         Auction toCreate = Auction.builder().carBrand(req.getCarBrand()).carModel(req.getCarModel()).carDesc(req.getCarDesc()).carYear(req.getCarYear()).startingPrice(req.getStartingPrice()).buyoutPrice(req.getBuyoutPrice()).mileage(req.getMileage()).location(req.getLocation()).startsOn(req.getStartsOn()).endsOn(req.getEndsOn()).build();
         Long createdAuctionId = auctionService.createAuction(toCreate, req.getUrls());
@@ -56,6 +58,7 @@ public class AuctionController {
 
     @PutMapping("/{auctionId}")
     @IsAuthenticated
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<ResourceChangedResponse> editAuction(@PathVariable Long auctionId, @RequestBody @Valid CreateAuctionReq req){
         Auction toEdit = Auction.builder().id(auctionId).carBrand(req.getCarBrand()).carModel(req.getCarModel()).carDesc(req.getCarDesc()).carYear(req.getCarYear()).startingPrice(req.getStartingPrice()).buyoutPrice(req.getBuyoutPrice()).mileage(req.getMileage()).location(req.getLocation()).startsOn(req.getStartsOn()).endsOn(req.getEndsOn()).build();
 
@@ -67,6 +70,7 @@ public class AuctionController {
 
     @DeleteMapping("/{auctionId}")
     @IsAuthenticated
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<ResourceDeletedResponse> deleteAuction(@PathVariable Long auctionId){
         auctionService.deleteAuction(auctionId);
 

@@ -112,7 +112,7 @@ function AuctionDetails(props) {
 
   const displayBidForm = () => {
     if (loggedUser !== null && dayjs().isAfter(auction.startsOn) && dayjs().isBefore(auction.endsOn)) {
-      return <BidForm />;
+      return <BidForm loggedUser={loggedUser}/>;
     }
   }
 
@@ -204,9 +204,9 @@ function AuctionDetails(props) {
               </div>
             }
             <div className="rounded my-2 shadow">
-              <div className="current-bid-details bg-success p-3">
+
                 {
-                  auction.bids.length !== 0 ? <>
+                  auction.bids.length !== 0 && <div className="current-bid-details bg-success p-3">
                   <p>
                   {auction.winningBid == null ? "Leading bid" : "Winner"}
                   <Link className="link-light" to="profile">
@@ -227,11 +227,22 @@ function AuctionDetails(props) {
                 <p>
                   Placed on <span className="bold">{dayjs(auction.bids[0].creatordOn).format("DD/MM/YYYY HH:mm:ss")}</span>
                 </p>
-                </> : <h4>This auction has no bids yet</h4>
+                </div>
                 }
-                
-              </div>
-
+                {
+                  auction.bids.length === 0 && !auction.hasSold && <h4 className="p-3">
+                    This auction has no bids yet!
+                  </h4>
+                }
+              
+                {
+                  auction.bids.length === 0 && auction.hasSold && 
+                  <div className="bg-danger p-3 text-white">
+                    <h4>
+                    This auction failed to sell!
+                    </h4>
+                  </div>
+                }
               {displayBidForm()}
             </div>
             <BidHistory bids={auction.bids}/>

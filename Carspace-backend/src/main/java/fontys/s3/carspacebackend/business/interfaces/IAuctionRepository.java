@@ -14,4 +14,5 @@ public interface IAuctionRepository {
     Long changeAuctionInfo(Auction auction, List<String> urls);
     boolean deleteAuction(Long auctionId);
     Page<Auction> findLiveAuctionsByFilters(AuctionFilters filters, Pageable pageable);
+    public void endAuctions();
 }

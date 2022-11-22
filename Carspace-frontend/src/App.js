@@ -13,14 +13,12 @@ import AuctionDetails from './pages/AuctionDetails/AuctionDetails';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { toast } from 'react-toastify';
 import { useEffect, useContext, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { checkLoginKey } from './service/userService';
 import { UserContext } from './UserProvider';
 import Protected from './components/Protected/Protected';
 import NotFound from './pages/NotFound/NotFound';
 import AuctionResults from './pages/AuctionResults/AuctionResults';
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies();
   const {loggedUser, setLoggedUser} = useContext(UserContext);
   const [isBusy, setIsBusy] = useState(true);
 

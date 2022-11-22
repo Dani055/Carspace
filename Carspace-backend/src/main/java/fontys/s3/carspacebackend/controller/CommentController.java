@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
@@ -21,6 +23,7 @@ public class CommentController {
 
     @PostMapping("/{auctionId}") //Maybe not the most RESTful way, auctionId should be a query param
     @IsAuthenticated
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<ResourceCreatedResponse> postComment(@PathVariable Long auctionId, @RequestBody @Valid CreateCommentReq req){
         Comment c = Comment.builder().text(req.getText()).build();
 
@@ -32,6 +35,7 @@ public class CommentController {
 
     @DeleteMapping("/{commentId}")
     @IsAuthenticated
+    @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
     public ResponseEntity<ResourceDeletedResponse> deleteComment(@PathVariable Long commentId){
         commentService.deleteComment(commentId);
 

@@ -24,8 +24,13 @@ public class BidService implements IBidService {
 
     private AccessToken requestAccessToken;
 
-    @Transactional
     public Long createBid(Bid b, Long auctionId){
+        concludeEndedAuctions();
+        return placeBid(b, auctionId);
+    }
+
+    @Transactional
+    public Long placeBid(Bid b, Long auctionId){
         User bidder = userRepository.findById(requestAccessToken.getUserId());
         Auction auction = auctionRepository.getAuctionById(auctionId);
         if(!auction.hasStarted()){
@@ -49,5 +54,10 @@ public class BidService implements IBidService {
         }
 
         return bidRepository.saveBid(b, auctionId, bidder.getId());
+    }
+
+    @Transactional
+    public void concludeEndedAuctions(){
+        auctionRepository.endAuctions();
     }
 }

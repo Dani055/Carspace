@@ -1,16 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginUserCall } from "../../../service/userService";
 import { toast } from 'react-toastify';
 import { UserContext } from "../../../UserProvider";
-import { useCookies } from 'react-cookie';
-
 function LoginForm(props) {
   const navigate = useNavigate();
   const [formState, setFormState] = useState({username: "", password: ""});
-  const {setLoggedUser} = useContext(UserContext)
-  const [cookies, setCookie] = useCookies();
-
+  const {loggedUser, setLoggedUser} = useContext(UserContext)
+  
+  // useEffect(()=>{
+  //   if(loggedUser !== null || loggedUser !== undefined){
+  //     navigate('/home');
+  //   }
+  // },[])
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -19,7 +21,6 @@ function LoginForm(props) {
       window.sessionStorage.setItem("tkn", res.obj.accessToken);
       setLoggedUser(res.obj.user);
       navigate("/");
-
     } 
     catch (err) {
       toast.error("Incorrect username or password");

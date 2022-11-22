@@ -15,6 +15,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -117,5 +119,18 @@ public class AuctionRepository implements IAuctionRepository {
 
         Page<Auction> auctions = entities.map(AuctionConverter::convertToPOJO);
         return auctions;
+    }
+
+    @Override
+    public void endAuctions() {
+        List<AuctionEntity> unendedAuctions = auctionRepository.findByEndsOnBeforeAndHasSold(Instant.now(), false);
+        for (AuctionEntity auction: unendedAuctions) {
+            auction.setHasSold(true);
+            if(!auction.getBids().isEmpty()){
+                //Sorted by jpa, first bid is the highest
+                auction.setWinningBid(auction.getBids().iterator().next());
+            }
+        }
+        auctionRepository.saveAll(unendedAuctions);
     }
 }
