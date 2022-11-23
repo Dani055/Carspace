@@ -54,6 +54,7 @@ public class BidServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
+        verify(auctionRepoMock).endAuctions();
         verify(auctionRepoMock).getAuctionById(100L);
         verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
@@ -83,6 +84,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(auctionRepoMock).endAuctions();
         verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
@@ -111,6 +113,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(50L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(auctionRepoMock).endAuctions();
         verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
@@ -140,6 +143,7 @@ public class BidServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(55L);
         verify(auctionRepoMock).getAuctionById(100L);
+        verify(auctionRepoMock).endAuctions();
         verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
     }
@@ -168,6 +172,7 @@ public class BidServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(55L);
+        verify(auctionRepoMock).endAuctions();
         verify(auctionRepoMock).getAuctionById(100L);
         verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
@@ -202,6 +207,7 @@ public class BidServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
         verify(userRepoMock).findById(55L);
+        verify(auctionRepoMock).endAuctions();
         verify(auctionRepoMock).getAuctionById(100L);
         verify(accessToken).getUserId();
         TimeHelper.QuitDebugMode();
@@ -233,6 +239,7 @@ public class BidServiceTest {
         verify(auctionRepoMock).getAuctionById(100L);
         verify(bidRepoMock).saveBid(toCreate, 100L, 55L);
         verify(accessToken).getUserId();
+        verify(auctionRepoMock).endAuctions();
         TimeHelper.QuitDebugMode();
     }
 }
