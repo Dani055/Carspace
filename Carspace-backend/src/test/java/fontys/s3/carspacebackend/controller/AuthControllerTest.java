@@ -142,7 +142,7 @@ public class AuthControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void checkKeyShouldReturn200WhenRequestValid() throws Exception{
         UserRole role = UserRole.builder().id(1L).role("user").build();
         User user = User.builder().id(25L).username("test").password("123").role(role).firstName("John").lastName("Doe").email("jdoe@gmail.com").address("eindhoven").phone("+123124124").build();
