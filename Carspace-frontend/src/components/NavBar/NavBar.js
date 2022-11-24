@@ -13,7 +13,7 @@ function NavBar() {
   
   const logout = (e) => {
     e.preventDefault();
-    removeCookie('token', {path:'/'});
+    window.sessionStorage.removeItem("tkn");
     setLoggedUser(null);
     toast.success("Logged out")
   }
@@ -52,7 +52,7 @@ function NavBar() {
               </NavLink>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <Link className="dropdown-item" to="#">
+                  <Link className="dropdown-item" to="/">
                     Live auctions
                   </Link>
                 </li>
@@ -62,7 +62,7 @@ function NavBar() {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="#">
+                  <Link className="dropdown-item" to="/results">
                     Ended actions
                   </Link>
                 </li>

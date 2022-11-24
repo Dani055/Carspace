@@ -5,7 +5,7 @@ const registerUserCall = (body) => {
     return axiosConfig.post(`auth/signup`, body)
         .then((response) => response.data)
         .catch((err) => {
-            throwError(err)
+            throwError(err);
         })
 }
 
@@ -24,8 +24,18 @@ const checkLoginKey = () => {
             throwError(err)
         })
 }
+const getUserProfile = (username) => {
+    return axiosConfig.get(`user/${username}`)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
 function throwError (err){
     if (err.response) {
+        if(err.response.data.fieldErrors){
+            err.response.data.message = err.response.data.fieldErrors[0].field + ": " + err.response.data.fieldErrors[0].message;
+        }
         throw err.response.data.message;
     } else if (err.request) {
         throw err.request;
@@ -37,5 +47,6 @@ function throwError (err){
 export {
     registerUserCall,
     loginUserCall,
-    checkLoginKey
+    checkLoginKey,
+    getUserProfile
 }

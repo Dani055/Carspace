@@ -25,7 +25,7 @@ function BidForm(props) {
 
   return (
     <div className="place-bid border-top p-3">
-      <h6>Place bid as LOGGED USER</h6>
+      <h6>Place bid as {props.loggedUser.username}</h6>
       <form id="bidForm" onSubmit={handleSubmit}>
         <div className="input-group mb-3">
           <input

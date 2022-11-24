@@ -8,8 +8,22 @@ const createAuctionCall = (body) => {
             throwError(err)
         })
 }
-const getAuctionsCall = () => {
-    return axiosConfig.get(`auction`)
+const getAuctionsByCreatorCall = (creatorId) => {
+    return axiosConfig.get(`auction?creatorId=${creatorId}`)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
+const getLiveAuctionsWithFiltersAndPage = (filters, page) => {
+    return axiosConfig.get(`auction/filter?location=${filters?.location}&carModel=${filters?.carModel}&minPrice=${filters?.minPrice}&maxPrice=${filters?.maxPrice}&minMileage=${filters?.minMileage}&hasEnded=false&carBrand=${filters?.carBrand}&minYear=${filters?.minYear}&maxYear=${filters?.maxYear}&maxMileage=${filters?.maxMileage}&page=${page}`)
+        .then((response) => response.data)
+        .catch((err) => {
+            throwError(err)
+        })
+}
+const getEndedAuctionsWithFiltersAndPage = (filters, page) => {
+    return axiosConfig.get(`auction/filter?location=${filters?.location}&carModel=${filters?.carModel}&minPrice=${filters?.minPrice}&maxPrice=${filters?.maxPrice}&minMileage=${filters?.minMileage}&hasEnded=true&carBrand=${filters?.carBrand}&minYear=${filters?.minYear}&maxYear=${filters?.maxYear}&maxMileage=${filters?.maxMileage}&page=${page}`)
         .then((response) => response.data)
         .catch((err) => {
             throwError(err)
@@ -49,7 +63,9 @@ function throwError (err){
 
 export {
     createAuctionCall,
-    getAuctionsCall,
+    getAuctionsByCreatorCall,
+    getLiveAuctionsWithFiltersAndPage,
+    getEndedAuctionsWithFiltersAndPage,
     getAuctionById,
     editAuctionCall,
     deleteAuctionCall
