@@ -38,7 +38,7 @@ function RegisterForm(props) {
               name="firstName"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">First name</label>
+            <label htmlFor="floatingInput">First name*</label>
           </div>
         </div>
         <div className="col-md-6 mb-4">
@@ -51,7 +51,7 @@ function RegisterForm(props) {
               name="lastName"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">Last name</label>
+            <label htmlFor="floatingInput">Last name*</label>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ function RegisterForm(props) {
               name="address"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">Address</label>
+            <label htmlFor="floatingInput">Address*</label>
           </div>
         </div>
         <div className="col-md-6">
@@ -80,7 +80,7 @@ function RegisterForm(props) {
               name="phone"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">Phone number</label>
+            <label htmlFor="floatingInput">Phone number*</label>
           </div>
         </div>
       </div>
@@ -96,7 +96,7 @@ function RegisterForm(props) {
               name="email"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">Email</label>
+            <label htmlFor="floatingInput">Email*</label>
           </div>
         </div>
         <div className="col-md-6 mb-4">
@@ -109,13 +109,13 @@ function RegisterForm(props) {
               name="username"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">Username</label>
+            <label htmlFor="floatingInput">Username* (Min. 2)</label>
           </div>
         </div>
       </div>
 
       <div className="row justify-content-center">
-        <div className="col-md-6 mb-4">
+        <div className="col-md-6 mb-2">
           <div className="form-floating mb-3">
             <input
               type="password"
@@ -125,8 +125,14 @@ function RegisterForm(props) {
               name="password"
               placeholder="name@example.com"
             />
-            <label htmlFor="floatingInput">Password</label>
+            <label htmlFor="floatingInput">Password* (min. 3)</label>
           </div>
+        </div>
+      </div>
+
+      <div className="row justify-content-center">
+        <div className="col-md-6 text-center">
+          <p className="text-danger">* Fields are required</p>
         </div>
       </div>
 

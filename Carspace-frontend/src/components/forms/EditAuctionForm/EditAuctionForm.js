@@ -109,7 +109,7 @@ function EditAuctionForm(props) {
                     value={formState.carBrand}
                     placeholder="Elon mobile"
                   />
-                  <label htmlFor="floatingInput">Brand</label>
+                  <label htmlFor="floatingInput">Brand*</label>
                 </div>
               </div>
               <div className="col-md-6 mb-4">
@@ -123,7 +123,7 @@ function EditAuctionForm(props) {
                     value={formState.carModel}
                     placeholder="Cybertrock"
                   />
-                  <label htmlFor="floatingInput">Model</label>
+                  <label htmlFor="floatingInput">Model*</label>
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@ function EditAuctionForm(props) {
                   onChange={handleFormChange}
                   value={formState.carDesc}
                 ></textarea>
-                <label htmlFor="floatingTextarea">Description</label>
+                <label htmlFor="floatingTextarea">Description* (Min. 10)</label>
               </div>
             </div>
 
@@ -154,7 +154,7 @@ function EditAuctionForm(props) {
                     value={formState.location}
                     placeholder="The moon"
                   />
-                  <label htmlFor="floatingInput">Location</label>
+                  <label htmlFor="floatingInput">Location*</label>
                 </div>
               </div>
               <div className="col-md-6 mb-4">
@@ -170,7 +170,7 @@ function EditAuctionForm(props) {
                     value={formState.mileage}
                     placeholder="20"
                   />
-                  <label htmlFor="floatingInput">Mileage in KM</label>
+                  <label htmlFor="floatingInput">Mileage in KM*</label>
                 </div>
               </div>
               <div className="col-md-6 mb-4">
@@ -186,7 +186,7 @@ function EditAuctionForm(props) {
                     value={formState.carYear}
                     placeholder="2022"
                   />
-                  <label htmlFor="floatingInput">Vehicle year</label>
+                  <label htmlFor="floatingInput">Vehicle year*</label>
                 </div>
               </div>
             </div>
@@ -198,7 +198,7 @@ function EditAuctionForm(props) {
 
             <div className="mb-4 pb-2">
               <label className="form-label" htmlFor="form3Examplea3">
-                Start date
+                Start date*
               </label>
               <div>
                 <DateTimePicker
@@ -213,7 +213,7 @@ function EditAuctionForm(props) {
 
             <div className="mb-4 pb-2">
               <label className="form-label" htmlFor="form3Examplea3">
-                End date
+                End date*
               </label>
               <div>
                 <DateTimePicker
@@ -227,7 +227,7 @@ function EditAuctionForm(props) {
             </div>
 
             <div className="row">
-              <div className="col-md-6 mb-4 text-black">
+              <div className="col-md-6 mb-1 text-black">
                 <div className="form-floating mb-3">
                   <input
                     type="number"
@@ -240,11 +240,11 @@ function EditAuctionForm(props) {
                     name="startingPrice"
                     placeholder="20"
                   />
-                  <label htmlFor="floatingInput">Starting Price</label>
+                  <label htmlFor="floatingInput">Starting Price*</label>
                 </div>
               </div>
               <div className="col-md-6 mb-4 text-black">
-                <div className="form-floating mb-3">
+                <div className="form-floating mb-1">
                   <input
                     type="number"
                     min={0}
@@ -256,11 +256,11 @@ function EditAuctionForm(props) {
                     name="buyoutPrice"
                     placeholder="20"
                   />
-                  <label htmlFor="floatingInput">Buyout Price</label>
+                  <label htmlFor="floatingInput">Buyout Price*</label>
                 </div>
               </div>
             </div>
-
+            <p className="text-warning">* Fields are required</p>
             <button
               type="submit"
               className="btn btn-dark"

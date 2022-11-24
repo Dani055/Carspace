@@ -13,25 +13,25 @@ import AuctionDetails from './pages/AuctionDetails/AuctionDetails';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { toast } from 'react-toastify';
 import { useEffect, useContext, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { checkLoginKey } from './service/userService';
 import { UserContext } from './UserProvider';
 import Protected from './components/Protected/Protected';
 import NotFound from './pages/NotFound/NotFound';
+import AuctionResults from './pages/AuctionResults/AuctionResults';
 function App() {
-  const [cookies, setCookie, removeCookie] = useCookies();
   const {loggedUser, setLoggedUser} = useContext(UserContext);
   const [isBusy, setIsBusy] = useState(true);
 
   useEffect(()=>{
     async function getUser() {
-      if(cookies["token"] !== undefined){
+      const token = window.sessionStorage.getItem("tkn");
+      if(token !== null){
         try {
           const res = await checkLoginKey();
           setLoggedUser(res.obj);
         } catch (err) {
           toast.error(err);
-          removeCookie('token', {path:'/'});
+          window.sessionStorage.removeItem("tkn");
           setLoggedUser(null);
           setIsBusy(false);
         }
@@ -47,8 +47,14 @@ function App() {
           <NavBar />
           <Routes>
           <Route path="/" element={<MainPage />} />
+          <Route path="/results" element={<AuctionResults />} />
           <Route path="/login" element={<Login />} />
 
+          <Route path="/profile/:username" element={
+            <Protected loggedUser={loggedUser}>
+              <ProfilePage />
+            </Protected>
+          } />
           <Route path="/profile" element={
             <Protected loggedUser={loggedUser}>
               <ProfilePage />

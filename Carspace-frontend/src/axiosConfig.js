@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use(function (config) {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    const token = window.sessionStorage.getItem("tkn");
     if(token !== null && token !== undefined && token !== ''){
         config.headers.Authorization =  "Bearer " + token;
     }
