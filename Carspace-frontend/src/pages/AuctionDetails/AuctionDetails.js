@@ -8,10 +8,16 @@ import BidHistory from "../../components/BidHistory/BidHistory";
 import { deleteAuctionCall, getAuctionById } from "../../service/auctionService";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
+import SockJS from 'sockjs-client';
+import {Stomp} from '@stomp/stompjs';
 import { UserContext } from "../../UserProvider";
 import TimerComponent from "../../components/TimerComponent/TimerComponent";
 
+const ENDPOINT = "http://localhost:8080/ws";
+
 function AuctionDetails(props) {
+  const [stompClient, setStompClient] = useState(null);
+
   const params = useParams();
   const navigate = useNavigate();
   const [auction, setAuction] = useState(null);
@@ -21,7 +27,6 @@ function AuctionDetails(props) {
     async function getData() {
       try {
         const res = await getAuctionById(params.auctionId);
-        console.log(res);
         setAuction(res)
       } catch (error) {
         console.log(error)
@@ -30,7 +35,25 @@ function AuctionDetails(props) {
       }
     }
     getData();
+    const socket = SockJS(ENDPOINT);
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, () => {
+      // subscribe to the backend
+      stompClient.subscribe('/topic/bids', (data) => {
+        console.log(data.body);
+      });
+    });
+    setStompClient(stompClient);
+    return () => {
+      // Anything in here is fired on component unmount.
+      stompClient.disconnect();
+    }
   }, [])
+
+  function sendMessage() {
+    stompClient.send("/app/hello", {}, JSON.stringify({'name' : "xd"}));
+
+  };
 
   const deleteAuction = async () => {
     try {
@@ -119,6 +142,7 @@ function AuctionDetails(props) {
 
   return (
     <div className="container">
+      <button  onClick={sendMessage}>Send Message</button>
       {
         auction !== null &&
         <div className="row my-4">
@@ -225,7 +249,7 @@ function AuctionDetails(props) {
                 </p>
                 <h3>{auction.bids[0].amount}€</h3>
                 <p>
-                  Placed on <span className="bold">{dayjs(auction.bids[0].creatordOn).format("DD/MM/YYYY HH:mm:ss")}</span>
+                  Placed on <span className="bold">{dayjs(auction.bids[0].createdOn).format("DD/MM/YYYY HH:mm:ss")}</span>
                 </p>
                 </div>
                 }
