@@ -1,7 +1,9 @@
 package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.IBidRepository;
+import fontys.s3.carspacebackend.converters.AuctionConverter;
 import fontys.s3.carspacebackend.converters.BidConverter;
+import fontys.s3.carspacebackend.domain.Auction;
 import fontys.s3.carspacebackend.domain.Bid;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
@@ -13,7 +15,9 @@ import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -38,5 +42,11 @@ public class BidRepository implements IBidRepository {
         bidRepository.save(bid);
 
         return bid.getId();
+    }
+    @Override
+    public List<Bid> getBidsOnLiveAuctions(){
+        List<BidEntity> bidEntities = bidRepository.findByAuctionHasSoldOrderByAmountDesc(false);
+        List<Bid> bids = bidEntities.stream().map(BidConverter::convertToPOJO).collect(Collectors.toList());
+        return bids;
     }
 }

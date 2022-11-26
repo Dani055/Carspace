@@ -21,13 +21,15 @@ function AuctionDetails(props) {
   const params = useParams();
   const navigate = useNavigate();
   const [auction, setAuction] = useState(null);
+  const [bids, setBids] = useState([]);
   const { loggedUser } = useContext(UserContext);
 
   useEffect(() => {
     async function getData() {
       try {
         const res = await getAuctionById(params.auctionId);
-        setAuction(res)
+        await setAuction(res);
+        await setBids(res.bids);
       } catch (error) {
         console.log(error)
         toast.error("Error loading auction");
@@ -35,26 +37,24 @@ function AuctionDetails(props) {
       }
     }
     getData();
-    const socket = SockJS(ENDPOINT);
-    const stompClient = Stomp.over(socket);
-    stompClient.connect({}, () => {
-      // subscribe to the backend
-      stompClient.subscribe('/topic/bids', (data) => {
-        console.log(data.body);
-      });
-    });
-    setStompClient(stompClient);
-    return () => {
-      // Anything in here is fired on component unmount.
-      stompClient.disconnect();
-    }
   }, [])
-
-  function sendMessage() {
-    stompClient.send("/app/hello", {}, JSON.stringify({'name' : "xd"}));
-
-  };
-
+  useEffect(() => {
+    if(auction !== null && !auction.hasSold){
+      const socket = SockJS(ENDPOINT);
+      const stompClient = Stomp.over(socket);
+      stompClient.connect({}, () => {
+        // subscribe to the backend
+        stompClient.subscribe('/topic/bids', (data) => {
+          filterRelevantBids(JSON.parse(data.body));
+        });
+      });
+      setStompClient(stompClient);
+      return () => {
+        // Anything in here is fired on component unmount.
+        stompClient.disconnect();
+      }
+    }
+  }, [auction])
   const deleteAuction = async () => {
     try {
       const res = await deleteAuctionCall(params.auctionId);
@@ -65,6 +65,12 @@ function AuctionDetails(props) {
       toast.error(error);
     }
   };
+
+  const filterRelevantBids = (bids) => {
+    const auctionId = Number.parseInt(params.auctionId);
+    let relevantBids = bids.filter(b => b.auctionId === auctionId);
+    setBids(relevantBids);
+  }
 
   const deleteButtonHTML = () => {
     return <>
@@ -142,7 +148,6 @@ function AuctionDetails(props) {
 
   return (
     <div className="container">
-      <button  onClick={sendMessage}>Send Message</button>
       {
         auction !== null &&
         <div className="row my-4">
@@ -230,7 +235,7 @@ function AuctionDetails(props) {
             <div className="rounded my-2 shadow">
 
                 {
-                  auction.bids.length !== 0 && <div className="current-bid-details bg-success p-3">
+                  bids.length !== 0 && <div className="current-bid-details bg-success p-3">
                   <p>
                   {auction.winningBid == null ? "Leading bid" : "Winner"}
                   <Link className="link-light" to="profile">
@@ -244,10 +249,10 @@ function AuctionDetails(props) {
                     >
                       <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
                     </svg>{" "}
-                    {auction.bids[0].bidder.username}
+                    {bids[0].bidder.username}
                   </Link>
                 </p>
-                <h3>{auction.bids[0].amount}€</h3>
+                <h3>{bids[0].amount}€</h3>
                 <p>
                   Placed on <span className="bold">{dayjs(auction.bids[0].createdOn).format("DD/MM/YYYY HH:mm:ss")}</span>
                 </p>
@@ -269,7 +274,7 @@ function AuctionDetails(props) {
                 }
               {displayBidForm()}
             </div>
-            <BidHistory bids={auction.bids}/>
+            <BidHistory bids={bids}/>
           </div>
         </div>
       }
