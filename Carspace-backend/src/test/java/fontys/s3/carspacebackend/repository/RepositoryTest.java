@@ -1,17 +1,17 @@
 package fontys.s3.carspacebackend.repository;
 
 import fontys.s3.carspacebackend.domain.TimeHelper;
-import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.carspacebackend.persistence.Entity.ImageEntity;
-import fontys.s3.carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
+import fontys.s3.carspacebackend.persistence.entity.ImageEntity;
+import fontys.s3.carspacebackend.persistence.entity.RoleEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityManager;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 
-public abstract class RepositoryTest {
+ abstract class RepositoryTest {
     @Autowired
     private
     EntityManager entityManager;
@@ -41,8 +41,9 @@ public abstract class RepositoryTest {
         Instant aucStart = TimeHelper.Now().plus(1, ChronoUnit.DAYS);
         Instant aucEnd = TimeHelper.Now().plus(4, ChronoUnit.DAYS);
         AuctionEntity auction = AuctionEntity.builder().creator(creator).carBrand("BMW").carModel("330i").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).mileage(10000).hasSold(false).location("123 avenue").startsOn(aucStart).endsOn(aucEnd).build();
+        AuctionEntity auctionToEnd = AuctionEntity.builder().creator(creator).carBrand("Merc").carModel("300E").carDesc("desc").carYear(2002).startingPrice(1000).buyoutPrice(2000).mileage(10000).hasSold(false).location("123 avenue").startsOn(TimeHelper.Now().minus(5, ChronoUnit.DAYS)).endsOn(TimeHelper.Now().minus(3, ChronoUnit.DAYS)).build();
         entityManager.persist(auction);
-
+        entityManager.persist(auctionToEnd);
         ImageEntity img1 = ImageEntity.builder().imgUrl("img1").auction(auction).build();
         entityManager.persist(img1);
 

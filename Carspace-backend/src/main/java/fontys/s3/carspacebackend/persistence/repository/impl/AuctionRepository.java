@@ -1,13 +1,13 @@
 package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.IAuctionRepository;
-import fontys.s3.carspacebackend.converters.AuctionConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.AuctionConverter;
 import fontys.s3.carspacebackend.domain.Auction;
 import fontys.s3.carspacebackend.domain.AuctionFilters;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
-import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.carspacebackend.persistence.Entity.ImageEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
+import fontys.s3.carspacebackend.persistence.entity.ImageEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionImageRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
@@ -20,7 +20,6 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -54,8 +53,7 @@ public class AuctionRepository implements IAuctionRepository {
     public List<Auction> getAuctionsByCreator(long creatorId){
         List<AuctionEntity> auctionsEntities = auctionRepository.findByCreatorId(creatorId);
 
-        List<Auction> auctions = auctionsEntities.stream().map(AuctionConverter::convertToPOJO).collect(Collectors.toList());
-        return auctions;
+        return auctionsEntities.stream().map(AuctionConverter::convertToPOJO).toList();
     }
 
     @Override
@@ -64,8 +62,7 @@ public class AuctionRepository implements IAuctionRepository {
         if(auction.isEmpty()){
             throw new ResourceNotFoundException("Auction", "id", aucId);
         }
-        Auction a = AuctionConverter.convertToPOJO(auction.get());
-        return a;
+        return AuctionConverter.convertToPOJO(auction.get());
     }
 
     @Override
@@ -75,7 +72,7 @@ public class AuctionRepository implements IAuctionRepository {
             throw new ResourceNotFoundException("Auction", "id", a.getId());
         }
         AuctionEntity entity = ae.get();
-        if(urls.size() > 0){
+        if(!urls.isEmpty()){
             imageRepository.deleteAll(entity.getImages());
         }
 
@@ -117,8 +114,7 @@ public class AuctionRepository implements IAuctionRepository {
             entities = auctionRepository.findByCarBrandContainingAndCarModelContainingAndLocationContainingAndCarYearBetweenAndStartingPriceGreaterThanEqualAndBuyoutPriceLessThanEqualAndMileageBetweenAndHasSoldOrderByEndsOnAsc(filters.getCarBrand(),filters.getCarModel(), filters.getLocation(), filters.getMinYear(), filters.getMaxYear(),filters.getMinPrice(), filters.getMaxPrice(),filters.getMinMileage(), filters.getMaxMileage(),false, pageable);
         }
 
-        Page<Auction> auctions = entities.map(AuctionConverter::convertToPOJO);
-        return auctions;
+        return entities.map(AuctionConverter::convertToPOJO);
     }
 
     @Override

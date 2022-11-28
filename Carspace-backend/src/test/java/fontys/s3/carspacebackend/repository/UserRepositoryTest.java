@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryTest extends RepositoryTest{
+class UserRepositoryTest extends RepositoryTest{
 
     @Autowired private UserRepository userRepo;
     @Autowired private RoleRepository roleRepo;

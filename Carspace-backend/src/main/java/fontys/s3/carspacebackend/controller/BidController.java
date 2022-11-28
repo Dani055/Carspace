@@ -5,8 +5,7 @@ import fontys.s3.carspacebackend.configuration.security.isauthenticated.IsAuthen
 import fontys.s3.carspacebackend.controller.dto.BidDTO;
 import fontys.s3.carspacebackend.controller.requests.CreateBidReq;
 import fontys.s3.carspacebackend.controller.responses.ResourceCreatedResponse;
-import fontys.s3.carspacebackend.converters.AuctionConverter;
-import fontys.s3.carspacebackend.converters.BidConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.BidConverter;
 import fontys.s3.carspacebackend.domain.Bid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
@@ -31,7 +29,7 @@ public class BidController{
     @PostMapping("/{auctionId}") //Maybe not the most RESTful way, auctionId should be a query param
     @IsAuthenticated
     @RolesAllowed({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<ResourceCreatedResponse> placeBid(@PathVariable Long auctionId, @RequestBody @Valid CreateBidReq req) throws Exception{
+    public ResponseEntity<ResourceCreatedResponse> placeBid(@PathVariable Long auctionId, @RequestBody @Valid CreateBidReq req){
         Bid bid = Bid.builder().amount(req.getAmount()).build();
 
         Long createdBidId = bidService.createBid(bid, auctionId);
@@ -43,7 +41,7 @@ public class BidController{
     }
 
     public void sendNotif(List<Bid> bids, Long auctionId) {
-        List<BidDTO> dtos = bids.stream().map(BidConverter::convertToDTO).collect(Collectors.toList());
+        List<BidDTO> dtos = bids.stream().map(BidConverter::convertToDTO).toList();
         for (BidDTO b: dtos ){
             b.setAuctionId(auctionId);
         }

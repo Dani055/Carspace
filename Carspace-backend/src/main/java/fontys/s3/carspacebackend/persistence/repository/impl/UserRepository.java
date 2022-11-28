@@ -1,12 +1,12 @@
 package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.IUserRepository;
-import fontys.s3.carspacebackend.converters.UserConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.UserConverter;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.exception.IncorrectCredentialsException;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.carspacebackend.exception.UsernameExistsException;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;

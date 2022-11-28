@@ -44,25 +44,20 @@ public class UserService implements IUserService {
             throw new IncorrectCredentialsException();
         }
         String accesstoken = accessTokenHelper.generateAccessToken(found);
-        UserWithToken uwt = UserWithToken.builder().user(found).token(accesstoken).build();
-        return uwt;
+        return UserWithToken.builder().user(found).token(accesstoken).build();
     }
 
     @Override
     public User getUserById(Long id){
-        User found = userRepository.findById(id);
+        return userRepository.findById(id);
 
-        return found;
     }
     @Override
     public User getUserByUsername(String username){
-        User found = userRepository.getUserByUsername(username);
-        return found;
+        return userRepository.getUserByUsername(username);
     }
     @Override
     public User getUserByAccessToken(){
-        User found = userRepository.findById(requestAccessToken.getUserId());
-
-        return found;
+        return userRepository.findById(requestAccessToken.getUserId());
     }
 }

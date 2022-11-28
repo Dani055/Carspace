@@ -1,13 +1,13 @@
 package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.IAuctionImageRepository;
-import fontys.s3.carspacebackend.converters.ImageConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.ImageConverter;
 
 import fontys.s3.carspacebackend.domain.Image;
 
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
-import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.carspacebackend.persistence.Entity.ImageEntity;
+import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
+import fontys.s3.carspacebackend.persistence.entity.ImageEntity;
 
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionImageRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionRepository;

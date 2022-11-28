@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class AuctionValidatorTest {
+class AuctionValidatorTest {
     @Autowired
     private IAuctionValidator auctionValidator;
 

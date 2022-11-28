@@ -2,14 +2,14 @@ package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.ICommentRepository;
 
-import fontys.s3.carspacebackend.converters.CommentConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.CommentConverter;
 
 import fontys.s3.carspacebackend.domain.Comment;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
-import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
+import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
 
-import fontys.s3.carspacebackend.persistence.Entity.CommentEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.CommentEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionRepository;
 
 import fontys.s3.carspacebackend.persistence.repository.IJPACommentRepository;
@@ -32,8 +32,7 @@ public class CommentRepository implements ICommentRepository {
         if(ce.isEmpty()){
             throw new ResourceNotFoundException("Comment", "id", commentId);
         }
-        Comment c = CommentConverter.convertToPOJO(ce.get());
-        return c;
+        return CommentConverter.convertToPOJO(ce.get());
     }
     @Override
     public Long saveComment(Comment c, Long auctionId, Long userId){

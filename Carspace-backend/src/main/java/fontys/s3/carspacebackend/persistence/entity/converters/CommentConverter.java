@@ -1,9 +1,9 @@
-package fontys.s3.carspacebackend.converters;
+package fontys.s3.carspacebackend.persistence.entity.converters;
 
 
 import fontys.s3.carspacebackend.domain.Comment;
 import fontys.s3.carspacebackend.controller.dto.CommentDTO;
-import fontys.s3.carspacebackend.persistence.Entity.CommentEntity;
+import fontys.s3.carspacebackend.persistence.entity.CommentEntity;
 
 
 public class CommentConverter {

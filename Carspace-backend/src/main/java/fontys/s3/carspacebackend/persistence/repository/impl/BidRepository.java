@@ -1,14 +1,12 @@
 package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.IBidRepository;
-import fontys.s3.carspacebackend.converters.AuctionConverter;
-import fontys.s3.carspacebackend.converters.BidConverter;
-import fontys.s3.carspacebackend.domain.Auction;
+import fontys.s3.carspacebackend.persistence.entity.converters.BidConverter;
 import fontys.s3.carspacebackend.domain.Bid;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
-import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
-import fontys.s3.carspacebackend.persistence.Entity.BidEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
+import fontys.s3.carspacebackend.persistence.entity.BidEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import fontys.s3.carspacebackend.persistence.repository.IJPAAuctionRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPABidRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -46,7 +43,6 @@ public class BidRepository implements IBidRepository {
     @Override
     public List<Bid> getBidsOnLiveAuctions(){
         List<BidEntity> bidEntities = bidRepository.findByAuctionHasSoldOrderByAmountDesc(false);
-        List<Bid> bids = bidEntities.stream().map(BidConverter::convertToPOJO).collect(Collectors.toList());
-        return bids;
+        return bidEntities.stream().map(BidConverter::convertToPOJO).toList();
     }
 }

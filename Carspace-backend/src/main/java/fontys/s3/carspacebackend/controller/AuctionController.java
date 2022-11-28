@@ -4,7 +4,7 @@ import fontys.s3.carspacebackend.business.service.IAuctionService;
 
 import fontys.s3.carspacebackend.configuration.security.isauthenticated.IsAuthenticated;
 import fontys.s3.carspacebackend.controller.responses.*;
-import fontys.s3.carspacebackend.converters.AuctionConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.AuctionConverter;
 import fontys.s3.carspacebackend.domain.Auction;
 import fontys.s3.carspacebackend.controller.dto.AuctionDTO;
 import fontys.s3.carspacebackend.controller.requests.CreateAuctionReq;
@@ -22,14 +22,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/auction")
 @AllArgsConstructor
 public class AuctionController {
-//    private IUserService userService;
     private final IAuctionService auctionService;
 
     @PostMapping()
@@ -45,7 +43,7 @@ public class AuctionController {
     @GetMapping()
     public ResponseEntity<GenericObjectResponse> getAuctionsByCreator(@RequestParam(required = true) Long creatorId){
         List<Auction> auctions = auctionService.getAuctionsByCreator(creatorId);
-        List<AuctionDTO> dtos = auctions.stream().map(AuctionConverter::convertToDTO).collect(Collectors.toList());
+        List<AuctionDTO> dtos = auctions.stream().map(AuctionConverter::convertToDTO).toList();
         GenericObjectResponse res = GenericObjectResponse.builder().message("Successfully fetched auctions").obj(dtos).build();
         return ResponseEntity.ok(res);
     }
@@ -95,7 +93,7 @@ public class AuctionController {
         Pageable paging = PageRequest.of(page, 1);
         AuctionFilters filters = AuctionFilters.builder().carBrand(carBrand).carModel(carModel).minYear(minYear).maxYear(maxYear).location(location).minPrice(minPrice).maxPrice(maxPrice).minMileage(minMileage).maxMileage(maxMileage).hasEnded(hasEnded).build();
         Page<Auction> pages = auctionService.getLiveAuctions(filters, paging);
-        List<AuctionDTO> dtos = pages.getContent().stream().map(a -> AuctionConverter.convertToDTO(a)).collect(Collectors.toList());
+        List<AuctionDTO> dtos = pages.getContent().stream().map(AuctionConverter::convertToDTO).toList();
         FilteredAuctionsResponse res = FilteredAuctionsResponse.builder().auctions(dtos).currentPage(pages.getNumber()).totalItems(pages.getTotalElements()).totalPages(pages.getTotalPages()).build();
         return ResponseEntity.ok(res);
     }

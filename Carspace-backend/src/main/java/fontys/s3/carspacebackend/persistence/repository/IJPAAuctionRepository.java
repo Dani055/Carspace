@@ -1,6 +1,6 @@
 package fontys.s3.carspacebackend.persistence.repository;
 
-import fontys.s3.carspacebackend.persistence.Entity.AuctionEntity;
+import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;

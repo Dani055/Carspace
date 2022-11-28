@@ -1,9 +1,9 @@
-package fontys.s3.carspacebackend.converters;
+package fontys.s3.carspacebackend.persistence.entity.converters;
 
 import fontys.s3.carspacebackend.domain.Bid;
 
 import fontys.s3.carspacebackend.controller.dto.BidDTO;
-import fontys.s3.carspacebackend.persistence.Entity.BidEntity;
+import fontys.s3.carspacebackend.persistence.entity.BidEntity;
 
 
 public class BidConverter {

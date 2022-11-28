@@ -2,13 +2,13 @@ package fontys.s3.carspacebackend.converter;
 
 import fontys.s3.carspacebackend.controller.dto.CommentDTO;
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
-import fontys.s3.carspacebackend.converters.CommentConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.CommentConverter;
 import fontys.s3.carspacebackend.domain.Comment;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.domain.impl.UserRole;
-import fontys.s3.carspacebackend.persistence.Entity.CommentEntity;
-import fontys.s3.carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.CommentEntity;
+import fontys.s3.carspacebackend.persistence.entity.RoleEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CommentConverterTest {
+class CommentConverterTest {
 
     @Test
     void testConvertToPOJO(){

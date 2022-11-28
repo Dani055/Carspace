@@ -1,4 +1,4 @@
-package fontys.s3.carspacebackend.persistence.Entity;
+package fontys.s3.carspacebackend.persistence.entity;
 
 
 import lombok.*;
@@ -44,7 +44,4 @@ public class UserEntity implements Serializable {
     @Column(name="phone", nullable = false)
     private String phone;
 
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "creator")
-//    private Set<AuctionEntity> auctions = new HashSet<>();
 }

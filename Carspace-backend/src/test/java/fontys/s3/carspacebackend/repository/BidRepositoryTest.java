@@ -15,13 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.Instant;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BidRepositoryTest extends RepositoryTest{
+class BidRepositoryTest extends RepositoryTest{
     @Autowired
     private BidRepository bidRepo;
     @Autowired
@@ -51,5 +52,23 @@ public class BidRepositoryTest extends RepositoryTest{
             assertEquals(3L, b.getBidder().getId());
             assertTrue(b.getCreatedOn().isBefore(Instant.now()));
         }
+    }
+
+    @Transactional
+    @Test
+    void shouldSaveBidsAndAppearInNotificationBids() {
+        InsertTestAuctions();
+        Bid savedBid = Bid.builder().amount(500.0).build();
+        Bid savedBid2 = Bid.builder().amount(1000.0).build();
+        Long bidId = bidRepo.saveBid(savedBid, 1L, 3L);
+        Long bidId2 = bidRepo.saveBid(savedBid2, 1L, 3L);
+        Long bidId3 = bidRepo.saveBid(savedBid2, 2L, 3L);
+        assertNotNull(bidId);
+        assertNotNull(bidId2);
+        assertNotNull(bidId3);
+
+        List<Bid> bids = bidRepo.getBidsOnLiveAuctions();
+
+        assertEquals(3, bids.size());
     }
 }

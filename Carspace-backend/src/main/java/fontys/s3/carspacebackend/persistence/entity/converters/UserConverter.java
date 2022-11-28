@@ -1,12 +1,12 @@
-package fontys.s3.carspacebackend.converters;
+package fontys.s3.carspacebackend.persistence.entity.converters;
 
 import fontys.s3.carspacebackend.domain.IRole;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
 import fontys.s3.carspacebackend.domain.impl.AdminRole;
 import fontys.s3.carspacebackend.domain.impl.UserRole;
-import fontys.s3.carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.RoleEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 
 public final class UserConverter {
     private UserConverter(){

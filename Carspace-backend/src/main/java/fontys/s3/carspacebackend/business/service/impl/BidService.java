@@ -25,6 +25,7 @@ public class BidService implements IBidService {
 
     private AccessToken requestAccessToken;
 
+    @Override
     public Long createBid(Bid b, Long auctionId){
         concludeEndedAuctions();
         return placeBid(b, auctionId);

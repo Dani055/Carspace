@@ -1,4 +1,4 @@
-package fontys.s3.carspacebackend.persistence.Entity;
+package fontys.s3.carspacebackend.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

@@ -1,9 +1,9 @@
-package fontys.s3.carspacebackend.converters;
+package fontys.s3.carspacebackend.persistence.entity.converters;
 
 
 import fontys.s3.carspacebackend.domain.Image;
 
-import fontys.s3.carspacebackend.persistence.Entity.ImageEntity;
+import fontys.s3.carspacebackend.persistence.entity.ImageEntity;
 
 
 public class ImageConverter {

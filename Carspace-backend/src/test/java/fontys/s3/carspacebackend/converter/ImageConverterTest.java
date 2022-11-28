@@ -1,14 +1,14 @@
 package fontys.s3.carspacebackend.converter;
 
-import fontys.s3.carspacebackend.converters.ImageConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.ImageConverter;
 import fontys.s3.carspacebackend.domain.Image;
-import fontys.s3.carspacebackend.persistence.Entity.ImageEntity;
+import fontys.s3.carspacebackend.persistence.entity.ImageEntity;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class ImageConverterTest {
+class ImageConverterTest {
 
     @Test
     void testConvertToPOJO(){

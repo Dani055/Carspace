@@ -5,7 +5,7 @@ import fontys.s3.carspacebackend.domain.IRole;
 import fontys.s3.carspacebackend.domain.impl.AdminRole;
 import fontys.s3.carspacebackend.domain.impl.UserRole;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
-import fontys.s3.carspacebackend.persistence.Entity.RoleEntity;
+import fontys.s3.carspacebackend.persistence.entity.RoleEntity;
 import fontys.s3.carspacebackend.persistence.repository.IJPARoleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

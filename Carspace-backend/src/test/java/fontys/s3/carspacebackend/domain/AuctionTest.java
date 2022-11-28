@@ -8,7 +8,7 @@ import java.time.Instant;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AuctionTest {
+class AuctionTest {
     @Test
     void testIsOwner(){
         UserRole role = UserRole.builder().id(99L).role("user").build();

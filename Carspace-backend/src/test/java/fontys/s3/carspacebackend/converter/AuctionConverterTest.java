@@ -1,10 +1,10 @@
 package fontys.s3.carspacebackend.converter;
 
 import fontys.s3.carspacebackend.controller.dto.AuctionDTO;
-import fontys.s3.carspacebackend.converters.AuctionConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.AuctionConverter;
 import fontys.s3.carspacebackend.domain.*;
 import fontys.s3.carspacebackend.domain.impl.UserRole;
-import fontys.s3.carspacebackend.persistence.Entity.*;
+import fontys.s3.carspacebackend.persistence.entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
@@ -14,7 +14,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AuctionConverterTest {
+class AuctionConverterTest {
     @Test
     void testConvertToPOJO(){
         Instant now = Instant.now();

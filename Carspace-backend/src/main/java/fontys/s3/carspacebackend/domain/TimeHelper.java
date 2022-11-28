@@ -5,6 +5,9 @@ import java.time.Instant;
 public final class TimeHelper {
     private static boolean debugMode = false;
     private static Instant debugTime = Instant.parse("2022-07-10T15:30:00.00Z");
+    private TimeHelper() {
+        throw new IllegalStateException("Utility class");
+    }
     public static Instant Now(){
         if(debugMode){
             return debugTime;
