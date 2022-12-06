@@ -19,7 +19,7 @@ sonarqube-check:
       - ./gradlew.bat --stop
   allow_failure: true
   only:
-    - dev # or the name of your main branch
+    - main # or the name of your main branch
 
 build: 
     stage: build_backend
@@ -34,3 +34,5 @@ test:
         - cd Carspace-backend
         - ./gradlew test
         - ./gradlew.bat --stop
+    only:
+    - dev # or the name of your main branch
