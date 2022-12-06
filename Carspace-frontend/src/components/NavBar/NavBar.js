@@ -63,7 +63,7 @@ function NavBar() {
                 </li>
                 <li>
                   <Link className="dropdown-item" to="/results">
-                    Ended actions
+                    Ended auctions
                   </Link>
                 </li>
               </ul>

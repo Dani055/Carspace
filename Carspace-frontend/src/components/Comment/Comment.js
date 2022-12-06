@@ -65,7 +65,7 @@ function Comment(props) {
   }
 
     return (
-      <div className="bg-light rounded p-3 mb-4">
+      <div className="comment bg-light rounded p-3 mb-4">
         <div className="comment-header row">
         <div className="col-auto me-auto">
         <p>

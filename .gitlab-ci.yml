@@ -16,6 +16,7 @@ sonarqube-check:
   script: 
       - cd Carspace-backend
       - gradle sonarqube
+      - ./gradlew.bat --stop
   allow_failure: true
   only:
     - dev # or the name of your main branch

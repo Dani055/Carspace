@@ -134,7 +134,7 @@ function AuctionDetails(props) {
         return deleteButtonHTML();
       }
     }
-    else if (loggedUser?.role === 'admin') {
+    if (loggedUser?.role === 'admin') {
       return deleteButtonHTML();
     }
   };
@@ -174,7 +174,7 @@ function AuctionDetails(props) {
                 <div className="col-auto me-auto">
                   <p className="m-0">
                     Vehicle owner:
-                    <Link className="link-light" to="profile">
+                    <Link className="link-light" to={"/profile/" + auction.creator.username}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="32"
@@ -233,9 +233,8 @@ function AuctionDetails(props) {
               </div>
             }
             <div className="rounded my-2 shadow">
-
                 {
-                  bids.length !== 0 && <div className="current-bid-details bg-success p-3">
+                  bids.length !== 0 && bids[0] !== undefined && <div className="current-bid-details bg-success p-3">
                   <p>
                   {auction.winningBid == null ? "Leading bid" : "Winner"}
                   <Link className="link-light" to="profile">
@@ -254,7 +253,7 @@ function AuctionDetails(props) {
                 </p>
                 <h3>{bids[0].amount}€</h3>
                 <p>
-                  Placed on <span className="bold">{dayjs(auction.bids[0].createdOn).format("DD/MM/YYYY HH:mm:ss")}</span>
+                  Placed on <span className="bold">{dayjs(auction.bids[0]?.createdOn).format("DD/MM/YYYY HH:mm:ss")}</span>
                 </p>
                 </div>
                 }
