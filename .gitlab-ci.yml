@@ -1,6 +1,8 @@
 stages:
-    - sonar
     - build_backend
+    - compose_dev_server
+    - sonar
+    - test_end_to_end
     - test_backend
     
 sonarqube-check:
@@ -19,7 +21,7 @@ sonarqube-check:
       - ./gradlew.bat --stop
   allow_failure: true
   only:
-    - main # or the name of your main branch
+    - dev # or the name of your main branch
 
 build: 
     stage: build_backend
@@ -28,11 +30,23 @@ build:
         - ./gradlew build -x test
         - ./gradlew.bat --stop
 
-test:
+compose-dev-server: 
+    stage: compose_dev_server
+    script:
+        - docker compose up -d
+
+test-e2e: 
+    stage: test_end_to_end
+    script:
+        - cd Carspace-backend
+        - npm install
+        - npm run cy:run
+
+test-backend:
     stage: test_backend
     script: 
         - cd Carspace-backend
         - ./gradlew test
         - ./gradlew.bat --stop
     only:
-    - dev # or the name of your main branch
+    - main # or the name of your main branch

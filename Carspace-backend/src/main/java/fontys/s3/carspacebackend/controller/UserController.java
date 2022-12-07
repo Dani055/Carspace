@@ -24,4 +24,9 @@ public class UserController {
         GenericObjectResponse res = GenericObjectResponse.builder().message("User fetched").obj(userDTO).build();
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
+
+    @GetMapping("ping")
+    public ResponseEntity<String> ping(){
+        return ResponseEntity.status(HttpStatus.OK).body("UP");
+    }
 }

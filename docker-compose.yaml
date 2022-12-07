@@ -2,7 +2,50 @@ version: "3"
 services:
   sonarqube:
     image: sonarqube:latest
+    healthcheck:
+      test: exit 0
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
     ports:
       - 9000:9000
     environment:
       - SONAR_FORCEAUTHENTICATION=false
+  frontend:
+    build: ./Carspace-frontend
+    healthcheck:
+      test: curl -f localhost:3000 | findstr /b HTTP/1\.1.*200 && echo 0 || echo 1
+      interval: 15s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    ports:
+      - 3000:3000
+    depends_on:
+      sonarqube:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+  backend:
+    build:
+      context: ./Carspace-backend
+      args:
+         - JAR_FILE=build/libs/*.jar
+    healthcheck:
+      test: curl -f localhost:8080/user/ping | findstr "UP" && echo 0 || echo 1
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 15s
+    ports:
+      - 8080:8080
+    depends_on:
+      sonarqube:
+        condition: service_healthy
+    environment:
+      - DB_PASSWORD=password
+      - DB_USERNAME=sa
+      - INSERT_DATA=TRUE
+      - SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.H2Dialect
+      - SPRING_DATASOURCE_URL=jdbc:h2:mem:testdb
