@@ -33,6 +33,10 @@ build:
 compose-dev-server: 
     stage: compose_dev_server
     script:
+        - cd Carspace-backend
+        - ./gradlew build -x test
+        - ./gradlew.bat --stop
+        - cd ../
         - docker compose up -d
 
 test-e2e: 
