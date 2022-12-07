@@ -1,17 +1,5 @@
 version: "3"
 services:
-  sonarqube:
-    image: sonarqube:latest
-    healthcheck:
-      test: exit 0
-      interval: 15s
-      timeout: 10s
-      retries: 5
-      start_period: 40s
-    ports:
-      - 9000:9000
-    environment:
-      - SONAR_FORCEAUTHENTICATION=false
   frontend:
     build: ./Carspace-frontend
     healthcheck:
@@ -23,8 +11,6 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      sonarqube:
-        condition: service_healthy
       backend:
         condition: service_healthy
   backend:
@@ -41,8 +27,6 @@ services:
     ports:
       - 8080:8080
     depends_on:
-      sonarqube:
-        condition: service_healthy
     environment:
       - DB_PASSWORD=password
       - DB_USERNAME=sa

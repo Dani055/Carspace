@@ -27,7 +27,7 @@ jacocoTestReport {
     }
 }
 
-sonarqube {
+sonar {
   properties {
     property "sonar.projectKey", "I476740_s3-carspace_AYQ4zFv2WExUpI2ZPdgp"
     property "sonar.qualitygate.wait", true 
@@ -63,6 +63,6 @@ test {
 }
 
 test.finalizedBy jacocoTestReport
-tasks.named('sonarqube').configure {
+tasks.named('sonar').configure {
 	dependsOn test
 }

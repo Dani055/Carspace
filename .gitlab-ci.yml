@@ -2,7 +2,6 @@ stages:
     - build_backend
     - compose_dev_server
     - sonar
-    - test_end_to_end
     - test_backend
     
 sonarqube-check:
@@ -17,7 +16,7 @@ sonarqube-check:
       - .sonar/cache
   script: 
       - cd Carspace-backend
-      - gradle sonarqube
+      - gradle sonar
       - ./gradlew.bat --stop
   allow_failure: true
   only:
