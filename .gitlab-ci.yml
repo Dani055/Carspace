@@ -42,9 +42,11 @@ compose-dev-server:
 test-e2e: 
     stage: test_end_to_end
     script:
-        - cd Carspace-backend
+        - cd Carspace-frontend
         - npm install
         - npm run cy:run
+        - cd ../
+        - docker compose down
 
 test-backend:
     stage: test_backend
