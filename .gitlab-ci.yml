@@ -31,6 +31,8 @@ build:
         - cd Carspace-backend
         - ./gradlew build -x test
         - ./gradlew.bat --stop
+    only:
+        - main
 
 compose-dev-server: 
     stage: compose_dev_server
@@ -70,6 +72,8 @@ push_images_to_hub:
         - docker build -t ydoykov/s3carspacefrontend .
         - cd ../
         - cd Carspace-backend
+        - ./gradlew build -x test
+        - ./gradlew.bat --stop
         - docker build --build-arg JAR_FILE=build/libs/*.jar -t ydoykov/s3carspacebackend .
         - cd ../
         - docker image prune -f
