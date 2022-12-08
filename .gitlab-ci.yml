@@ -89,6 +89,6 @@ deploy:
         - docker pull ydoykov/s3carspacefrontend
         - docker pull ydoykov/s3carspacebackend
         - docker run -d -p 3000:3000 --rm --name runningfrontend ydoykov/s3carspacefrontend
-        - docker run -d -p 8080:8080 -e "DB_PASSWORD=yaQZW9!$uRFIY#xIyymG" -e INSERT_DATA=false -e DB_USERNAME=customer_251983_database -e SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect -e SPRING_DATASOURCE_URL=jdbc:mysql://eu01-sql.pebblehost.com:3306/customer_251983_database?useSSL=false --name runningbackend ydoykov/s3carspacebackend .
+        - docker run -d -p 8080:8080 -e DB_PASSWORD=yaQZW9!$$uRFIY#xIyymG -e INSERT_DATA=false -e DB_USERNAME=customer_251983_database -e SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect -e SPRING_DATASOURCE_URL=jdbc:mysql://eu01-sql.pebblehost.com:3306/customer_251983_database?useSSL=false --name runningbackend ydoykov/s3carspacebackend .
     only:
     - dev 
