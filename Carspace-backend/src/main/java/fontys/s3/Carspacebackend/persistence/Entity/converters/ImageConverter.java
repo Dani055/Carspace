@@ -1,5 +1,4 @@
 package fontys.s3.carspacebackend.persistence.entity.converters;
-
 import fontys.s3.carspacebackend.domain.Image;
 import fontys.s3.carspacebackend.persistence.entity.ImageEntity;
 

@@ -3,7 +3,6 @@ package fontys.s3.carspacebackend.persistence.repository.impl;
 import fontys.s3.carspacebackend.business.interfaces.IUserRepository;
 
 import fontys.s3.carspacebackend.persistence.entity.converters.UserConverter;
-
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.exception.IncorrectCredentialsException;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;

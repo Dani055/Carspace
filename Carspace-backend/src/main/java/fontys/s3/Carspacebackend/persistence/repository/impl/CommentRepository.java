@@ -7,7 +7,6 @@ import fontys.s3.carspacebackend.persistence.entity.converters.CommentConverter;
 import fontys.s3.carspacebackend.domain.Comment;
 import fontys.s3.carspacebackend.exception.ResourceNotFoundException;
 import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
-
 import fontys.s3.carspacebackend.persistence.entity.CommentEntity;
 import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 

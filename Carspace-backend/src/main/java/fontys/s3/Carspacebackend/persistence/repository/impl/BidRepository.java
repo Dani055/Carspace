@@ -14,7 +14,6 @@ import fontys.s3.carspacebackend.persistence.repository.IJPABidRepository;
 import fontys.s3.carspacebackend.persistence.repository.IJPAUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 import java.util.Optional;
 

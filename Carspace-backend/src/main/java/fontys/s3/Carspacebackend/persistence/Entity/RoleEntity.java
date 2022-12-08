@@ -1,6 +1,5 @@
 package fontys.s3.carspacebackend.persistence.entity;
 
-
 import lombok.*;
 
 import javax.persistence.*;

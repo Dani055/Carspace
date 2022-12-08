@@ -1,7 +1,6 @@
 package fontys.s3.carspacebackend.persistence.repository.impl;
 
 import fontys.s3.carspacebackend.business.interfaces.IAuctionRepository;
-
 import fontys.s3.carspacebackend.persistence.entity.converters.AuctionConverter;
 import fontys.s3.carspacebackend.domain.Auction;
 import fontys.s3.carspacebackend.domain.AuctionFilters;

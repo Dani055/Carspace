@@ -8,7 +8,6 @@ import fontys.s3.carspacebackend.controller.dto.AuctionDTO;
 import fontys.s3.carspacebackend.controller.dto.BidDTO;
 import fontys.s3.carspacebackend.controller.dto.CommentDTO;
 import fontys.s3.carspacebackend.persistence.entity.AuctionEntity;
-
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;

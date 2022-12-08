@@ -1,6 +1,5 @@
 
 package fontys.s3.carspacebackend.persistence.entity.converters;
-
 import fontys.s3.carspacebackend.domain.IRole;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
