@@ -4,6 +4,8 @@ stages:
     - sonar
     - test_end_to_end
     - test_backend
+    - push_images_to_hub
+    - deploy
     
 sonarqube-check:
   stage: sonar
@@ -21,7 +23,7 @@ sonarqube-check:
       - ./gradlew.bat --stop
   allow_failure: true
   only:
-    - dev # or the name of your main branch
+    - main
 
 build: 
     stage: build_backend
@@ -38,6 +40,8 @@ compose-dev-server:
         - ./gradlew.bat --stop
         - cd ../
         - docker compose up -d
+    only:
+        - main
 
 test-e2e: 
     stage: test_end_to_end
@@ -47,6 +51,8 @@ test-e2e:
         - npm run cy:run
         - cd ../
         - docker compose down
+    only:
+        - main
 
 test-backend:
     stage: test_backend
@@ -55,4 +61,29 @@ test-backend:
         - ./gradlew test
         - ./gradlew.bat --stop
     only:
-    - main # or the name of your main branch
+        - main 
+
+push_imahes_to_hub:
+    stage: push_imahes_to_hub
+    script: 
+        - cd Carspace-frontend
+        - docker build -t ydoykov/s3carspacefrontend .
+        - cd ../
+        - cd Carspace-backend
+        - docker build --build-arg JAR_FILE=build/libs/*.jar -t ydoykov/s3carspacebackend .
+        - cd ../
+        - docker image prune -f
+    only:
+    - dev 
+
+deploy:
+    stage: deploy
+    script: 
+        - docker pull ydoykov/s3carspacefrontend
+        - docker pull ydoykov/s3carspacebackend
+        - docker stop runningfrontend
+        - docker stop runningbackend
+        - docker run -d -p 3000:3000 --rm --name runningfrontend ydoykov/s3carspacefrontend
+        - docker run -d -p 8080:8080 -e DB_PASSWORD=yaQZW9!$uRFIY#xIyymG -e INSERT_DATA=false -e DB_USERNAME=customer_251983_database -e SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect -e SPRING_DATASOURCE_URL=jdbc:mysql://eu01-sql.pebblehost.com:3306/customer_251983_database?useSSL=false --rm --name runningbackend ydoykov/s3carspacebackend .
+    only:
+    - dev 
