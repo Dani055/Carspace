@@ -63,8 +63,8 @@ test-backend:
     only:
         - main 
 
-push_imahes_to_hub:
-    stage: push_imahes_to_hub
+push_images_to_hub:
+    stage: push_images_to_hub
     script: 
         - cd Carspace-frontend
         - docker build -t ydoykov/s3carspacefrontend .
