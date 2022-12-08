@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BidControllerTest {
+class BidControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -38,7 +38,7 @@ public class BidControllerTest {
     private BidService bidService;
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void createBidShouldReturn201WhenRequestValid() throws Exception{
         ArgumentCaptor<Bid> bidCaptor = ArgumentCaptor.forClass(Bid.class);
 
@@ -60,7 +60,7 @@ public class BidControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void createBidShouldReturn400WhenMissingAmount() throws Exception{
         CreateBidReq req = CreateBidReq.builder().amount(-2.2).build();
 

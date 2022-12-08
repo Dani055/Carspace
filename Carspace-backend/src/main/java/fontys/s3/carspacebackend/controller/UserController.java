@@ -1,10 +1,9 @@
 package fontys.s3.carspacebackend.controller;
 
 import fontys.s3.carspacebackend.business.service.IUserService;
-import fontys.s3.carspacebackend.configuration.security.isauthenticated.IsAuthenticated;
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
 import fontys.s3.carspacebackend.controller.responses.GenericObjectResponse;
-import fontys.s3.carspacebackend.converters.UserConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.UserConverter;
 import fontys.s3.carspacebackend.domain.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,5 +23,10 @@ public class UserController {
         UserDTO userDTO = UserConverter.convertToDTO(loggedUser);
         GenericObjectResponse res = GenericObjectResponse.builder().message("User fetched").obj(userDTO).build();
         return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
+
+    @GetMapping("ping")
+    public ResponseEntity<String> ping(){
+        return ResponseEntity.status(HttpStatus.OK).body("UP");
     }
 }

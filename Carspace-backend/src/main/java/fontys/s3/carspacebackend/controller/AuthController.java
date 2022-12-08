@@ -3,7 +3,7 @@ package fontys.s3.carspacebackend.controller;
 import fontys.s3.carspacebackend.business.service.IUserService;
 import fontys.s3.carspacebackend.configuration.security.isauthenticated.IsAuthenticated;
 import fontys.s3.carspacebackend.controller.responses.LoginResponse;
-import fontys.s3.carspacebackend.converters.UserConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.UserConverter;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
 import fontys.s3.carspacebackend.controller.requests.CreateUserReq;

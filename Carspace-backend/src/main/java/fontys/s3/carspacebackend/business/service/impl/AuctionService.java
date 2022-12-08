@@ -30,9 +30,8 @@ public class AuctionService implements IAuctionService {
     public Long createAuction(Auction auc, List<String> urls){
         auctionValidator.ValidateDatesForModification(auc);
 
-        Long auctionId = auctionRepository.saveAuction(auc, requestAccessToken.getUserId(), urls);
+        return auctionRepository.saveAuction(auc, requestAccessToken.getUserId(), urls);
 
-        return auctionId;
     }
 
     public List<Auction> getAuctionsByCreator(Long creatorId){
@@ -52,17 +51,15 @@ public class AuctionService implements IAuctionService {
             throw new UnauthorizedException("Auction");
         }
 
-        if(foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD()){
-            if(foundAuction.hasStarted()){
-                throw new AuctionHasStartedException();
-            }
-        }
 
+        if(foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD() && foundAuction.hasStarted()){
+             throw new AuctionHasStartedException();
+
+        }
         auctionValidator.ValidateDatesForModification(auc);
 
-        Long auctionId = auctionRepository.changeAuctionInfo(auc, urls);
+        return auctionRepository.changeAuctionInfo(auc, urls);
 
-        return auctionId;
     }
     @Transactional
     public boolean deleteAuction(Long auctionId){
@@ -72,10 +69,9 @@ public class AuctionService implements IAuctionService {
             throw new UnauthorizedException("Auction");
         }
 
-        if(foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD()){
-            if(foundAuction.hasStarted()){
-                throw new AuctionHasStartedException();
-            }
+        if(foundAuction.isOwner(owner) && !owner.getRole().canAccessAuctionCRUD() && foundAuction.hasStarted()){
+            throw new AuctionHasStartedException();
+
         }
         return auctionRepository.deleteAuction(auctionId);
     }

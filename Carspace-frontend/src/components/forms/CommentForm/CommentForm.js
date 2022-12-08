@@ -20,13 +20,13 @@ function CommentForm(props) {
       toast.success(res.message);
     } catch (error) {
       console.log(error);
-      toast.error(error);
+      toast.error("Comment length must be at least 5");
     }
   };
     return (
         <div className="place-bid border-top p-3">
         <h6>Leave comment:</h6>
-        <form onSubmit={handleSubmit}>
+        <form className="commentForm" onSubmit={handleSubmit}>
           <div className="input-group mb-3">
             <input
               type="text"

@@ -4,7 +4,6 @@ import fontys.s3.carspacebackend.domain.AccessToken;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.exception.BadTokenException;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -30,7 +29,7 @@ public class AccessTokenHelper implements IAccessTokenHelper{
     @Override
     public String generateAccessToken(User user) {
         Long userId = user.getId();
-        String role= user.getRole().getRole();
+        String role= user.getRole() == null ? null : user.getRole().getRole();
 
         return encode(
                 AccessToken.builder()
@@ -42,7 +41,7 @@ public class AccessTokenHelper implements IAccessTokenHelper{
 
     private String encode(AccessToken accessToken) {
         Map<String, Object> claimsMap = new HashMap<>();
-        if (accessToken.getRole() != null || !accessToken.getRole().isEmpty()) {
+        if (accessToken.getRole() != null && !accessToken.getRole().isEmpty()) {
             claimsMap.put("role", accessToken.getRole());
         }
         if (accessToken.getUserId() != null) {

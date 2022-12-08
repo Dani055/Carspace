@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class CommentRepositoryTest extends RepositoryTest{
+class CommentRepositoryTest extends RepositoryTest{
     @Autowired
     private CommentRepository commentRepo;
     @Autowired

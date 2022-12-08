@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
-public class TimeHelperTest {
+class TimeHelperTest {
     @BeforeEach()
     void freezeTime(){
         TimeHelper.EnterDebugMode();

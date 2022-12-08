@@ -1,18 +1,18 @@
 package fontys.s3.carspacebackend.converter;
 
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
-import fontys.s3.carspacebackend.converters.UserConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.UserConverter;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.domain.impl.AdminRole;
 import fontys.s3.carspacebackend.domain.impl.UserRole;
-import fontys.s3.carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.RoleEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserConverterTest {
+class UserConverterTest {
 
     @Test
     void testConvertUserToPOJO(){

@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AuctionControllerTest {
+class AuctionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -45,7 +45,7 @@ public class AuctionControllerTest {
     private AuctionService auctionServiceMock;
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void createAuctionShouldReturn201WhenRequestValid() throws Exception{
         ArgumentCaptor<Auction> auctionCaptor = ArgumentCaptor.forClass(Auction.class);
         List<String> urls = new ArrayList<>();
@@ -68,7 +68,7 @@ public class AuctionControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void createAuctionShouldReturn400WhenMissingFields() throws Exception{
         CreateAuctionReq req = CreateAuctionReq.builder().carBrand("").carModel("").carDesc("").carYear(0).startingPrice(-1).buyoutPrice(-1).mileage(-1).startsOn(null).endsOn(null).location("").build();
 
@@ -136,7 +136,7 @@ public class AuctionControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void editAuctionShouldReturn200WhenRequestValid() throws Exception{
         ArgumentCaptor<Auction> auctionCaptor = ArgumentCaptor.forClass(Auction.class);
         List<String> urls = new ArrayList<>();
@@ -159,7 +159,7 @@ public class AuctionControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void editAuctionShouldReturn400WhenMissingFields() throws Exception{
         CreateAuctionReq req = CreateAuctionReq.builder().carBrand("").carModel("").carDesc("").carYear(0).startingPrice(-1).buyoutPrice(-1).mileage(-1).startsOn(null).endsOn(null).location("").build();
 
@@ -174,7 +174,7 @@ public class AuctionControllerTest {
         verifyNoInteractions(auctionServiceMock);
     }
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void deleteAuctionShouldReturn200WhenRequestValid() throws Exception{
         when(auctionServiceMock.deleteAuction(100L)).thenReturn(true);
 

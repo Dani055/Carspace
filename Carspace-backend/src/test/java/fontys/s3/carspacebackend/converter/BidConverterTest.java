@@ -2,18 +2,18 @@ package fontys.s3.carspacebackend.converter;
 
 import fontys.s3.carspacebackend.controller.dto.BidDTO;
 import fontys.s3.carspacebackend.controller.dto.UserDTO;
-import fontys.s3.carspacebackend.converters.BidConverter;
+import fontys.s3.carspacebackend.persistence.entity.converters.BidConverter;
 import fontys.s3.carspacebackend.domain.Bid;
 import fontys.s3.carspacebackend.domain.User;
 import fontys.s3.carspacebackend.domain.impl.UserRole;
-import fontys.s3.carspacebackend.persistence.Entity.BidEntity;
-import fontys.s3.carspacebackend.persistence.Entity.RoleEntity;
-import fontys.s3.carspacebackend.persistence.Entity.UserEntity;
+import fontys.s3.carspacebackend.persistence.entity.BidEntity;
+import fontys.s3.carspacebackend.persistence.entity.RoleEntity;
+import fontys.s3.carspacebackend.persistence.entity.UserEntity;
 import org.junit.jupiter.api.Test;
 import java.time.Instant;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BidConverterTest {
+class BidConverterTest {
     @Test
     void testConvertToPOJO(){
         Instant now = Instant.now();

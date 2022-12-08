@@ -24,7 +24,7 @@ import java.util.List;
 // If one is found then it will be verified, decoded and the authenticated user will be configured into Spring Security context.
 @Component
 public class AuthenticationRequestInterceptor extends OncePerRequestFilter {
-    private final static String SPRING_SECURITY_ROLE_PREFIX = "ROLE_";
+    private static final String SPRING_SECURITY_ROLE_PREFIX = "ROLE_";
 
     @Autowired
     private IAccessTokenHelper accessTokenHelper;

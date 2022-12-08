@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +25,8 @@ public class BidService implements IBidService {
 
     private AccessToken requestAccessToken;
 
+
+    @Override
     public Long createBid(Bid b, Long auctionId){
         concludeEndedAuctions();
         return placeBid(b, auctionId);
@@ -54,6 +57,11 @@ public class BidService implements IBidService {
         }
 
         return bidRepository.saveBid(b, auctionId, bidder.getId());
+    }
+
+    @Override
+    public List<Bid> getAllBidsOnLiveAuctions(){
+        return bidRepository.getBidsOnLiveAuctions();
     }
 
     @Transactional

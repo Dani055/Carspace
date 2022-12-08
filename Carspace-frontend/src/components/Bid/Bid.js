@@ -24,7 +24,7 @@ function Bid(props) {
           bid <span className="bold">{props.bid.amount}€</span>
         </p>
         <p className="m-0">
-          Placed on <span className="bold">{dayjs(props.bid.creatordOn).format("DD/MM/YYYY HH:mm:ss")}</span>
+          Placed on <span className="bold">{dayjs(props.bid.createdOn).format("DD/MM/YYYY HH:mm:ss")}</span>
         </p>
       </div>
     )

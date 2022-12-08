@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CommentControllerTest {
+class CommentControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -41,7 +41,7 @@ public class CommentControllerTest {
     private CommentService commentService;
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void createCommentShouldReturn201WhenRequestValid() throws Exception{
         ArgumentCaptor<Comment> commentCaptor = ArgumentCaptor.forClass(Comment.class);
 
@@ -63,7 +63,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void createCommentShouldReturn400WhenMissingFields() throws Exception{
         CreateCommentReq req = CreateCommentReq.builder().text("").build();
 
@@ -80,7 +80,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "usernaem", roles = {"user"})
+    @WithMockUser(username = "usernaem", roles = {"USER"})
     void deleteShouldReturn200WhenRequestValid() throws Exception{
         when(commentService.deleteComment(111L)).thenReturn(true);
 

@@ -43,10 +43,9 @@ public class CommentService implements ICommentService {
     public Boolean deleteComment(Long commentId){
         User u = userRepository.findById(requestAccessToken.getUserId());
         Comment c = commentRepository.findById(commentId);
-        if(!c.getCreator().getId().equals(u.getId())){
-            if(!u.getRole().canAccessCommentCRUD()){
-                throw new CannotDeleteCommentException("You can only delete your own comments");
-            }
+
+        if(!c.getCreator().getId().equals(u.getId()) && !u.getRole().canAccessCommentCRUD()){
+            throw new CannotDeleteCommentException("You can only delete your own comments");
         }
 
         return commentRepository.deleteComment(commentId);

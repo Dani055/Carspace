@@ -49,7 +49,7 @@ function EditAuctionForm(props) {
       formData.append("photo", imageFiles[i]);
     }
     try {
-      const imageRes = await axios.post("https://ydimage-server.herokuapp.com/feed/uploadimg", formData, {
+      const imageRes = await axios.post("http://localhost:9999/feed/uploadimg", formData, {
       headers:{
         "Content-type": "multipart/form-data",
       },})

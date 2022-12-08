@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserRepositoryTest extends RepositoryTest{
+class UserRepositoryTest extends RepositoryTest{
 
     @Autowired private UserRepository userRepo;
     @Autowired private RoleRepository roleRepo;
@@ -74,14 +74,4 @@ public class UserRepositoryTest extends RepositoryTest{
         assertEquals(savedUser.getPhone(), foundUser.getPhone());
         assertEquals(savedUser.getRole().getRoleId(), foundUser.getRole().getRoleId());
     }
-//    @Transactional
-//    @Test
-//    void tests() {
-//        //Find the user entity with the entity manager, but now I need to convert it
-//        User foundUser = userRepo.findById(1L);
-//        RoleEntity user = entityManager.find(RoleEntity.class, 1L);
-//        RoleEntity admin = entityManager.find(RoleEntity.class, 2L);
-//        assertNull(user);
-//        assertNull(admin);
-//    }
 }

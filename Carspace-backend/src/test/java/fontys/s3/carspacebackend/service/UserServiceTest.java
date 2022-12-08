@@ -83,7 +83,7 @@ class UserServiceTest {
 
         UserWithToken uwt = userService.loginUser(username, password);
         assertEquals(toLogin, uwt.getUser());
-        assertEquals(uwt.getToken(), "token");
+        assertEquals("token", uwt.getToken());
 
         verify(userRepoMock).getUserByUsername(username);
         verify(accessTokenHelperMock).generateAccessToken(toLogin);

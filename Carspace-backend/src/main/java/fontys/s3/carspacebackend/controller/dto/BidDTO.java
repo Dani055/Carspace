@@ -20,4 +20,5 @@ public class BidDTO {
     private Instant createdOn;
 
     private UserDTO bidder;
+    private Long auctionId;
 }
