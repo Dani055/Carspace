@@ -68,6 +68,7 @@ test-backend:
 push_images_to_hub:
     stage: push_images_to_hub
     script: 
+        - docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}"
         - cd Carspace-frontend
         - docker build -t ydoykov/s3carspacefrontend .
         - cd ../
