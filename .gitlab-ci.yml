@@ -23,7 +23,7 @@ sonarqube-check:
       - ./gradlew.bat --stop
   allow_failure: true
   only:
-    - main
+    - dev
 
 build: 
     stage: build_backend
@@ -32,7 +32,7 @@ build:
         - ./gradlew build -x test
         - ./gradlew.bat --stop
     only:
-        - main
+        - dev
 
 compose-dev-server: 
     stage: compose_dev_server
@@ -43,7 +43,7 @@ compose-dev-server:
         - cd ../
         - docker compose up -d
     only:
-        - main
+        - dev
 
 test-e2e: 
     stage: test_end_to_end
@@ -54,7 +54,7 @@ test-e2e:
         - cd ../
         - docker compose down
     only:
-        - main
+        - dev
 
 test-backend:
     stage: test_backend
@@ -81,7 +81,7 @@ push_images_to_hub:
         - docker push ydoykov/s3carspacebackend:latest
         - docker image prune -f
     only:
-    - main 
+    - dev 
 
 deploy:
     stage: deploy
@@ -91,6 +91,6 @@ deploy:
         - docker pull ydoykov/s3carspacefrontend
         - docker pull ydoykov/s3carspacebackend
         - docker run -d -p 3000:3000 --rm --name runningfrontend ydoykov/s3carspacefrontend
-        - docker run -d -p 8080:8080 -e DB_PASSWORD=yaQZW9!$maikati -e INSERT_DATA=false -e DB_USERNAME=customer_251983_database -e SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect -e SPRING_DATASOURCE_URL=jdbc:mysql://eu01-sql.pebblehost.com:3306/customer_251983_database?useSSL=false --name runningbackend ydoykov/s3carspacebackend .
+        - docker run -d -p 8080:8080 --rm -e DB_PASSWORD=yaQZW9!$maikati -e INSERT_DATA=false -e DB_USERNAME=customer_251983_database -e SPRING_DATASOURCE_DIALECT=org.hibernate.dialect.MySQL5InnoDBDialect -e SPRING_DATASOURCE_URL=jdbc:mysql://eu01-sql.pebblehost.com:3306/customer_251983_database?useSSL=false --name runningbackend ydoykov/s3carspacebackend .
     only:
     - dev 
