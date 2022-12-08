@@ -3,7 +3,7 @@ services:
   frontend:
     build: ./Carspace-frontend
     healthcheck:
-      test: curl -f localhost:3000 | findstr /b HTTP/1\.1.*200 && echo 0 || echo 1
+      test: curl -f localhost:3000 | findstr /b HTTP/1\.1.*200 && exit 0 || exit 1
       interval: 15s
       timeout: 30s
       retries: 5
@@ -19,7 +19,7 @@ services:
       args:
          - JAR_FILE=build/libs/*.jar
     healthcheck:
-      test: curl -f localhost:8080/user/ping | findstr "UP" && echo 0 || echo 1
+      test: curl -f localhost:8080/user/ping | findstr "UP" && exit 0 || exit 1
       interval: 15s
       timeout: 10s
       retries: 5
