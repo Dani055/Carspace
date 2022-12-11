@@ -24,6 +24,9 @@
 .bg-danger-light{
   background-color: rgba(192, 48, 19, 0.8);
 }
+.text-danget-light{
+  background-color: rgba(192, 48, 19, 0.8);
+}
 .btn-warning-light{
   background-color: rgba(255, 193, 7, 0.6);
 }
@@ -38,6 +41,9 @@
 .btn-outline-dark{
   border-width: 2px;
   font-weight: 500;
+}
+.border-purple{
+  border: 1px solid var(--bs-purple);
 }
 .App{
   min-height: 100vh;
