@@ -6,7 +6,7 @@ function Carousel(props) {
   return (
     <div
       id="carouselExampleIndicators"
-      className="carousel slide"
+      className="carousel rounded-top slide"
       data-bs-ride="carousel"
     >
       {

@@ -47,7 +47,7 @@ function MainPage() {
       <div className="container mt-5">
         <h3 className="pb-2 border-bottom">Live/Pending auctions</h3>
         <div className="row mb-5 g-4">
-          <p className="text-info">Found {results} auctions...</p>
+          <p className="text-purple-light">Found {results} auctions...</p>
           
           {auctions?.map((auction) => {
             return <AuctionCard key={auction.id} auction={auction}/>

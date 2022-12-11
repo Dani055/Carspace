@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./PaginationLinks.css"
 import {Link} from "react-router-dom";
 
 function PaginationLinks(props) {
@@ -28,8 +28,8 @@ function PaginationLinks(props) {
           </Link>
         </li>
         }
-        <li className="page-item">
-          <Link className="page-link active" to="#">
+        <li className="page-item active">
+          <Link className="page-link" to="#">
             {props.currentPage + 1}
             {/* current page */}
           </Link>

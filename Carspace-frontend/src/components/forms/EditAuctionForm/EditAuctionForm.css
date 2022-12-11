@@ -1,5 +1,5 @@
 .bgIndigo {
-    background-color: var(--bs-purple);
+    background-color: rgba(111, 66, 193, 0.7);
 }
 @media (min-width: 992px) {
     .card-registration-2 .bgIndigo {

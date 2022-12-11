@@ -80,7 +80,7 @@ function App() {
       </Router>
       }
       
-      <ToastContainer hideProgressBar={true}/>
+      <ToastContainer hideProgressBar={true} theme="dark"/>
     </div>
   );
 }

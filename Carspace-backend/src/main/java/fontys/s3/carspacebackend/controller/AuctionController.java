@@ -90,7 +90,7 @@ public class AuctionController {
             @RequestParam(defaultValue = "false", required = false) boolean hasEnded,
             @RequestParam(defaultValue = "0") int page)
     {
-        Pageable paging = PageRequest.of(page, 1);
+        Pageable paging = PageRequest.of(page, 6);
         AuctionFilters filters = AuctionFilters.builder().carBrand(carBrand).carModel(carModel).minYear(minYear).maxYear(maxYear).location(location).minPrice(minPrice).maxPrice(maxPrice).minMileage(minMileage).maxMileage(maxMileage).hasEnded(hasEnded).build();
         Page<Auction> pages = auctionService.getLiveAuctions(filters, paging);
         List<AuctionDTO> dtos = pages.getContent().stream().map(AuctionConverter::convertToDTO).toList();
