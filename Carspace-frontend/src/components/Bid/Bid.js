@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 function Bid(props) {
 
     return (
-        <div className="bg-light-gray rounded p-3 mt-4">
+        <div className="bg-light-gray shadow-sm rounded p-3 mt-4">
         <p>
           <Link className="link-dark" to="profile">
             <svg

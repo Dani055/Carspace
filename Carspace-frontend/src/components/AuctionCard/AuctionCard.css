@@ -1,0 +1,8 @@
+a.text-purple-light{
+    text-decoration: none ;
+}
+
+a.text-purple-light:hover{
+    text-decoration: underline ;
+    color: rgb(124, 73, 150);
+}

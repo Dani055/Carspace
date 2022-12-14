@@ -11,8 +11,8 @@ function RegisterPage(props) {
             className="card shadow-2-strong card-registration"
             style={{ borderRadius: 15 + "px" }}
           >
-            <div className="card-body p-4 p-md-5">
-              <h4 className="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h4>
+            <div className="card-body bg-light p-4 p-md-5">
+              <h4 className="mb-4 pb-2 pb-md-0 mb-md-5">Create an account in CarSpace</h4>
               <RegisterForm/>
             </div>
           </div>

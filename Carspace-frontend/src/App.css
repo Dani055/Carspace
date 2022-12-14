@@ -11,23 +11,48 @@
   color: white;
 }
 .bg-light-gray{
-  background-color: rgb(225, 225, 225);
+  background-color: rgb(244, 244, 244);
+}
+.bg-purple-light{
+  background-color: rgba(111, 66, 193, 0.4);
+  
+}
+.bg-warning-light{
+  background-color: rgba(255, 193, 7, 0.6);
+}
+
+.bg-danger-light{
+  background-color: rgba(192, 48, 19, 0.8);
+}
+.text-danget-light{
+  background-color: rgba(192, 48, 19, 0.8);
+}
+.btn-warning-light{
+  background-color: rgba(255, 193, 7, 0.6);
+}
+.btn-warning-light:hover{
+  background-color: rgba(255, 193, 7, 0.9) !important;
 }
 .btn-primary:hover{
   opacity: 0.7;
-  border-color: var(--bs-purple);
-  background-color: var(--bs-purple);
+  border-color: var(--bs-purple) !important;
+  background-color: var(--bs-purple) !important;
 }
 .btn-outline-dark{
   border-width: 2px;
   font-weight: 500;
+}
+.border-purple{
+  border: 1px solid var(--bs-purple);
 }
 .App{
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
-
+.text-purple-light{
+  color: rgb(124, 73, 150);
+}
 /* CREATE AUCTION FORM */
 
 span.bold{

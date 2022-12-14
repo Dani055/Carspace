@@ -5,6 +5,7 @@ import Comment from "../Comment/Comment";
 import { useContext } from "react";
 import { UserContext } from "../../UserProvider";
 import dayjs from "dayjs";
+import "./AuctionComments.css"
 
 function AuctionComments(props) {
     const { loggedUser } = useContext(UserContext);

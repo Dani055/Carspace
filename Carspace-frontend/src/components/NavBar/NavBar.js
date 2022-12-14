@@ -4,13 +4,15 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../UserProvider";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import Tooltip from '@mui/material/Tooltip';
+import Typography from '@mui/material/Typography';
 
 function NavBar() {
   const navigate = useNavigate();
-  const {setLoggedUser} = useContext(UserContext)
+  const { setLoggedUser } = useContext(UserContext)
   const [cookies, setCookie, removeCookie] = useCookies();
   const { loggedUser } = useContext(UserContext);
-  
+
   const logout = (e) => {
     e.preventDefault();
     window.sessionStorage.removeItem("tkn");
@@ -19,7 +21,7 @@ function NavBar() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
+    <nav className="navbar shadow navbar-expand-lg navbar-dark">
       <div className="container">
         <NavLink className="navbar-brand header-media-logo" to="/">
           <div className="media">
@@ -95,10 +97,10 @@ function NavBar() {
                 </Link>
                 <ul className="dropdown-menu text-small shadow">
                   <li>
-                    <span className="mx-3 my-1 fw-bold">Welcome, --user--</span>
+                    <span className="mx-3 my-1 fw-bold">Welcome, {loggedUser.username}</span>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/profile">
+                    <Link data-bs-toggle="tooltip" data-bs-title="Default tooltip" className="dropdown-item" to="/profile">
                       My profile
                     </Link>
                   </li>
@@ -106,27 +108,36 @@ function NavBar() {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
+                  <Tooltip title={<Typography fontSize={14}>Logout</Typography>} placement="bottom">
                     <Link className="dropdown-item" onClick={logout}>
-                      Log out
+                      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="23" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                      </svg>
                     </Link>
+                    </Tooltip>
                   </li>
                 </ul>
               </div>
             </ul>
           }
           {
-            loggedUser === null && 
+            loggedUser === null &&
             <>
-            <button
-              type="button"
-              onClick={() => navigate("/login")}
-              className="btn btn-dark mx-2">
-              Log in
-            </button>
+              <button
+                type="button"
+                onClick={() => navigate("/login")}
+                className="btn btn-dark mx-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-box-arrow-in-right me-2" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                </svg>
+                Log in
+              </button>
               <button
                 type="button"
                 onClick={() => navigate("/register")}
-                className="btn btn-outline-dark"
+                className="btn text-white btn-outline-dark"
               >
                 Register
               </button>
