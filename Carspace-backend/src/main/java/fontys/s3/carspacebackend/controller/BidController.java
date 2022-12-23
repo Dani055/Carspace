@@ -17,7 +17,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
+
 @RestController
 @RequestMapping("/bid")
 @AllArgsConstructor
