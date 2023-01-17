@@ -1,4 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:300,400,600,700&display=swap');  
+:root {
+  --main-color: rgb(153, 39, 159);
+  --main-color-alpha: rgba(153, 39, 159, 0.7);
+  --almost-white: rgb(247, 247, 247);
+  --jet-color: rgb(45, 45, 42);
+  --dark-grey: rgb(88, 88, 88);
+  --accent-color: rgb(162, 250, 163);
+  --danger-color: rgb(239, 93, 96);
+  --warning-color: rgba(255, 193, 7, 0.9);
+}
+
+
 body {
   font: "Poppins", Verdana, sans-serif;
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -26,7 +38,7 @@ body {
 ::-webkit-scrollbar-thumb
 {
   border-radius: 5px;
-	background-color: #521a75;
+	background-color: #0a0010;
 }
 
 html {
@@ -35,3 +47,4 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
+

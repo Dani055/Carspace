@@ -80,7 +80,7 @@ function EditAuctionForm(props) {
         <div className="col-lg-6">
           <div className="p-5">
             <h3
-              className="fw-normal mb-5 text-purple-light"
+              
             >
               General vehicle infomation
             </h3>
@@ -103,7 +103,7 @@ function EditAuctionForm(props) {
             <div className="row">
               <div className="col-md-6 mb-4">
                 <div className="form-floating mb-3">
-                <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>The vehicle's brand. <span className="text-warning">Min. 2 characters!</span></Typography>} placement="top-start" arrow>
+                <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>The vehicle's brand. <span className="text-mint">Min. 2 characters!</span></Typography>} placement="top-start" arrow>
                 <input
                     type="text"
                     className="form-control"
@@ -120,7 +120,7 @@ function EditAuctionForm(props) {
               </div>
               <div className="col-md-6 mb-4">
                 <div className="form-floating mb-3">
-                <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>Model of the vehicle. <span className="text-warning">Min. 2 characters!</span></Typography>} placement="top-start" arrow>
+                <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>Model of the vehicle. <span className="text-mint">Min. 2 characters!</span></Typography>} placement="top-start" arrow>
                   <input
                     type="text"
                     className="form-control"
@@ -138,7 +138,7 @@ function EditAuctionForm(props) {
 
             <div className="mb-4">
               <div className="form-floating">
-              <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>Description of the auction <span className="text-warning">Min. 10 characters!</span></Typography>} placement="top-start" arrow>
+              <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>Description of the auction <span className="text-mint">Min. 10 characters!</span></Typography>} placement="top-start" arrow>
                 <textarea
                   className="form-control"
                   placeholder="Vehicle description here"
@@ -171,7 +171,7 @@ function EditAuctionForm(props) {
               </div>
               <div className="col-md-6 mb-4">
                 <div className="form-floating mb-3">
-                <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>Mileage of the vehicle <span className="text-warning">in KM</span></Typography>} placement="top-start" arrow>
+                <Tooltip  className="tooltipsize" title={<Typography fontSize={14}>Mileage of the vehicle <span className="text-mint">in KM</span></Typography>} placement="top-start" arrow>
                   <input
                     type="number"
                     min={0}
@@ -208,7 +208,7 @@ function EditAuctionForm(props) {
             </div>
           </div>
         </div>
-        <div className="col-lg-6 bgIndigo text-white">
+        <div className="col-lg-6 background-main-alpha text-white">
           <div className="p-5">
             <h3 className="fw-normal mb-5">Auction details</h3>
 
@@ -245,7 +245,7 @@ function EditAuctionForm(props) {
             <div className="row">
               <div className="col-md-6 mb-1 text-black">
                 <div className="form-floating mb-3">
-                <Tooltip title={<Typography fontSize={14}>Starting price of the auction <span className="text-warning">Min. €1000</span></Typography>} placement="top-start" arrow>
+                <Tooltip title={<Typography fontSize={14}>Starting price of the auction <span className="text-mint">Min. €1000</span></Typography>} placement="top-start" arrow>
                   <input
                     type="number"
                     min={0}
@@ -263,7 +263,7 @@ function EditAuctionForm(props) {
               </div>
               <div className="col-md-6 mb-4 text-black">
                 <div className="form-floating mb-1">
-                <Tooltip title={<Typography fontSize={14}>Buyout price of the auction <span className="text-warning">Max. €2 000 000</span></Typography>} placement="top-start" arrow>
+                <Tooltip title={<Typography fontSize={14}>Buyout price of the auction <span className="text-mint">Max. €2 000 000</span></Typography>} placement="top-start" arrow>
                   <input
                     type="number"
                     min={0}
@@ -280,10 +280,10 @@ function EditAuctionForm(props) {
                 </div>
               </div>
             </div>
-            <p className="text-warning bg-dark bg-opacity-50 px-2 py-1 rounded">* Fields are required</p>
+            <p className="text-mint bg-dark bg-opacity-50 px-2 py-1 rounded">* Fields are required</p>
             <button
               type="submit"
-              className="btn btn-dark"
+              className="btn btn-jet"
               data-mdb-ripple-color="dark"
             >
               Confirm

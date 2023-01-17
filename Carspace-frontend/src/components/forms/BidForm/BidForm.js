@@ -26,7 +26,7 @@ function BidForm(props) {
 
 
   return (
-    <div className="place-bid border-top p-3">
+    <div className="place-bid mt-3">
       <h6>Place bid as {props.loggedUser.username}</h6>
       <form id="bidForm" onSubmit={handleSubmit}>
         <div className="input-group mb-3">
@@ -42,7 +42,7 @@ function BidForm(props) {
             aria-label="Bid amount"
             aria-describedby="button-bid"
           />
-          <Tooltip className="tooltipsize" title={<Typography fontSize={14}><span className="text-warning">Place bid</span></Typography>} placement="top-start">
+          <Tooltip className="tooltipsize" title={<Typography fontSize={14}><span className="text-mint">Place bid</span></Typography>} placement="top-start">
             <button
               className="btn btn-outline-dark mx-1 px-3"
               type="button"

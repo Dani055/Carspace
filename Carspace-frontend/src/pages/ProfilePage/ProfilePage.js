@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import ProfileAuctionCard from "../../components/ProfileAuctionCard/ProfileAuctionCard";
+import AuctionCard from "../../components/AuctionCard/AuctionCard";
 import { getAuctionsByCreatorCall } from "../../service/auctionService";
 import { getUserProfile } from "../../service/userService";
 import { UserContext } from "../../UserProvider";
@@ -69,11 +69,11 @@ function ProfilePage(props) {
                         </div>
                     </div>
                 </div>
-                <div className="col-md-10 mx-auto border-top pt-4">
+                <div className="col-md-12 mx-auto border-top pt-4">
                     <h3 className="pb-2">Cars auctioned: ({auctions === null ? 0 : auctions.length})</h3>
                     <div className="row mb-5 g-4">
                         {auctions?.map((auction) => {
-                            return <ProfileAuctionCard key={auction.id} auction={auction}/>
+                            return <AuctionCard key={auction.id} auction={auction}/>
                         })}
                     </div>
                 </div>

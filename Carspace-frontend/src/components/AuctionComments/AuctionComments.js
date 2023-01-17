@@ -19,7 +19,7 @@ function AuctionComments(props) {
     };
 
     return (
-      <div className="comments p-3 mt-2">
+      <div className="comments p-3 mt-2 mb-4">
       <h4>Comments ({props.comments.length})</h4>
       {
         displayCommentForm()

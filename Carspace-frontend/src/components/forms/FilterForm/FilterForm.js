@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import years from "../../../years";
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-
+import "./FilterForm.css"
 function FilterForm(props) {
   const [formState, setFormState] = useState({ carBrand: "", carModel: "", location: "", minYear: 0, maxYear: 3000, minPrice: 0, maxPrice: 214748364, minMileage: 0, maxMileage: 2000000 });
 
@@ -19,10 +19,11 @@ function FilterForm(props) {
   return (
     <div className="accordion rounded" id="filtersAccordion">
       <h2 className="accordion-header" id="headingOne">
-        <button className="accordion-button bg-purple-light collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
-          <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+        <button className="accordion-button background-main-alpha collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilters" aria-expanded="false" aria-controls="collapseFilters">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-funnel-fill me-1" viewBox="0 0 16 16">
             <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z" />
           </svg>
+          <span className="fw-semibold">Filters</span>
         </button>
       </h2>
       <div id="collapseFilters" className="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#filtersAccordion">

@@ -12,6 +12,7 @@ import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { UserContext } from "../../UserProvider";
 import TimerComponent from "../../components/TimerComponent/TimerComponent";
+import "./AuctionDetails.css"
 //&& dayjs().isBefore(auction.startsOn)
 const ENDPOINT = "http://localhost:8080/ws";
 
@@ -160,15 +161,15 @@ function AuctionDetails(props) {
 
             {
               dayjs().isBefore(auction.startsOn) &&
-              <span className="badge bg-opacity-50 bg-warning ms-2">Pending</span>
+              <span className="badge bg-opacity-50 text-dark-grey bg-warning ms-2">Pending</span>
             }
             {
               dayjs().isAfter(auction.startsOn) && dayjs().isBefore(auction.endsOn) &&
-              <span className="badge bg-success ms-2">Live</span>
+              <span className="badge bg-opacity-75 bg-success ms-2">Live</span>
             }
             {
               dayjs().isAfter(auction.endsOn) &&
-              <span className="badge bg-opacity-75 bg-danger ms-2">Ended</span>
+              <span className="badge bg-opacity-75  bg-danger ms-2">Ended</span>
             }
           </h3>
           <div className="col-md-6 ">
@@ -213,35 +214,9 @@ function AuctionDetails(props) {
             <AuctionComments auction={auction} comments={auction.comments} />
           </div>
           <div className="col-md-6">
-            {
-              dayjs().isBefore(auction.startsOn) &&
-              <div className="bg-light text-muted p-3 rounded-top">
-                <p>
-                  Auction starts on <span className="bold">{dayjs(auction.startsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
-                </p>
-                <TimerComponent diffDate={auction.startsOn} />
-              </div>
-            }
-            {
-              dayjs().isAfter(auction.startsOn) && dayjs().isBefore(auction.endsOn) &&
-              <div className="bg-warning-light p-3 rounded-top">
-                <p>
-                  Auction ending on <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
-                </p>
-                <TimerComponent diffDate={auction.endsOn} />
-              </div>
-            }
-            {
-              dayjs().isAfter(auction.endsOn) &&
-              <div className="bg-danger bg-opacity-50 text-dark p-3 rounded-top">
-                <p className="m-0">
-                  Auction ended on: <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
-                </p>
-              </div>
-            }
-            <div className="rounded-bottom my-2 shadow">
+          <div className="mb-2 rounded-top shadow-sm">
               {
-                bids.length !== 0 && bids[0] !== undefined && <div className="current-bid-details bg-success text-success bg-opacity-10 p-3">
+                bids.length !== 0 && bids[0] !== undefined && <div className="current-bid-details border-thick-right bg-success text-success bg-opacity-10 p-3">
                   <p>
                     {auction.winningBid == null ? "Leading bid" : "Winner"}
                     <Link className="link-success" to="profile">
@@ -265,21 +240,53 @@ function AuctionDetails(props) {
                 </div>
               }
               {
-                auction.bids.length === 0 && !auction.hasSold && <h4 className="p-3">
+                auction.bids.length === 0 && !auction.hasSold && <h4 className="p-3 bg-warning bg-opacity-50 border-thick-right border-warning">
                   This auction has no bids yet!
                 </h4>
               }
 
               {
                 auction.bids.length === 0 && auction.hasSold &&
-                <div className="bg-danger bg-opacity-75 p-3">
+                <div className="bg-light shadow-sm p-3 border-thick-right border-danger">
                   <h4>
-                    This auction failed to sell!
+                    <span className="text-red">
+                      This auction failed to sell!
+                    </span>
                   </h4>
                 </div>
               }
+            </div>
+            <div className="bg-light border-thick-right border-gray shadow-sm p-3">
+              {
+                dayjs().isBefore(auction.startsOn) &&
+                <>
+                  <p>
+                    Auction starts on <span className="bold">{dayjs(auction.startsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
+                  </p>
+                  <TimerComponent diffDate={auction.startsOn} />
+                </>
+              }
+              {
+                dayjs().isAfter(auction.startsOn) && dayjs().isBefore(auction.endsOn) &&
+                <>
+                  <p>
+                    Auction ending on <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
+                  </p>
+                  <TimerComponent diffDate={auction.endsOn} />
+                </>
+              }
+              {
+                dayjs().isAfter(auction.endsOn) &&
+                <>
+                  <p className="m-0">
+                    Auction ended on: <span className="bold">{dayjs(auction.endsOn).format("DD/MM/YYYY HH:mm:ss")}</span>
+                  </p>
+                </>
+              }
               {displayBidForm()}
             </div>
+
+            
             <BidHistory bids={bids} />
           </div>
         </div>
