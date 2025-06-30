@@ -2,6 +2,8 @@
 
 This project was inspired by Doug Demuro's "Cars & Bids" website for car auctions.
 
+![landing page](./Screenshots/Ladning%20page.jpg)
+
 ## Features
 - CRUD of auctions
 - Dynamic roles (admins have unlimited access)
